@@ -26,6 +26,12 @@ import AutocompleteComponent from '../../../components/AutocompleteComponent'
 import matchService from '../../../services/match.service'
 import IMatch from '../../../models/IMatch'
 import casinoSlugs from '../../../utils/casino-slugs.json'
+import UserService from "../../../services/user.service";
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+
+// const isMobile = true
+
+
 
 const Header = () => {
   const ref = useRef<any>(null)
@@ -50,11 +56,11 @@ const Header = () => {
   const [isOpenRule, setIsOpenRule] = React.useState<any>(false)
   const [getExposerEvent, setGetExposerEvent] = React.useState<any>([])
 
-  React.useEffect(() => {
-    axios.get(`userMessage.json?v=${Date.now()}`).then((res: AxiosResponse) => {
-      setUserMessage(res.data.message)
-    })
-  }, [])
+  // React.useEffect(() => {
+  //   axios.get(`userMessage.json?v=${Date.now()}`).then((res: AxiosResponse) => {
+  //     setUserMessage(res.data.message)
+  //   })
+  // }, [])
 
   React.useEffect(() => {
     setIsOpenRule(rules.open)
@@ -127,6 +133,22 @@ const Header = () => {
     }
   }
 
+  const [userAlldata, setUserAlldata] = React.useState<{ [key: string]: any }>(
+    {}
+  );
+
+  React.useEffect(() => {
+      if (userState?.user?.username) {
+        UserService.getUserDetail(userState?.user?.username).then(
+          (res: AxiosResponse<any>) => {
+            console.log(res, "ressss for all values");
+            const detail = res?.data.data;
+            setUserAlldata(detail);
+          }
+        );
+      }
+    }, [userState?.user?.username]);
+
   return (
     <header className='header'>
       <div className='container-fluid'>
@@ -146,6 +168,19 @@ const Header = () => {
               >
                 <img src='/imgs/logo.png' className='logo-icon' />
               </CustomLink>
+
+              <button
+  className="btn btn-success m-1"
+  onClick={() => {
+    if (userAlldata?.phone) {
+      const phoneNumber = userAlldata.phone.replace(/[^0-9]/g, ""); // sirf digits rakhega
+      window.open(`https://wa.me/${phoneNumber}`, "_blank");
+    }
+  }}
+>
+  <WhatsAppIcon /> 
+</button>
+
             </div>
 
             <ul className='flex05 justify-content-end d-flex profile-right-side'>

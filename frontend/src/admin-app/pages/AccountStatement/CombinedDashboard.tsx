@@ -180,7 +180,31 @@ const CombinedDashboard = () => {
       })
     return achtml
   }
-  console.log(currentItems , "fddf")
+ 
+  const dataDash = currentItems.reduce(
+    (acc:any, item:any) => {
+      const closing = parseFloat(item.closing); // string → number
+  
+      if (closing < 0) {
+        acc.totalUserLoss += closing; // negative values
+      } else {
+        acc.totalUserWin += closing; // positive values
+      }
+  
+      acc.totalClosing += closing;
+      acc.totalBets += 1;
+  
+      return acc;
+    },
+    {
+      totalUserLoss: 0,
+      totalUserWin: 0,
+      totalClosing: 0,
+      totalBets: 0,
+    }
+  );
+  
+  console.log(dataDash);
 
   return (
     <>
@@ -323,7 +347,7 @@ const CombinedDashboard = () => {
     <div className="col-6 col-lg-3">
       <div className="dashboard-card">
         <h5>Total Bets</h5>
-        <p>-</p>
+        <p>{dataDash?.totalBets}</p>
       </div>
     </div>
 
@@ -351,14 +375,22 @@ const CombinedDashboard = () => {
     <div className="col-6 col-lg-3">
       <div className="dashboard-card">
         <h5>User Loss</h5>
-        <p>₹-</p>
+        <p>₹ {dataDash?.totalUserLoss}</p>
+      </div>
+    </div>
+
+
+    <div className="col-6 col-lg-3">
+      <div className="dashboard-card">
+        <h5>User Win</h5>
+        <p>₹ {dataDash?.totalUserWin}</p>
       </div>
     </div>
 
     <div className="col-6 col-lg-3">
       <div className="dashboard-card">
         <h5>Panel Profit</h5>
-        <p>₹-</p>
+        <p>₹ {dataDash?.totalUserLoss}</p>
       </div>
     </div>
   </div>
