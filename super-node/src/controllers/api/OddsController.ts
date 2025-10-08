@@ -384,56 +384,6 @@ class OddsController {
     }
   }
 
-  // public static async getMarketList(
-  //   req: Request,
-  //   res: Response
-  // ): Promise<Response> {
-  //   try {
-  //     const { EventID, sportId } = req.query;
-  //     if (!EventID) throw Error("EventID is required field");
-  //     if (!sportId) throw Error("sportId is required field");
-
-  //     let matchList = [];
-  //     if (req.originalUrl.includes("get-marketes-t10")) {
-  //       const data = await redisReplica.get(`getMarketList-bm-${EventID}`);
-  //       if (data) matchList = JSON.parse(data);
-  //       if (!data) {
-  //         const res = await api.get(
-  //           `/get-marketes-t10?sportId=${sportId}&EventID=${EventID}`
-  //         );
-  //         matchList = res.data.sports;
-  //       }
-  //     } else if (req.originalUrl.includes("get-marketes")) {
-  //       const data = await redisReplica.get(`getMarketList-${EventID}`);
-  //       if (data) matchList = JSON.parse(data);
-  //       if (!data) {
-  //         const res = await api.get(
-  //           `/get-marketes?sportId=${sportId}&EventID=${EventID}`
-  //         );
-  //         matchList = res.data.sports;
-  //       }
-  //     } else if (req.originalUrl.includes("get-bookmaker-marketes")) {
-  //       const data = await redisReplica.get(`getMarketList-bm-${EventID}`);
-  //       if (data) matchList = JSON.parse(data);
-  //       if (!data) {
-  //         const res = await api.get(
-  //           `/get-bookmaker-marketes?sportId=${sportId}&EventID=${EventID}`
-  //         );
-  //         matchList = res.data.sports;
-  //       }
-  //     }
-
-  //     return res.json({
-  //       sports: matchList,
-  //     });
-  //   } catch (e: any) {
-  //     return res.json({
-  //       sports: [],
-  //       error: e.message,
-  //     });
-  //   }
-  // }
-
   public static async getMarketList(
     req: Request,
     res: Response
@@ -454,23 +404,17 @@ class OddsController {
           matchList = res.data.sports;
         }
       } else if (req.originalUrl.includes("get-marketes")) {
-        // const data = await redisReplica.get(`getMarketList-${EventID}`);
-        const data :any =  await fetchDataFromApi(EventID,sportId)
-        console.log(data,"data here is data ")
-        // if (data) matchList = JSON.parse(data);
-        if (data.length == 0) {
+        const data = await redisReplica.get(`getMarketList-${EventID}`);
+        if (data) matchList = JSON.parse(data);
+        if (!data) {
           const res = await api.get(
             `/get-marketes?sportId=${sportId}&EventID=${EventID}`
           );
-         return matchList = data;
-          // console.log(matchList,"matchList")
+          matchList = res.data.sports;
         }
-        matchList = data;
       } else if (req.originalUrl.includes("get-bookmaker-marketes")) {
-        const data = await fetchBookMakerDataFromApi(EventID,sportId)
-        // await redisReplica.get(`getMarketList-bm-${EventID}`);
-        if (data) matchList = data
-        console.log("Bookmaker data",data)
+        const data = await redisReplica.get(`getMarketList-bm-${EventID}`);
+        if (data) matchList = JSON.parse(data);
         if (!data) {
           const res = await api.get(
             `/get-bookmaker-marketes?sportId=${sportId}&EventID=${EventID}`
@@ -488,7 +432,63 @@ class OddsController {
         error: e.message,
       });
     }
-}
+  }
+
+//   public static async getMarketList(
+//     req: Request,
+//     res: Response
+//   ): Promise<Response> {
+//     try {
+//       const { EventID, sportId } = req.query;
+//       if (!EventID) throw Error("EventID is required field");
+//       if (!sportId) throw Error("sportId is required field");
+
+//       let matchList = [];
+//       if (req.originalUrl.includes("get-marketes-t10")) {
+//         const data = await redisReplica.get(`getMarketList-bm-${EventID}`);
+//         if (data) matchList = JSON.parse(data);
+//         if (!data) {
+//           const res = await api.get(
+//             `/get-marketes-t10?sportId=${sportId}&EventID=${EventID}`
+//           );
+//           matchList = res.data.sports;
+//         }
+//       } else if (req.originalUrl.includes("get-marketes")) {
+//         // const data = await redisReplica.get(`getMarketList-${EventID}`);
+//         const data :any =  await fetchDataFromApi(EventID,sportId)
+//         console.log(data,"data here is data ")
+//         // if (data) matchList = JSON.parse(data);
+//         if (data.length == 0) {
+//           const res = await api.get(
+//             `/get-marketes?sportId=${sportId}&EventID=${EventID}`
+//           );
+//          return matchList = data;
+//           // console.log(matchList,"matchList")
+//         }
+//         matchList = data;
+//       } else if (req.originalUrl.includes("get-bookmaker-marketes")) {
+//         const data = await fetchBookMakerDataFromApi(EventID,sportId)
+//         // await redisReplica.get(`getMarketList-bm-${EventID}`);
+//         if (data) matchList = data
+//         console.log("Bookmaker data",data)
+//         if (!data) {
+//           const res = await api.get(
+//             `/get-bookmaker-marketes?sportId=${sportId}&EventID=${EventID}`
+//           );
+//           matchList = res.data.sports;
+//         }
+//       }
+
+//       return res.json({
+//         sports: matchList,
+//       });
+//     } catch (e: any) {
+//       return res.json({
+//         sports: [],
+//         error: e.message,
+//       });
+//     }
+// }
 
   // public static async getSessions(
   //   req: Request,
