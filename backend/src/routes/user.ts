@@ -83,6 +83,14 @@ export class UserRoutes {
     )
 
     this.router.post(
+      '/update-user-whatsapp',
+      Http.validateRequest,
+      Passport.authenticateJWT,
+      this.dealerController.updateUserWhatsapp,
+    )
+
+
+    this.router.post(
       '/user-account-balance',
       accountBalanceValidation,
       Http.validateRequest,

@@ -2,6 +2,7 @@ import React from 'react'
 import betService from '../../../services/bet.service'
 import { AxiosResponse } from 'axios'
 import mobileSubheader from '../_layout/elements/mobile-subheader'
+import CombinedDashboard from '../AccountStatement/CombinedDashboard'
 // import betService from '../../../services/bet.service'
 
 const AdminDashboard = () => {
@@ -109,6 +110,8 @@ const AdminDashboard = () => {
           </div>
         </div>
       </div>
+
+      <CombinedDashboard />
     </>
   )
 }

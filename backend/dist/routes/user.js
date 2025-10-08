@@ -30,6 +30,7 @@ class UserRoutes {
         this.router.post('/update-user', user_validation_1.passwordUpdateValidation, Http_1.default.validateRequest, Passport_1.default.authenticateJWT, this.dealerController.updateUser);
         this.router.post('/update-user-status', user_validation_1.statusValidation, Http_1.default.validateRequest, Passport_1.default.authenticateJWT, this.dealerController.updateUserStatus);
         this.router.post('/update-user-wallet', user_validation_1.walletValidation, Http_1.default.validateRequest, Passport_1.default.authenticateJWT, this.dealerController.updateUserWallet);
+        this.router.post('/update-user-whatsapp', Http_1.default.validateRequest, Passport_1.default.authenticateJWT, this.dealerController.updateUserWhatsapp);
         this.router.post('/user-account-balance', user_validation_1.accountBalanceValidation, Http_1.default.validateRequest, Passport_1.default.authenticateJWT, this.accountController.saveUserDepositFC);
         this.router.get('/get-user-balance', Passport_1.default.authenticateJWT, this.accountController.getUserBalanceWithExposer);
         this.router.post('/update-password', Passport_1.default.authenticateJWT, this.authController.updatePassword);

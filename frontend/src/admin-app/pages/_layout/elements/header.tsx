@@ -266,6 +266,14 @@ const Header = () => {
                         </CustomLink>
                       </li>
 
+                      <li>
+                        <CustomLink to='/update-whatsapp' className='dropdown-item'>
+                          <b>{'Update Whatsapp'}</b>
+                        </CustomLink>
+                      </li>
+
+
+
                       </ul>
                     </li>
                 

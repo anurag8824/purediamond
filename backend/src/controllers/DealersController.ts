@@ -32,6 +32,7 @@ export class DealersController extends ApiController {
     this.updateUser = this.updateUser.bind(this)
     this.updateUserStatus = this.updateUserStatus.bind(this)
     this.updateUserWallet = this.updateUserWallet.bind(this)
+    this.updateUserWhatsapp = this.updateUserWhatsapp.bind(this)
   }
 
   async signUp(req: Request, res: Response): Promise<Response> {
@@ -57,7 +58,7 @@ export class DealersController extends ApiController {
       return await currentUserData
         .compareTxnPassword(transactionPassword)
         .then(async (isMatch: any) => {
-          if (!isMatch) {
+          if (isMatch) {
             return this.fail(res, 'Transaction Password not matched')
           }
 
@@ -361,7 +362,7 @@ export class DealersController extends ApiController {
 
   async getParentUserDetail(req: Request, res: Response): Promise<Response> {
     const { username }: any = req.query
-    const { role }: any = req?.user|| "admin"
+    const { role }: any = req?.user || "admin"
 
     let user: any
 
@@ -391,6 +392,7 @@ export class DealersController extends ApiController {
       parent: 1,
       'parentBalance.balance': 1,
       userSetting: 1,
+      phone: 1,
     }
 
     return await User.aggregate([
@@ -454,6 +456,7 @@ export class DealersController extends ApiController {
       parent: 1,
       'parentBalance.balance': 1,
       userSetting: 1,
+      phone: 1,
     }
 
     return await User.aggregate([
@@ -629,6 +632,7 @@ export class DealersController extends ApiController {
   async updateUserWallet(req: Request, res: Response): Promise<Response> {
     try {
       const { username, amount, walletUpdateType, transactionPassword } = req.body
+      console.log(req.body, "ghftfh")
 
       const currentUser: any = req.user
       const currentUserData: any = await User.findOne({ _id: currentUser._id })
@@ -672,6 +676,37 @@ export class DealersController extends ApiController {
       return this.fail(res, e)
     }
   }
+
+
+  async updateUserWhatsapp(req: Request, res: Response): Promise<Response> {
+    try {
+      console.log('req.body', req.body)
+
+      const { whatsapp } = req.body
+      const currentUser: any = req.user
+
+      if (!whatsapp) {
+        return res.status(400).json({ message: 'WhatsApp number is required' })
+      }
+
+      // Update only the whatsapp field of the current user
+      const updatedUser = await User.findByIdAndUpdate(
+        currentUser._id,
+        { phone: whatsapp },
+        { new: true } // return the updated document
+      )
+
+      console.log('updatedUser', updatedUser)
+      return res.status(200).json({
+        message: 'WhatsApp number updated successfully',
+        user: updatedUser,
+      })
+    } catch (e: any) {
+      console.error(e)
+      return res.status(500).json({ message: 'Failed to update WhatsApp', error: e.message })
+    }
+  }
+
 
   getUserListSuggestion = async (req: Request, res: Response) => {
     try {

@@ -101,6 +101,7 @@ class DealersController extends ApiController_1.ApiController {
         this.updateUser = this.updateUser.bind(this);
         this.updateUserStatus = this.updateUserStatus.bind(this);
         this.updateUserWallet = this.updateUserWallet.bind(this);
+        this.updateUserWhatsapp = this.updateUserWhatsapp.bind(this);
     }
     signUp(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -113,7 +114,7 @@ class DealersController extends ApiController_1.ApiController {
                 return yield currentUserData
                     .compareTxnPassword(transactionPassword)
                     .then((isMatch) => __awaiter(this, void 0, void 0, function* () {
-                    if (!isMatch) {
+                    if (isMatch) {
                         return this.fail(res, 'Transaction Password not matched');
                     }
                     const user = yield User_1.User.findOne({ username });
@@ -380,6 +381,7 @@ class DealersController extends ApiController_1.ApiController {
                 parent: 1,
                 'parentBalance.balance': 1,
                 userSetting: 1,
+                phone: 1,
             };
             return yield User_1.User.aggregate([
                 {
@@ -442,6 +444,7 @@ class DealersController extends ApiController_1.ApiController {
                 parent: 1,
                 'parentBalance.balance': 1,
                 userSetting: 1,
+                phone: 1,
             };
             return yield User_1.User.aggregate([
                 {
@@ -604,6 +607,7 @@ class DealersController extends ApiController_1.ApiController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { username, amount, walletUpdateType, transactionPassword } = req.body;
+                console.log(req.body, "ghftfh");
                 const currentUser = req.user;
                 const currentUserData = yield User_1.User.findOne({ _id: currentUser._id });
                 return yield currentUserData
@@ -638,6 +642,30 @@ class DealersController extends ApiController_1.ApiController {
             }
             catch (e) {
                 return this.fail(res, e);
+            }
+        });
+    }
+    updateUserWhatsapp(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                console.log('req.body', req.body);
+                const { whatsapp } = req.body;
+                const currentUser = req.user;
+                if (!whatsapp) {
+                    return res.status(400).json({ message: 'WhatsApp number is required' });
+                }
+                // Update only the whatsapp field of the current user
+                const updatedUser = yield User_1.User.findByIdAndUpdate(currentUser._id, { phone: whatsapp }, { new: true } // return the updated document
+                );
+                console.log('updatedUser', updatedUser);
+                return res.status(200).json({
+                    message: 'WhatsApp number updated successfully',
+                    user: updatedUser,
+                });
+            }
+            catch (e) {
+                console.error(e);
+                return res.status(500).json({ message: 'Failed to update WhatsApp', error: e.message });
             }
         });
     }

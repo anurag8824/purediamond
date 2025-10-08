@@ -133,21 +133,36 @@ const Header = () => {
     }
   }
 
-  const [userAlldata, setUserAlldata] = React.useState<{ [key: string]: any }>(
+  const [userParentAlldata, setUserParentAlldata] = React.useState<{ [key: string]: any }>(
     {}
   );
 
-  React.useEffect(() => {
-      if (userState?.user?.username) {
-        UserService.getUserDetail(userState?.user?.username).then(
-          (res: AxiosResponse<any>) => {
-            console.log(res, "ressss for all values");
-            const detail = res?.data.data;
-            setUserAlldata(detail);
-          }
-        );
-      }
-    }, [userState?.user?.username]);
+  // React.useEffect(() => {
+  //     if (userState?.user?.username) {
+  //       UserService.getUserDetail(userState?.user?.username).then(
+  //         (res: AxiosResponse<any>) => {
+  //           console.log(res, "ressss for all values");
+  //           const detail = res?.data.data;
+  //           setUserAlldata(detail);
+  //         }
+  //       );
+  //     }
+  //   }, [userState?.user?.username]);
+
+    React.useEffect(() => {
+      // const userState = useAppSelector<{ user: User }>(selectUserData);
+      const username:any = userState?.user?.username;
+  
+      console.log(username, "testagentmaster");
+      UserService.getParentUserDetail(username).then(
+        (res: AxiosResponse<any>) => {
+          console.log(res, "check balance for parent");
+          const detail = res?.data.data[0];
+          setUserParentAlldata(detail);
+  
+        }
+      );
+    }, [userState]);
 
   return (
     <header className='header'>
@@ -170,10 +185,10 @@ const Header = () => {
               </CustomLink>
 
               <button
-  className="btn btn-success m-1"
+  className="btn btn-success m-1 d-n"
   onClick={() => {
-    if (userAlldata?.phone) {
-      const phoneNumber = userAlldata.phone.replace(/[^0-9]/g, ""); // sirf digits rakhega
+    if (userParentAlldata?.parent?.phone) {
+      const phoneNumber = userParentAlldata?.parent?.phone.replace(/[^0-9]/g, ""); // sirf digits rakhega
       window.open(`https://wa.me/${phoneNumber}`, "_blank");
     }
   }}
@@ -181,7 +196,7 @@ const Header = () => {
   <WhatsAppIcon /> 
 </button>
 
-            </div>
+            </div> 
 
             <ul className='flex05 justify-content-end d-flex profile-right-side'>
               {/* <div className='row-deposit-button mr-20'>

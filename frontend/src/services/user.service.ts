@@ -44,6 +44,10 @@ class UserService {
     return api.post('/update-user-wallet', data)
   }
 
+  updateUserWhatsapp(data: any) {
+    return api.post('/update-user-whatsapp', data)
+  }
+
   updateUserStake(data: any) {
     return api.post('/save-user-stake', data)
   }

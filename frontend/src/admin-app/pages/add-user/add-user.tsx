@@ -350,7 +350,7 @@ const AddUser = () => {
                       </div>
                       <div className='col-md-6'>
                         <div className='form-group'>
-                          <label htmlFor='phone'>HelpLine Ph. no:</label>
+                          <label htmlFor='phone'>Phone. no:</label>
                           <input
                             maxLength={10}
                             placeholder='Phone'
