@@ -232,7 +232,7 @@ const CombinedDashboard = () => {
               !isMobile ? "col-md-12 mt-1" : "col-md-12 padding-custom"
             }
           >
-            <div className="card-body p15 bg-gray mb-20">
+            <div className="card-body p15 bg-gray mb-20 d-none">
               <form
                 className="ng-pristine ng-valid ng-touched mb-0"
                 method="post"

@@ -30,7 +30,7 @@ const SportsPage = () => {
           <div className='col-md-12 main-container'>
             <table className='table'>
               <tbody>
-                {sports.map((sport: ISport) => (
+                {sports?.filter((sport: any) => [4, 1, 2].includes(sport?.sportId))?.map((sport: ISport) => (
                   <tr key={sport._id}>
                     <td>
                       <CustomLink to={`/${currentUrl}/${sport.sportId}`}>{sport.name}</CustomLink>

@@ -132,14 +132,21 @@ const Header = () => {
             <CustomLink to={'/'} className='logo'>
               <img src='/imgs/logo.png' />
             </CustomLink>
-            <div className='side-menu-button' onClick={toggleDrawer}>
+            {/* <div className='side-menu-button' onClick={toggleDrawer}>
               <div className='bar1' />
               <div className='bar2' />
               <div className='bar3' />
-            </div>
+            </div> */}
             <nav className='navbar navbar-expand-md btco-hover-menu'>
               <div className='collapse navbar-collapse'>
                 <ul className='list-unstyled navbar-nav'>
+
+                <li className='nav-item'>
+                    <CustomLink to={`/combined-dashboard`}>
+                      <b>Dashboard</b>
+                    </CustomLink>
+                  </li>
+
                   <li className='nav-item'>
                     <CustomLink to={`/list-clients/${userState?.user?.username}`}>
                       <b>List of clients</b>

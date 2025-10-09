@@ -111,7 +111,6 @@ const AdminDashboard = () => {
         </div>
       </div>
 
-      <CombinedDashboard />
     </>
   )
 }
