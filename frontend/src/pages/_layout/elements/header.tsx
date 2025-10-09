@@ -184,8 +184,17 @@ const Header = () => {
                 <img src='/imgs/logo.png' className='logo-icon' />
               </CustomLink>
 
-              <button
-  className="btn btn-success m-1 d-n"
+
+            </div> 
+
+            <ul className='flex05 justify-content-end d-flex profile-right-side'>
+              {/* <div className='row-deposit-button mr-20'>
+                <CustomLink className='btn btn-deposit mr-10' to={'/deposit'}>Deposit</CustomLink>
+                <CustomLink className='btn btn-withdraw' to={'/withdraw'}>Withdraw</CustomLink>
+              </div> */}
+
+<button
+  className="btn btn-success mr-2 d-n"
   onClick={() => {
     if (userParentAlldata?.parent?.phone) {
       const phoneNumber = userParentAlldata?.parent?.phone.replace(/[^0-9]/g, ""); // sirf digits rakhega
@@ -195,14 +204,6 @@ const Header = () => {
 >
   <WhatsAppIcon /> 
 </button>
-
-            </div> 
-
-            <ul className='flex05 justify-content-end d-flex profile-right-side'>
-              {/* <div className='row-deposit-button mr-20'>
-                <CustomLink className='btn btn-deposit mr-10' to={'/deposit'}>Deposit</CustomLink>
-                <CustomLink className='btn btn-withdraw' to={'/withdraw'}>Withdraw</CustomLink>
-              </div> */}
               {!isMobile ? (
                 <>
                   <li className='search float-left row'>

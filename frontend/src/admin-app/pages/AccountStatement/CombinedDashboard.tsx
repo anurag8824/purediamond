@@ -439,6 +439,7 @@ const CombinedDashboard = () => {
                     <p>₹ {dataDash?.totalUserLoss}</p>
                   </div>
                 </div>
+                
               </div>
             </div>
           </div>

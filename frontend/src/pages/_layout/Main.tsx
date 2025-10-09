@@ -19,6 +19,8 @@ import { isMobile } from 'react-device-detect'
 import Welcome from '../Rules/welcome'
 import { useWebsocketUser } from '../../context/webSocketUser'
 
+// const isMobile = true
+
 const Main = () => {
   const dispatch = useDispatch()
   const userState = useAppSelector<{ user: User }>(selectUserData)
