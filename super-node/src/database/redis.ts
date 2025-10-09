@@ -2,7 +2,7 @@ import { createClient } from "redis";
 
 export const redisReplica = createClient({
   //  url:  "redis://:wvGLXqhDvbPcpDv7UrnIglB@172.236.19.246:6379",
-  url:  "redis://localhost:6379",
+  url:  process.env.REDIS_URL_REPLICA,
 });
 export const redisReplicaSub = redisReplica.duplicate();
 redisReplica.on("error", (err) => console.log("Redis replica Error", err));
