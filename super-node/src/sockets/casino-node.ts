@@ -10,9 +10,9 @@ casinoSocket.on("connect", () => {
 });
 
 export function initCasinoSocket() {
-  casinoSocket.on("result", (data: any) => {
-    console.log(data);
-  });
+  // casinoSocket.on("result", (data: any) => {
+  //   console.log(data);
+  // });
 }
 
 export default casinoSocket;
