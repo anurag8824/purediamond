@@ -1433,8 +1433,8 @@ def error(obj, message=''):
     }
 
 
-def delay(ms: int):
-    asyncio.sleep(ms / 1000)
+async def delay(ms: int):
+  await asyncio.sleep(ms / 1000)
 
 
 BetOn: any = {"FANCY": 'FANCY', 'MATCH_ODDS': 'MATCH_ODDS',
