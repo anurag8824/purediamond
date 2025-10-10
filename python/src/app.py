@@ -103,10 +103,10 @@ def placebetuser(userinfo):
             else:
                 return jsonify(error(response, response["message"])), 401
         else:
-            return jsonify(error(response, "Bet is not Acceptable")), 401
+            return jsonify(error(response, "Bet one is not Acceptable")), 401
     except Exception as e:
         print(str(traceback.format_exc()),"error")
-        return jsonify(error(response, "Bet is not Acceptable")), 401
+        return jsonify(error(response, "Bet two is not Acceptable")), 401
 
 @app.route("/api/bets", methods=["get"])
 @jwt_middleware
