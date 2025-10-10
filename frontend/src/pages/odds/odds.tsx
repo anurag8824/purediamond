@@ -378,7 +378,7 @@ const Odds = () => {
       return (
         <iframe
           style={{ width: '100%', height: 'auto' }}
-          src={`https://score.hr08bets.in/api?eventid=${currentMatch?.matchId}`}
+          src={`https://score.akamaized.uk/?id=${currentMatch?.matchId}`}
         ></iframe>
       )
   }
@@ -420,9 +420,10 @@ const Odds = () => {
             <div className='card-body p0'>
               <iframe
                 style={{ width: '100%', height: '250px' }}
-                src={`${tvUrl}${currentMatch?.matchId}`}
+                // src={`${tvUrl}${currentMatch?.matchId}`}
                 // src={`https://playg3.livestream11.com/user/526414545/unknown/27.0.178.13/c590458e-6d81-450e-8a6d-119bc2234267`}
-                // src={`https://score.hr08bets.in/api?eventid=${currentMatch?.matchId}`}
+                src={`https://livestream-v3-iframe.akamaized.uk/?eventid=${currentMatch?.matchId}`}
+                
               ></iframe>
               LIVE TV 
             </div>
@@ -431,8 +432,9 @@ const Odds = () => {
             <div className='card-body p0'>
               <iframe
                 style={{ width: '100%', height: '250px' }}
-                src={`${tvUrl}${currentMatch?.matchId}`}
+                // src={`${tvUrl}${currentMatch?.matchId}`}
                 // src={`https://score.hr08bets.in/api?eventid=${currentMatch?.matchId}`}
+                src={`https://livestream-v3-iframe.akamaized.uk/?eventid=${currentMatch?.matchId}`}
               ></iframe>
           
             </div>
