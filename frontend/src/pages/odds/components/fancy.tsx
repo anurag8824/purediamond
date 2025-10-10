@@ -218,9 +218,9 @@ class Fancy extends React.Component<
     const menus = [
       { type: 'session', label: 'Fancy', width: isMobile ? '19%' : '11%' },
       { type: 'fancy1', label: 'Fancy1', width: isMobile ? '19%' : '11%' },
-      { type: 'meter', label: 'Meter', width: isMobile ? '19%' : '10%' },
-      { type: 'khado', label: 'Khado', width: isMobile ? '19%' : '10%' },
-      { type: 'odd/even', label: 'Odd/Even', width: isMobile ? '24%' : '11%' },
+      // { type: 'meter', label: 'Meter', width: isMobile ? '19%' : '10%' },
+      // { type: 'khado', label: 'Khado', width: isMobile ? '19%' : '10%' },
+      // { type: 'odd/even', label: 'Odd/Even', width: isMobile ? '24%' : '11%' },
       { type: 'wkt', label: 'Wicket', width: isMobile ? '24%' : '10%' },
       { type: 'Four', label: 'Four', width: isMobile ? '20%' : '10%' },
       { type: 'Sixes', label: 'Six', width: isMobile ? '20%' : '11%' },
@@ -306,7 +306,6 @@ class Fancy extends React.Component<
                 <>
                   {this.fancyheader('Session Market')}
                   <FancyList fancies={fancies.blank} fancyUpdate={fancyUpdate} />
-                  d
                 </>
               )}
             </div>
