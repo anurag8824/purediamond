@@ -9,8 +9,12 @@ import cachegoose from 'recachegoose'
 export class Database {
   // Initialize your database pool
   public static init(): void {
-    const dsn = Locals.config().mongooseUrl + `?retryWrites=false&replicaSet=myReplicaSet`
-    ///const dsn = Locals.config().mongooseUrl
+    // const dsn = Locals.config().mongooseUrl
+    // const dsn = Locals.config().mongooseUrl + `?retryWrites=false&replicaSet=myReplicaSet`
+
+  //  const dsn = "mongodb+srv://365infayou:Jv9lwv6csl7J1Jp5@cluster365.sxln4q8.mongodb.net/infa?retryWrites=true&w=majority&appName=Cluster0"
+    const dsn = "mongodb+srv://betbhai:betbhai1234@cluster0.e6ybref.mongodb.net/infa?retryWrites=true&w=majority&appName=Cluster0";
+
 
     const options = {
       useNewUrlParser: true,

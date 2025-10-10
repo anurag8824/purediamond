@@ -6,14 +6,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Database = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
 const bluebird_1 = __importDefault(require("bluebird"));
-const Locals_1 = __importDefault(require("./Locals"));
 const Log_1 = __importDefault(require("../middlewares/Log"));
 const recachegoose_1 = __importDefault(require("recachegoose"));
 class Database {
     // Initialize your database pool
     static init() {
-        const dsn = Locals_1.default.config().mongooseUrl + `?retryWrites=false&replicaSet=myReplicaSet`;
-        ///const dsn = Locals.config().mongooseUrl
+        // const dsn = Locals.config().mongooseUrl
+        // const dsn = Locals.config().mongooseUrl + `?retryWrites=false&replicaSet=myReplicaSet`
+        //  const dsn = "mongodb+srv://365infayou:Jv9lwv6csl7J1Jp5@cluster365.sxln4q8.mongodb.net/infa?retryWrites=true&w=majority&appName=Cluster0"
+        const dsn = "mongodb+srv://betbhai:betbhai1234@cluster0.e6ybref.mongodb.net/infa?retryWrites=true&w=majority&appName=Cluster0";
         const options = {
             useNewUrlParser: true,
             useUnifiedTopology: true,
