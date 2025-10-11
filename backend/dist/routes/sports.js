@@ -18,7 +18,7 @@ class SportRoutes {
     }
     routes() {
         this.router.get('/get-sport-list', this.SportController.getSportList);
-        this.router.post('/add-new-fancy/:id', this.SportController.addFancyToDb);
+        this.router.post('/add-new-fancy', this.SportController.addFancyToDb);
         this.router.post('/deactivate-fancy', this.SportController.deactivateFancy);
         this.router.post('/deactivate-markets', this.SportController.deactivateMarkets);
         this.router.post('/activate-markets', this.SportController.activateMarkets);
