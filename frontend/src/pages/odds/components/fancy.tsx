@@ -221,10 +221,10 @@ class Fancy extends React.Component<
       // { type: 'meter', label: 'Meter', width: isMobile ? '19%' : '10%' },
       // { type: 'khado', label: 'Khado', width: isMobile ? '19%' : '10%' },
       // { type: 'odd/even', label: 'Odd/Even', width: isMobile ? '24%' : '11%' },
-      { type: 'wkt', label: 'Wicket', width: isMobile ? '24%' : '10%' },
-      { type: 'Four', label: 'Four', width: isMobile ? '20%' : '10%' },
-      { type: 'Sixes', label: 'Six', width: isMobile ? '20%' : '11%' },
-      { type: 'Casino', label: 'Cricket Casino', width: isMobile ? '36%' : '15%' },
+      // { type: 'wkt', label: 'Wicket', width: isMobile ? '24%' : '10%' },
+      // { type: 'Four', label: 'Four', width: isMobile ? '20%' : '10%' },
+      // { type: 'Sixes', label: 'Six', width: isMobile ? '20%' : '11%' },
+      // { type: 'Casino', label: 'Cricket Casino', width: isMobile ? '36%' : '15%' },
     ]
 
     // console.log(fancies,"fancies from frontend  side heyy worldd")
@@ -281,9 +281,9 @@ class Fancy extends React.Component<
         >
           <div className={`${clsgrid}`} style={{ padding: isMobile ? '0px' : '' }}>
             <div>
-              {!isMobile && (
-                <div className='market-title mt-1'>
-                  Session Market
+              {!isMobile  && fancies && Object.keys(fancies).length > 0 && (
+                 <div className='market-title mt-1'>
+           Session Market
                   <a
                     href='#'
                     onClick={(e: MouseEvent<HTMLAnchorElement>) => {

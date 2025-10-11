@@ -32,7 +32,7 @@ const CasinoListItem2 = (props: any) => {
                   <a href='#' onClick={(e) => onCasinoClick(e, Item)} className=''>
                       <div className="casino-list-item-banner" 
                         style={{ backgroundImage: `url(${Item.image})`}}>
-hk
+
                       </div>
                
                   </a>

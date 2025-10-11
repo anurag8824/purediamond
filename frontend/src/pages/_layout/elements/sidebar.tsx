@@ -55,38 +55,38 @@ const SideBar = () => {
               <span className='new-launch-text blink_me'>Our Casino</span>
             </CustomLink>
           </li>
-          <li className='nav-item'>
+          {/* <li className='nav-item'>
             <CustomLink
               to={`/casino-int/virtual-casino`}
               className={`nav-link`}
             >
               <span className='new-launch-text blink_me'>Our Virtual</span>
             </CustomLink>
-          </li>
+          </li> */}
           <li className='nav-item'>
             <CustomLink
-              to={`/casino-int/live-casino`}
+              to={`/casino-in/live-dmd`}
               className={`nav-link`}
             >
               <span className='new-launch-text '>Live Casino</span>
             </CustomLink>
           </li>
-          <li className='nav-item'>
+          {/* <li className='nav-item'>
             <CustomLink
               to={`/casino-int/slots`}
               className={`nav-link`}
             >
               <span className='new-launch-text'>Slot Game</span>
             </CustomLink>
-          </li>
-          <li className='nav-item'>
+          </li> */}
+          {/* <li className='nav-item'>
             <CustomLink
               to={`/casino-int/fantasy`}
               className={`nav-link`}
             >
               <span className='new-launch-text'>Fantasy Game</span>
             </CustomLink>
-          </li>
+          </li> */}
         </ul>
       </nav>
       <div data-toggle='collapse' data-target='.sports' className='sidebar-title'>
@@ -94,7 +94,7 @@ const SideBar = () => {
       </div>
       <nav className='collapse sports show'>
         <ul>
-          {sportListState.sports.map((sport: ISport) => (
+          {sportListState.sports?.filter((sport: any) => [4, 1, 2].includes(sport?.sportId))?.map((sport: ISport) => (
             <li key={sport._id} className='nav-item'>
               <CustomLink
                 to={`/match/${sport.sportId}`}
