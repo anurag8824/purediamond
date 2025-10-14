@@ -140,8 +140,9 @@ fancybetListSelection = async (req: Request, res: Response): Promise<Response> =
       }
     ]);
 
-    const { data } = await axios.get('https://api.bxpro99.xyz/api/get-business-fancy-list');
-    const betData = data.list || [];
+    const rdata = await axios.get('https://api.bxpro99.xyz/api/get-business-fancy-list');
+    const betData = rdata.data.data.list || [];
+    console.log(betData,"FGHJKL")
 
     // --- Merge bets + betData without duplicates (based on selectionName)
     const mergedMap = new Map();

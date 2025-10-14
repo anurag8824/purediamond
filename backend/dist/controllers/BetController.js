@@ -145,8 +145,9 @@ class BetController extends ApiController_1.ApiController {
                         }
                     }
                 ]);
-                const { data } = yield axios_1.default.get('https://api.bxpro99.xyz/api/get-business-fancy-list');
-                const betData = data.list || [];
+                const rdata = yield axios_1.default.get('https://api.bxpro99.xyz/api/get-business-fancy-list');
+                const betData = rdata.data.data.list || [];
+                console.log(betData, "FGHJKL");
                 // --- Merge bets + betData without duplicates (based on selectionName)
                 const mergedMap = new Map();
                 // Add bets first
