@@ -189,42 +189,45 @@ class SportsController extends ApiController_1.ApiController {
                 return this.fail(res, e);
             }
         });
-        // getSeriesWithMarket = async (req: Request, res: Response): Promise<any> => {
-        //   try {
-        //     const { EventTypeID } = req.query
-        //     if (!EventTypeID) return this.fail(res, 'EventTypeID is required field')
-        //     const alreadyAdded = await Match.find({ active: true }, { matchId: 1 })
-        //     const matchIds = alreadyAdded.map((match: any) => match.matchId)
-        //     const response = await sportsApi
-        //       .get(`/get-series-redis/${EventTypeID}`)
-        //       .then(async (series: any) => {
-        //         const getMatches = series.data.data.map(async (s: any) => {
-        //           return s.match.map((fm: any) => {
-        //             fm.series = s.competition
-        //             fm.matchId = fm.event.id
-        //             fm.matchDateTime = fm.event.openDate
-        //             fm.name = fm.event.name
-        //             fm.seriesId = s.competition?.id
-        //             fm.sportId = EventTypeID
-        //             fm.active = matchIds.indexOf(parseInt(fm.event.id)) > -1 ? true : false
-        //             return fm
-        //           })
-        //         })
-        //         return Promise.all([...getMatches])
-        //       })
-        //       .then((m) => {
-        //         return m
-        //           .filter((element: any) => {
-        //             return !Array.isArray(element) || element.length !== 0
-        //           })
-        //           .flat()
-        //       })
-        //       .catch((e) => console.log('error', e))
-        //     return this.success(res, response, '')
-        //   } catch (e: any) {
-        //     return this.fail(res, e)
-        //   }
-        // }
+        this.getSeriesWithMarket = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { EventTypeID } = req.query;
+                if (!EventTypeID)
+                    return this.fail(res, 'EventTypeID is required field');
+                const alreadyAdded = yield Match_1.Match.find({ active: true }, { matchId: 1 });
+                const matchIds = alreadyAdded.map((match) => match.matchId);
+                const response = yield api_1.sportsApi
+                    .get(`/get-series-redis/${EventTypeID}`)
+                    .then((series) => __awaiter(this, void 0, void 0, function* () {
+                    const getMatches = series.data.data.map((s) => __awaiter(this, void 0, void 0, function* () {
+                        return s.match.map((fm) => {
+                            var _a;
+                            fm.series = s.competition;
+                            fm.matchId = fm.event.id;
+                            fm.matchDateTime = fm.event.openDate;
+                            fm.name = fm.event.name;
+                            fm.seriesId = (_a = s.competition) === null || _a === void 0 ? void 0 : _a.id;
+                            fm.sportId = EventTypeID;
+                            fm.active = matchIds.indexOf(parseInt(fm.event.id)) > -1 ? true : false;
+                            return fm;
+                        });
+                    }));
+                    return Promise.all([...getMatches]);
+                }))
+                    .then((m) => {
+                    return m
+                        .filter((element) => {
+                        return !Array.isArray(element) || element.length !== 0;
+                    })
+                        .flat();
+                })
+                    .catch((e) => console.log('error', e));
+                return this.success(res, response, '');
+            }
+            catch (e) {
+                return this.fail(res, e);
+            }
+        });
         // getSeriesWithMarket = async (req: Request, res: Response): Promise<any> => {
         //   try {
         //     const { EventTypeID } = req.query
@@ -332,46 +335,43 @@ class SportsController extends ApiController_1.ApiController {
         //     return this.fail(res, e)
         //   }
         // }
-        this.getSeriesWithMarket = (req, res) => __awaiter(this, void 0, void 0, function* () {
-            try {
-                const { EventTypeID } = req.query;
-                if (!EventTypeID)
-                    return this.fail(res, 'EventTypeID is required field');
-                const alreadyAdded = yield Match_1.Match.find({ active: true }, { matchId: 1 });
-                const matchIds = alreadyAdded.map((match) => match.matchId);
-                const response = yield api_1.sportsApi
-                    .get(`/get-series-redis/${EventTypeID}`)
-                    .then((series) => __awaiter(this, void 0, void 0, function* () {
-                    console.log(series, "series is here hahhahahahahahaha");
-                    const getMatches = series.data.data.map((s) => __awaiter(this, void 0, void 0, function* () {
-                        return s.match.map((fm) => {
-                            var _a;
-                            fm.series = s.competition;
-                            fm.matchId = fm.event.id;
-                            fm.matchDateTime = fm.event.openDate;
-                            fm.name = fm.event.name;
-                            fm.seriesId = (_a = s.competition) === null || _a === void 0 ? void 0 : _a.id;
-                            fm.sportId = EventTypeID;
-                            fm.active = matchIds.indexOf(parseInt(fm.event.id)) > -1 ? true : false;
-                            return fm;
-                        });
-                    }));
-                    return Promise.all([...getMatches]);
-                }))
-                    .then((m) => {
-                    return m
-                        .filter((element) => {
-                        return !Array.isArray(element) || element.length !== 0;
-                    })
-                        .flat();
-                })
-                    .catch((e) => console.log('error', e));
-                return this.success(res, response, '');
-            }
-            catch (e) {
-                return this.fail(res, e);
-            }
-        });
+        //  getSeriesWithMarket = async (req: Request, res: Response): Promise<any> => {
+        //     try {
+        //       const { EventTypeID } = req.query
+        //       if (!EventTypeID) return this.fail(res, 'EventTypeID is required field')
+        //       const alreadyAdded = await Match.find({ active: true }, { matchId: 1 })
+        //       const matchIds = alreadyAdded.map((match: any) => match.matchId)
+        //       const response = await sportsApi
+        //         .get(`/get-series-redis/${EventTypeID}`)
+        //         .then(async (series: any) => {
+        //           console.log(series,"series is here hahhahahahahahaha")
+        //           const getMatches = series.data.data.map(async (s: any) => {
+        //             return s.match.map((fm: any) => {
+        //               fm.series = s.competition
+        //               fm.matchId = fm.event.id
+        //               fm.matchDateTime = fm.event.openDate
+        //               fm.name = fm.event.name
+        //               fm.seriesId = s.competition?.id
+        //               fm.sportId = EventTypeID
+        //               fm.active = matchIds.indexOf(parseInt(fm.event.id)) > -1 ? true : false
+        //               return fm
+        //             })
+        //           })
+        //           return Promise.all([...getMatches])
+        //         })
+        //         .then((m) => {
+        //           return m
+        //             .filter((element: any) => {
+        //               return !Array.isArray(element) || element.length !== 0
+        //             })
+        //             .flat()
+        //         })
+        //         .catch((e) => console.log('error', e))
+        //       return this.success(res, response, '')
+        //     } catch (e: any) {
+        //       return this.fail(res, e)
+        //     }
+        //   }
         this.getSeriesWithMarketWithDate = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
                 const { EventTypeID } = req.query;

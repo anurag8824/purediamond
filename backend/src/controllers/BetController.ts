@@ -70,23 +70,104 @@ export class BetController extends ApiController {
     }
   }
 
-  fancybetListSelection = async (req: Request, res: Response): Promise<Response> => {
-    try {
-      const bets: Array<any> = await Bet.find({
-        bet_on: BetOn.FANCY,
-        status: 'pending',
-      }, {
-        matchId: 1,
-        selectionId: 1,
-        id: -1,
-        _id: -1,
-        selectionName: 1
-      })
-      return this.success(res, { list: bets })
-    } catch (e: any) {
-      return this.fail(res, e)
+//  fancybetListSelection = async (
+//     req: Request,
+//     res: Response
+//   ): Promise<Response> => {
+//     try {
+//       const bets = await Bet.aggregate([
+//         {
+//           $match: {
+//             bet_on: BetOn.FANCY,
+//             status: "pending"
+//           }
+//         },
+//         {
+//           $group: {
+//             _id: "$selectionName", // group unique by selectionName
+//             matchId: { $first: "$matchId" },
+//             selectionId: { $first: "$selectionId" },
+//             customId: { $first: "$id" }      // agar tere doc me id naam ka field hai
+//           }
+//         },
+//         {
+//           $project: {
+//             _id: 0,
+//             selectionName: "$_id",
+//             matchId: 1,
+//             selectionId: 1,
+//             originalId: 1,
+//             customId: 1
+//           }
+//         }
+//       ]);
+
+//       const Data = await axios.get('https://api.bxpro99.xyz/api/get-business-fancy-list')
+//       const betData = Data.data.list
+
+//       return this.success(res, { list: bets });
+//     } catch (e: any) {
+//       console.log(e,"FGHJKL")
+//       return this.fail(res, e);
+//     }
+//   };
+
+fancybetListSelection = async (req: Request, res: Response): Promise<Response> => {
+  try {
+    const bets = await Bet.aggregate([
+      {
+        $match: {
+          bet_on: BetOn.FANCY,
+          status: "pending"
+        }
+      },
+      {
+        $group: {
+          _id: "$selectionName",
+          matchId: { $first: "$matchId" },
+          selectionId: { $first: "$selectionId" },
+          customId: { $first: "$id" }
+        }
+      },
+      {
+        $project: {
+          _id: 0,
+          selectionName: "$_id",
+          matchId: 1,
+          selectionId: 1,
+          customId: 1
+        }
+      }
+    ]);
+
+    const { data } = await axios.get('https://api.bxpro99.xyz/api/get-business-fancy-list');
+    const betData = data.list || [];
+
+    // --- Merge bets + betData without duplicates (based on selectionName)
+    const mergedMap = new Map();
+
+    // Add bets first
+    for (const b of bets) {
+      mergedMap.set(b.selectionName, b);
     }
+
+    // Add betData (only if selectionName not already in map)
+    for (const d of betData) {
+      if (!mergedMap.has(d.selectionName)) {
+        mergedMap.set(d.selectionName, d);
+      }
+    }
+
+    // Convert Map values to array
+    const mergedList = Array.from(mergedMap.values());
+
+    return this.success(res, { list: mergedList });
+  } catch (e: any) {
+    console.log(e, "FGHJKL");
+    return this.fail(res, e);
   }
+};
+
   checkFancyOddsConditions = async ({
     match_id,
     selectionId,

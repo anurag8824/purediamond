@@ -276,7 +276,7 @@ class FancyController extends ApiController_1.ApiController {
         this.updatefancyresultapi = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
                 const data = req.body;
-                axios_1.default.post("https://api.9xbro.com/api/update-fancy-result", data);
+                axios_1.default.post("https://api.bxpro99.xyz/api/update-fancy-result", data);
                 if (data.result != '' && data.message == 'ok') {
                     const findFancy = yield Fancy_1.Fancy.findOne({ fancyName: data.runnerName, matchId: data.matchId });
                     if ((findFancy === null || findFancy === void 0 ? void 0 : findFancy._id) && !data.isRollback) {
