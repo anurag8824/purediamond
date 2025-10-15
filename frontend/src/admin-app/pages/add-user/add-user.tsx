@@ -453,8 +453,8 @@ const AddUser = () => {
                           <tr>
                             <th />
                             {sportListState.sports.map((sports: ISport) =>
-                              // sports.sportId === 1 || sports.sportId === 2 || sports.sportId === 4 ? (
-                               sports.sportId === 4 ? (
+                              sports.sportId === 1 || sports.sportId === 2 || sports.sportId === 4 ? (
+                              //  sports.sportId === 4 ? (
 
                                 <th key={sports._id}>{sports.name}</th>
                               ) : (
@@ -467,8 +467,8 @@ const AddUser = () => {
                           <tr>
                             <td>Upline</td>
                             {sportListState.sports.map(({ _id, sportId }) =>
-                              // sportId == 1 || sportId == 2 || sportId == 4 ? (
-                             sportId == 4 ? (
+                              sportId == 1 || sportId == 2 || sportId == 4 ? (
+                            //  sportId == 4 ? (
 
                                 <td id='taxpartnership-upline' key={`upline-${_id}`}>
                                   {userData?.partnership?.[sportId].ownRatio}
@@ -478,7 +478,7 @@ const AddUser = () => {
                               ),
                             )}
                           </tr>
-                          {/* <tr>
+                     <tr>
                             <td>Downline</td>
                             {sportListState.sports?.map(({ _id, sportId }) =>
                               sportId == 1 || sportId == 2 || sportId == 4 ? (
@@ -513,9 +513,9 @@ const AddUser = () => {
                                 <td key={_id} />
                               ),
                             )}
-                          </tr> */}
+                          </tr> 
 
-<tr>
+{/* <tr>
   <td>Downline</td>
   <td colSpan={sportListState.sports?.length}>
     <input
@@ -548,13 +548,13 @@ const AddUser = () => {
     />
     <span className="error" />
   </td>
-</tr>
+</tr> */}
 
                           <tr>
                             <td>Our</td>
                             {sportListState.sports?.map(({ _id, sportId }) =>
-                              // sportId == 1 || sportId == 2 || sportId == 4 ? (
-                               sportId == 4 ? (
+                              sportId == 1 || sportId == 2 || sportId == 4 ? (
+                              //  sportId == 4 ? (
 
                                 <td id={`taxpartnership-our.${sportId}`} key={_id}>
                                   <input
