@@ -6,6 +6,184 @@ import { marketFormatter } from "../../utils/helper";
 import axios from "axios";
 import { result } from "lodash";
 import { AnyRecord } from "dns";
+import { RootNodesUnavailableError } from "redis";
+
+
+//  Dataparser for Mac 88 ****
+// const MacParser = async(tabledata:any, rounddata:any)=>{
+//     const jsonData = await eventJson['lucky7'](); // ← Make sure this maps to correct file
+//     const templates = JSON.parse(JSON.stringify(jsonData.default)) || [];
+//     console.log(templates,"temaplets is here");
+//     const marketData =  templates?.event_data?.market.map((data:any)=>{
+//         MarketName:data.MarketName
+
+//         Runners: data.map((rdata:any)=>{
+//           tabledata.table.markets((macdata:any)=>{
+//             macdata.map((mrdata:any)=>{
+//             if(rdata?.RunnerName.toLowerCase === mrdata.runnerName.toLowerCase() ){
+//               return {
+//                RunnerName:rdata.RunnnerNamme,
+//                SelectionId:rdata.SelectionId,
+//                b1:mrdata?.backPrices[0]?.price || 0,
+//                l1:mrdata?.layPrices[0]?.price ||0 ,
+//                max:10000,
+//                min:100,
+//                mid:"YTRETREERRERRERDGHJJ",
+//                sid:rdata?.selectionId,
+//               runnerName:rdata.RunnnerNamme,
+
+//               }
+//             }
+
+//             })
+
+
+//           })
+
+//          })
+       
+//      })
+
+
+// }
+
+
+const slugType:any= {
+  "lucky7":["AGXLK7101","ATGYLK7101"],
+  "AAA":["AGXA3101","ATGYA3101"],
+  "aaa":["AGXA3101","ATGYA3101"],
+ "dt20":["AGXDT101","ATGYDT101"],
+  "dt20b":["AGXDT2101","ATGXDT2101"],
+ "dtl20":["AGXDTL101","ATGYDTL101"],
+  "ddb":["AGXBOC101","ATGYBOC102"],
+  "teen20":["AGXTPTT101","ATGYTPTT101"],
+  "Tp1Day":["AGX1TP101","ATGX1TP101"],
+  "warcasino":["AGXCAW101","ATGXCAW101"]
+
+
+
+
+ }
+
+
+
+const MacParser = async (type:any) => {
+  try {
+    // Load JSON (e.g. lucky7 event data)
+
+     const macarr = slugType[type]
+    let tdata = await axios.get(`http://72.61.18.12:3000/mac/tabledata/${macarr[0]}/${macarr[1]}`)
+    let rdata = await axios.get(`http://72.61.18.12:3000/mac/rounddata/${macarr[1]}`)
+    if(!tdata || !tdata.data ){
+      return false
+    }
+    if(!rdata.data) {
+      return false;
+    }
+
+    const tabledata :any = tdata.data
+    let rounddata :any = rdata.data
+    let roundid = rounddata.roundDetails.roundId
+
+
+    const jsonData = await eventJson[type]();
+    const templates = JSON.parse(JSON.stringify(jsonData.default)) || {};
+
+    const markets = templates?.event_data?.market || [];
+    if (!Array.isArray(markets)) {
+      console.error("No valid market array found in template");
+      return [];
+    }
+
+    const marketData = markets.map((market: any) => {
+      const marketName = market?.MarketName || "Unknown Market";
+      const runners: any[] = [];
+
+      // Iterate over all runners in this market
+      (market?.Runners || []).forEach((runner: any) => {
+        const runnerName = runner?.RunnerName?.toLowerCase?.();
+        // console.log(runnerName,"runnerName") 
+        let matchedRunner = null;
+
+        // Try to find matching runner in live tabledata
+        tabledata?.table?.markets?.forEach((macdata: any) => {
+          // console.log(macdata,"BGHJKL")
+          macdata?.runners?.forEach((mrdata: any) => {
+            // console.log(mrdata?.runnerName?.toLowerCase?.().split(" ").reverse().join(" "),"mac data")
+            if (mrdata?.runnerName?.toLowerCase?.() === runnerName || mrdata?.runnerName?.toLowerCase?.().split(" ").reverse().join(" ") === runnerName) {
+              matchedRunner = {
+                RunnerName: runner?.RunnerName,
+                SelectionId: runner?.SelectionId,
+                b1: mrdata?.backPrices?.[0]?.price || 0,
+                l1: mrdata?.layPrices?.[0]?.price || 0,
+                gstatus: macdata?.status === "ACTIVE" ? "1" : "0",
+                max: 100000,
+                min: 100,
+                mid: roundid.toString(),
+                rate:
+                  mrdata?.backPrices?.[0]?.price ||
+                  mrdata?.layPrices?.[0]?.price ||
+                  0,
+                sid: runner?.SelectionId,
+                nat: runner?.RunnerName,
+                runnerName: mrdata?.runnerName?.toLowerCase?.().split(" ").reverse().join(" ") ,
+              };
+            }
+          });
+        });
+
+        // If no live data found, fallback to default runner values
+        if (!matchedRunner) {
+          matchedRunner = {
+            RunnerName: runner?.RunnerName,
+            SelectionId: runner?.SelectionId,
+            b1: "0.00",
+            l1: "0.00",
+            gstatus: "1",
+            max: 25000,
+            min: 100,
+            mid: "106251016122937",
+            rate: 0,
+            sid: runner?.SelectionId,
+            nat: runner?.RunnerName,
+            runnerName: runner?.RunnerName,
+          };
+        }
+
+        runners.push(matchedRunner);
+      });
+
+      return {
+        MarketName: marketName,
+        Runners: runners,
+      };
+    });
+
+    // console.log("✅ Parsed Market Data:", JSON.stringify(marketData, null, 2));
+    templates.event_data.market = marketData;
+    templates.event_data.autotime = rounddata.roundDetails.TimetoBet;
+    templates.event_data.mid = rounddata.roundDetails.roundId;
+    templates.match_id = roundid
+    templates.status = "1"
+    templates.defaultMarkets = templates.event_data.market
+  
+    return templates
+  } catch (err) {
+    console.error("❌ Error in MacParser:", err);
+    return [];
+  }
+};
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -368,7 +546,6 @@ setInterval(() => {
 
 
 
-
 export default class CasinoController extends ApiController {
 //   getCasinoMarket = async (req: Request, res: Response) => {
 //     let { type, selectionId } = req.params;
@@ -714,6 +891,16 @@ export default class CasinoController extends ApiController {
 
 getCasinoMarket = async (req: Request, res: Response) => {
   let { type, selectionId } = req.params;
+
+ 
+
+
+
+
+
+
+
+
   console.log(type,selectionId,"dhjfjldj")
 
   if (!type) {
@@ -722,198 +909,199 @@ getCasinoMarket = async (req: Request, res: Response) => {
   
   type = type === "AAA" ? "aaa" : type;
 
-  const result = await fetchData(type);
+  const result = await MacParser(type);
   if (!result) {
     return res.status(500).json({ error: "Failed to fetch data" });
   }
 
-  const { tableData, iframeData, casinoResult } = result;
-  let markets: any[] = [];
-  let results: any[] = [];
-  let t3: any = null;
-  let t4: any = null;
-  let scoreCards: any | undefined = undefined;
-  let tv = iframeData?.tv_url || "";
+  // const { tableData, iframeData, casinoResult } = result;
+  // let markets: any[] = [];
+  // let results: any[] = [];
+  // let t3: any = null;
+  // let t4: any = null;
+  // let scoreCards: any | undefined = undefined;
+  // let tv = iframeData?.tv_url || "";
 
-  if (casinoResult?.data) {
-    // 
-    // console.log(casinoResult.data.res,"casino Result ")
-    results = casinoResult?.data?.res.map((item:any)=>{
-      return{
-        "mid":item.mid.toString(),
-        "result":item.win.toString()
-      }
-    });
+  // if (casinoResult?.data) {
+  //   // 
+  //   // console.log(casinoResult.data.res,"casino Result ")
+  //   results = casinoResult?.data?.res.map((item:any)=>{
+  //     return{
+  //       "mid":item.mid.toString(),
+  //       "result":item.win.toString()
+  //     }
+  //   });
 
-    // console.log(results,"rresult ")
-  }
+  //   // console.log(results,"rresult ")
+  // }
 
-  async function dataparser(data1: any, match_id: any) {
-    let data: any;
+  // async function dataparser(data1: any, match_id: any) {
+  //   let data: any;
   
-    if (data1 && data1["t1"]?.gtype === "cricketv3") {
-      data = data1.t1;
-    } else {
-      data = data1;
-    }
+  //   if (data1 && data1["t1"]?.gtype === "cricketv3") {
+  //     data = data1.t1;
+  //   } else {
+  //     data = data1;
+  //   }
   
-    const cardValues = data?.card ? data.card.split(",") : [];
-    let cardData: { [key: string]: string } = {};
-    cardValues.forEach((card: string, index: number) => {
-      cardData[`C${index + 1}`] = card;
-    });
+  //   const cardValues = data?.card ? data.card.split(",") : [];
+  //   let cardData: { [key: string]: string } = {};
+  //   cardValues.forEach((card: string, index: number) => {
+  //     cardData[`C${index + 1}`] = card;
+  //   });
   
-    // Normalize slug (xyz)
-    let xyz: any = data?.gtype;
-    xyz = xyz === "lucky7eu" ? "lucky7B" : xyz;
-    xyz = xyz === "teen" ? "Tp1Day" : xyz;
-    xyz = xyz === "teen8" ? "opentp" : xyz;
-    xyz = xyz === "poker6" ? "poker6player" : xyz;
-    xyz = xyz === "cmatch20" ? "cricket2020" : xyz;
-    xyz = xyz === "3cardj" ? "Cards3J" : xyz;
-    xyz = xyz === "cricketv3" ? "fivewicket" : xyz;
-    xyz = xyz === "war" ? "warcasino" : xyz;
-    xyz = xyz === "race20" ? "race2020" : xyz;
-    xyz = xyz === "ab20" ? "Andarbahar" : xyz;
-    xyz = xyz === "dt202" ? "dt20b" : xyz;
-    xyz = xyz === "dt6" ? "dragontiger1Day" : xyz;
-    xyz = xyz === "poker" ? "onedaypoker" : xyz;
-    xyz = xyz === "poker20" ? "onedaypoker20" : xyz;
-    xyz = xyz === "card32eu" ? "card32b" : xyz;
-    xyz = xyz === "aaa" ? "AAA" : xyz;
-    xyz = xyz === "btable" ? "ddb" : xyz;
-    xyz = xyz === "worli" ? "worliinstant" : xyz;
-    xyz = xyz === "teen1" ? "1-CARD-ONE-DAY" : xyz;
+  //   // Normalize slug (xyz)
+  //   let xyz: any = data?.gtype;
+  //   xyz = xyz === "lucky7eu" ? "lucky7B" : xyz;
+  //   xyz = xyz === "teen" ? "Tp1Day" : xyz;
+  //   xyz = xyz === "teen8" ? "opentp" : xyz;
+  //   xyz = xyz === "poker6" ? "poker6player" : xyz;
+  //   xyz = xyz === "cmatch20" ? "cricket2020" : xyz;
+  //   xyz = xyz === "3cardj" ? "Cards3J" : xyz;
+  //   xyz = xyz === "cricketv3" ? "fivewicket" : xyz;
+  //   xyz = xyz === "war" ? "warcasino" : xyz;
+  //   xyz = xyz === "race20" ? "race2020" : xyz;
+  //   xyz = xyz === "ab20" ? "Andarbahar" : xyz;
+  //   xyz = xyz === "dt202" ? "dt20b" : xyz;
+  //   xyz = xyz === "dt6" ? "dragontiger1Day" : xyz;
+  //   xyz = xyz === "poker" ? "onedaypoker" : xyz;
+  //   xyz = xyz === "poker20" ? "onedaypoker20" : xyz;
+  //   xyz = xyz === "card32eu" ? "card32b" : xyz;
+  //   xyz = xyz === "aaa" ? "AAA" : xyz;
+  //   xyz = xyz === "btable" ? "ddb" : xyz;
+  //   xyz = xyz === "worli" ? "worliinstant" : xyz;
+  //   xyz = xyz === "teen1" ? "1-CARD-ONE-DAY" : xyz;
   
-    // Prevent duplicates
-    const newItem = { mid: data?.mid?.toString(), slug: data?.gtype, Result: false };
-    const exists = resultArr.some(item => item.mid === newItem.mid && item.slug === newItem.slug);
-    if (!exists) resultArr.push(newItem);
+  //   // Prevent duplicates
+  //   const newItem = { mid: data?.mid?.toString(), slug: data?.gtype, Result: false };
+  //   const exists = resultArr.some(item => item.mid === newItem.mid && item.slug === newItem.slug);
+  //   if (!exists) resultArr.push(newItem);
   
-    // Format market data using template
-    const getFormattedMarkets = async (slug: any, apiRunners = []) => {
-      // console.log(apiRunners,"appi runners")
-      type RunnerData = {
-        sid?: string | number;
-        b?: string;
-        l?: string;
-        gstatus?: string;
-        max?: number;
-        min?: number;
-        mid?: string;
-      };
+  //   // Format market data using template
+  //   const getFormattedMarkets = async (slug: any, apiRunners = []) => {
+  //     // console.log(apiRunners,"appi runners")
+  //     type RunnerData = {
+  //       sid?: string | number;
+  //       b?: string;
+  //       l?: string;
+  //       gstatus?: string;
+  //       max?: number;
+  //       min?: number;
+  //       mid?: string;
+  //     };
   
-      const jsonData = await eventJson[slug](); // ← Make sure this maps to correct file
-      const templates = JSON.parse(JSON.stringify(jsonData.default)) || [];
-      // console.log(templates,"ghjkltyghjkl;tyukl")
+  //     const jsonData = await eventJson[slug](); // ← Make sure this maps to correct file
+  //     const templates = JSON.parse(JSON.stringify(jsonData.default)) || [];
+  //     // console.log(templates,"ghjkltyghjkl;tyukl")
   
-      return templates.event_data.market.map((market: any) => ({
-        MarketName: market.MarketName,
-        Runners: market.Runners.map((templateRunner: any) => {
-          const live: RunnerData =
-            apiRunners.find(
-              (r: any) => r?.sid?.toString() === templateRunner.SelectionId?.toString()
-            ) || {};
+  //     return templates.event_data.market.map((market: any) => ({
+  //       MarketName: market.MarketName,
+  //       Runners: market.Runners.map((templateRunner: any) => {
+  //         const live: RunnerData =
+  //           apiRunners.find(
+  //             (r: any) => r?.sid?.toString() === templateRunner.SelectionId?.toString()
+  //           ) || {};
 
-            // console.log("live",live ,"rtyuihojghjki")
-            // console.log({
-            //   RunnerName: templateRunner.RunnerName,
-            //   SelectionId: templateRunner.SelectionId,
-            //   b1: live.b || "0.00",
-            //   l1: live.l || "0.00",
-            //   gstatus: live.gstatus === "OPEN" ? "1" : "0",
-            //   max: live.max || 100000,
-            //   min: live.min || 100,
-            //   mid: live.mid || data?.mid?.toString() || "",
-            //   rate: live.b || "0.00",
-            //   sid: live?.sid?.toString() || templateRunner.SelectionId,
-            //   nat: templateRunner.RunnerName,
-            //   runnerName: templateRunner.RunnerName,
-            // },"hello world yuijok")
+  //           // console.log("live",live ,"rtyuihojghjki")
+  //           // console.log({
+  //           //   RunnerName: templateRunner.RunnerName,
+  //           //   SelectionId: templateRunner.SelectionId,
+  //           //   b1: live.b || "0.00",
+  //           //   l1: live.l || "0.00",
+  //           //   gstatus: live.gstatus === "OPEN" ? "1" : "0",
+  //           //   max: live.max || 100000,
+  //           //   min: live.min || 100,
+  //           //   mid: live.mid || data?.mid?.toString() || "",
+  //           //   rate: live.b || "0.00",
+  //           //   sid: live?.sid?.toString() || templateRunner.SelectionId,
+  //           //   nat: templateRunner.RunnerName,
+  //           //   runnerName: templateRunner.RunnerName,
+  //           // },"hello world yuijok")
   
-          return {
-            RunnerName: templateRunner.RunnerName,
-            SelectionId: templateRunner.SelectionId,
-            b1: live.b || "0.00",
-            l1: live.l || "0.00",
-            gstatus: live.gstatus === "OPEN" ? "1" : "0",
-            max: live.max || 100000,
-            min: live.min || 100,
-            mid: live.mid || data?.mid?.toString() || "",
-            rate: live.b || "0.00",
-            sid: live?.sid?.toString() || templateRunner.SelectionId,
-            nat: templateRunner.RunnerName,
-            runnerName: templateRunner.RunnerName,
-          };
-        }),
-      }));
-    };
+  //         return {
+  //           RunnerName: templateRunner.RunnerName,
+  //           SelectionId: templateRunner.SelectionId,
+  //           b1: live.b || "0.00",
+  //           l1: live.l || "0.00",
+  //           gstatus: live.gstatus === "OPEN" ? "1" : "0",
+  //           max: live.max || 100000,
+  //           min: live.min || 100,
+  //           mid: live.mid || data?.mid?.toString() || "",
+  //           rate: live.b || "0.00",
+  //           sid: live?.sid?.toString() || templateRunner.SelectionId,
+  //           nat: templateRunner.RunnerName,
+  //           runnerName: templateRunner.RunnerName,
+  //         };
+  //       }),
+  //     }));
+  //   };
   
-    // Final formatted markets from templates + live
-    const marketsxyzz = await getFormattedMarkets(xyz, data?.sub || []);
-    // console.log(marketsxyzz[0],"formatedd data")
+  //   // Final formatted markets from templates + live
+  //   const marketsxyzz = await getFormattedMarkets(xyz, data?.sub || []);
+  //   // console.log(marketsxyzz[0],"formatedd data")
   
-    // Return full object
-    return {
-      autotime: data?.lt?.toString() || "",
-      ...cardData,
-      desc: data?.card || "",
-      slug: xyz || "",
-      status: "1",
-      title: xyz || "",
-      match_id: data?.mid?.toString() || "",
-      mid: String(data?.mid || ""),
-      max: 50000,
-      min: 100,
-      event_data: {
-        autotime: data?.lt?.toString() || "",
-        match_id: match_id?.toString() || "",
-        remark: "",
-        market: marketsxyzz,
-      },
-    };
-  }
+  //   // Return full object
+  //   return {
+  //     autotime: data?.lt?.toString() || "",
+  //     ...cardData,
+  //     desc: data?.card || "",
+  //     slug: xyz || "",
+  //     status: "1",
+  //     title: xyz || "",
+  //     match_id: data?.mid?.toString() || "",
+  //     mid: String(data?.mid || ""),
+  //     max: 50000,
+  //     min: 100,
+  //     event_data: {
+  //       autotime: data?.lt?.toString() || "",
+  //       match_id: match_id?.toString() || "",
+  //       remark: "",
+  //       market: marketsxyzz,
+  //     },
+  //   };
+  // }
   
 
   try {
     // type == "aaa" ? "AAA" :type
-    const jsonData = await eventJson[type]();
-    const cloneJsonData = JSON.parse(JSON.stringify(jsonData.default));
-    console.log(cloneJsonData?.match_id .toString()|| "","hello world dhkafkal;jcl;ajol")
+  //   const jsonData = await eventJson[type]();
+  //   const cloneJsonData = JSON.parse(JSON.stringify(jsonData.default));
+  //   console.log(cloneJsonData?.match_id .toString()|| "","hello world dhkafkal;jcl;ajol")
 
-    let eventData = {
-      ...cloneJsonData,
-      match_id: tableData?.data.data|| "",
-      results,
-      tv,
-      defaultMarkets: cloneJsonData?.event_data?.market || [],
-      t3,
-      t4
-    };
+  //   let eventData = {
+  //     ...cloneJsonData,
+  //     match_id: tableData?.data.data|| "",
+  //     results,
+  //     tv,
+  //     defaultMarkets: cloneJsonData?.event_data?.market || [],
+  //     t3,
+  //     t4
+  //   };
 
-    // if (type === "Tp1Day" && tableData?.bf) {
-    //   const { C1: C1A, C2: C2A, C3: C3A, marketId: mid, min, max } = tableData.bf[0];
-    //   const { C1: C1B, C2: C2B, C3: C3B } = tableData.bf[1];
+  //   // if (type === "Tp1Day" && tableData?.bf) {
+  //   //   const { C1: C1A, C2: C2A, C3: C3A, marketId: mid, min, max } = tableData.bf[0];
+  //   //   const { C1: C1B, C2: C2B, C3: C3B } = tableData.bf[1];
 
-    //   eventData = {
-    //     ...eventData,
-    //     C1A,
-    //     C2A,
-    //     C3A,
-    //     C1B,
-    //     C2B,
-    //     C3B,
-    //     mid,
-    //     match_id: mid,
-    //     min,
-    //     max
-    //   };
-    // }
+  //   //   eventData = {
+  //   //     ...eventData,
+  //   //     C1A,
+  //   //     C2A,
+  //   //     C3A,
+  //   //     C1B,
+  //   //     C2B,
+  //   //     C3B,
+  //   //     mid,
+  //   //     match_id: mid,
+  //   //     min,
+  //   //     max
+  //   //   };
+  //   // }
 
-  const  eventDatap = await dataparser(tableData?.data,cloneJsonData?.match_id );
+  // const  eventDatap = await dataparser(tableData?.data,cloneJsonData?.match_id );
     // .event_data.market
     // console.log(eventDatap)
-    return res.status(200).json({ ...eventData,...eventDatap });
+    let eventData = await MacParser(type)
+    return res.status(200).json({ ...eventData});
   } catch (error) {
     console.error("Error processing event data:", error);
     return res.status(500).json({ error: "Internal Server Error" });
@@ -1034,3 +1222,450 @@ getSingleMarket = async (req: Request, res: Response) => {
 
 
 }
+
+
+
+const data = {
+    "status": "RS_OK",
+    "errorDescription": "",
+    "table": {
+        "providerId": "MAC88",
+        "providerName": "Mac88 Live",
+        "gameId": "AGXA3101",
+        "gameName": "Amar Akbar Anthony",
+        "tableId": "ATGYA3101",
+        "tableName": "Amar Akbar Anthony",
+        "roundId": "",
+        "betstatus": "",
+        "status": "ACTIVE",
+        "config": {
+            "matchOdds": {
+                "min": 100,
+                "max": 200000,
+                "oddLimits": 0,
+                "stakeLimit": 0,
+                "profitability": 0,
+                "maxCredit": 0
+            },
+            "IsExposureEnable": false,
+            "isSet": true
+        },
+        "markets": [
+            {
+                "marketId": "AMTGYA310102",
+                "marketName": "Odd Even",
+                "marketType": "ODD_EVEN",
+                "status": "ACTIVE",
+                "runners": [
+                    {
+                        "runnerId": "ARMTGYA31010201",
+                        "runnerName": "Odd",
+                        "runnerType": "ODD",
+                        "layPrices": [],
+                        "backPrices": [
+                            {
+                                "price": 1.83,
+                                "size": 15000
+                            }
+                        ]
+                    },
+                    {
+                        "runnerId": "ARMTGYA31010202",
+                        "runnerName": "Even",
+                        "runnerType": "EVEN",
+                        "layPrices": [],
+                        "backPrices": [
+                            {
+                                "price": 2.12,
+                                "size": 15000
+                            }
+                        ]
+                    }
+                ],
+                "noValue": 0,
+                "noRate": 0,
+                "yesValue": 0,
+                "yesRate": 0,
+                "config": {
+                    "matchOdds": {
+                        "min": 100,
+                        "max": 50000,
+                        "oddLimits": 0,
+                        "stakeLimit": 0,
+                        "profitability": 0,
+                        "maxCredit": 0
+                    },
+                    "IsExposureEnable": false,
+                    "isSet": true
+                },
+                "maxOdd": 0,
+                "maxRunnersAllowed": 0,
+                "maxAllowedBetsOnRnrs": 0
+            },
+            {
+                "marketId": "AMTGYA310101",
+                "marketName": "Match Odds",
+                "marketType": "MATCH_ODDS",
+                "status": "ACTIVE",
+                "runners": [
+                    {
+                        "runnerId": "ARMTGYA31010101",
+                        "runnerName": "Amar",
+                        "runnerType": "AMAR",
+                        "layPrices": [
+                            {
+                                "price": 2.22,
+                                "size": 15000
+                            }
+                        ],
+                        "backPrices": [
+                            {
+                                "price": 2.12,
+                                "size": 15000
+                            }
+                        ]
+                    },
+                    {
+                        "runnerId": "ARMTGYA31010102",
+                        "runnerName": "Akbar",
+                        "runnerType": "AKBAR",
+                        "layPrices": [
+                            {
+                                "price": 3.35,
+                                "size": 15000
+                            }
+                        ],
+                        "backPrices": [
+                            {
+                                "price": 3.15,
+                                "size": 15000
+                            }
+                        ]
+                    },
+                    {
+                        "runnerId": "ARMTGYA31010103",
+                        "runnerName": "Anthony",
+                        "runnerType": "ANTHONY",
+                        "layPrices": [
+                            {
+                                "price": 4.45,
+                                "size": 15000
+                            }
+                        ],
+                        "backPrices": [
+                            {
+                                "price": 4.15,
+                                "size": 15000
+                            }
+                        ]
+                    }
+                ],
+                "noValue": 0,
+                "noRate": 0,
+                "yesValue": 0,
+                "yesRate": 0,
+                "config": {
+                    "matchOdds": {
+                        "min": 100,
+                        "max": 500000,
+                        "oddLimits": 0,
+                        "stakeLimit": 0,
+                        "profitability": 0,
+                        "maxCredit": 0
+                    },
+                    "IsExposureEnable": false,
+                    "isSet": true
+                },
+                "maxOdd": 0,
+                "maxRunnersAllowed": 0,
+                "maxAllowedBetsOnRnrs": 0
+            },
+            {
+                "marketId": "AMTGYA310104",
+                "marketName": "Over Under 7",
+                "marketType": "OVER_UNDER_7",
+                "status": "ACTIVE",
+                "runners": [
+                    {
+                        "runnerId": "ARMTGYA31010401",
+                        "runnerName": "Under7",
+                        "runnerType": "UNDER7",
+                        "layPrices": [],
+                        "backPrices": [
+                            {
+                                "price": 2,
+                                "size": 15000
+                            }
+                        ]
+                    },
+                    {
+                        "runnerId": "ARMTGYA31010402",
+                        "runnerName": "Over 7",
+                        "runnerType": "OVER7",
+                        "layPrices": [],
+                        "backPrices": [
+                            {
+                                "price": 2,
+                                "size": 15000
+                            }
+                        ]
+                    }
+                ],
+                "noValue": 0,
+                "noRate": 0,
+                "yesValue": 0,
+                "yesRate": 0,
+                "config": {
+                    "matchOdds": {
+                        "min": 100,
+                        "max": 50000,
+                        "oddLimits": 0,
+                        "stakeLimit": 0,
+                        "profitability": 0,
+                        "maxCredit": 0
+                    },
+                    "IsExposureEnable": false,
+                    "isSet": true
+                },
+                "maxOdd": 0,
+                "maxRunnersAllowed": 0,
+                "maxAllowedBetsOnRnrs": 0
+            },
+            {
+                "marketId": "AMTGYA310103",
+                "marketName": "Color",
+                "marketType": "COLOR",
+                "status": "ACTIVE",
+                "runners": [
+                    {
+                        "runnerId": "ARMTGYA31010301",
+                        "runnerName": "Black",
+                        "runnerType": "BLACK",
+                        "layPrices": [],
+                        "backPrices": [
+                            {
+                                "price": 1.97,
+                                "size": 15000
+                            }
+                        ]
+                    },
+                    {
+                        "runnerId": "ARMTGYA31010302",
+                        "runnerName": "Red",
+                        "runnerType": "RED",
+                        "layPrices": [],
+                        "backPrices": [
+                            {
+                                "price": 1.97,
+                                "size": 15000
+                            }
+                        ]
+                    }
+                ],
+                "noValue": 0,
+                "noRate": 0,
+                "yesValue": 0,
+                "yesRate": 0,
+                "config": {
+                    "matchOdds": {
+                        "min": 100,
+                        "max": 50000,
+                        "oddLimits": 0,
+                        "stakeLimit": 0,
+                        "profitability": 0,
+                        "maxCredit": 0
+                    },
+                    "IsExposureEnable": false,
+                    "isSet": true
+                },
+                "maxOdd": 0,
+                "maxRunnersAllowed": 0,
+                "maxAllowedBetsOnRnrs": 0
+            },
+            {
+                "marketId": "AMTGYA310105",
+                "marketName": "Card",
+                "marketType": "CARD",
+                "status": "ACTIVE",
+                "runners": [
+                    {
+                        "runnerId": "ARMTGYA31010501",
+                        "runnerName": "A",
+                        "runnerType": "1",
+                        "layPrices": [],
+                        "backPrices": [
+                            {
+                                "price": 12,
+                                "size": 15000
+                            }
+                        ]
+                    },
+                    {
+                        "runnerId": "ARMTGYA31010502",
+                        "runnerName": "2",
+                        "runnerType": "2",
+                        "layPrices": [],
+                        "backPrices": [
+                            {
+                                "price": 12,
+                                "size": 15000
+                            }
+                        ]
+                    },
+                    {
+                        "runnerId": "ARMTGYA31010503",
+                        "runnerName": "3",
+                        "runnerType": "3",
+                        "layPrices": [],
+                        "backPrices": [
+                            {
+                                "price": 12,
+                                "size": 15000
+                            }
+                        ]
+                    },
+                    {
+                        "runnerId": "ARMTGYA31010504",
+                        "runnerName": "4",
+                        "runnerType": "4",
+                        "layPrices": [],
+                        "backPrices": [
+                            {
+                                "price": 12,
+                                "size": 15000
+                            }
+                        ]
+                    },
+                    {
+                        "runnerId": "ARMTGYA31010505",
+                        "runnerName": "5",
+                        "runnerType": "5",
+                        "layPrices": [],
+                        "backPrices": [
+                            {
+                                "price": 12,
+                                "size": 15000
+                            }
+                        ]
+                    },
+                    {
+                        "runnerId": "ARMTGYA31010506",
+                        "runnerName": "6",
+                        "runnerType": "6",
+                        "layPrices": [],
+                        "backPrices": [
+                            {
+                                "price": 12,
+                                "size": 15000
+                            }
+                        ]
+                    },
+                    {
+                        "runnerId": "ARMTGYA31010507",
+                        "runnerName": "7",
+                        "runnerType": "7",
+                        "layPrices": [],
+                        "backPrices": [
+                            {
+                                "price": 12,
+                                "size": 15000
+                            }
+                        ]
+                    },
+                    {
+                        "runnerId": "ARMTGYA31010508",
+                        "runnerName": "8",
+                        "runnerType": "8",
+                        "layPrices": [],
+                        "backPrices": [
+                            {
+                                "price": 12,
+                                "size": 15000
+                            }
+                        ]
+                    },
+                    {
+                        "runnerId": "ARMTGYA31010509",
+                        "runnerName": "9",
+                        "runnerType": "9",
+                        "layPrices": [],
+                        "backPrices": [
+                            {
+                                "price": 12,
+                                "size": 15000
+                            }
+                        ]
+                    },
+                    {
+                        "runnerId": "ARMTGYA31010510",
+                        "runnerName": "10",
+                        "runnerType": "10",
+                        "layPrices": [],
+                        "backPrices": [
+                            {
+                                "price": 12,
+                                "size": 15000
+                            }
+                        ]
+                    },
+                    {
+                        "runnerId": "ARMTGYA31010511",
+                        "runnerName": "J",
+                        "runnerType": "J",
+                        "layPrices": [],
+                        "backPrices": [
+                            {
+                                "price": 12,
+                                "size": 15000
+                            }
+                        ]
+                    },
+                    {
+                        "runnerId": "ARMTGYA31010512",
+                        "runnerName": "Q",
+                        "runnerType": "Q",
+                        "layPrices": [],
+                        "backPrices": [
+                            {
+                                "price": 12,
+                                "size": 15000
+                            }
+                        ]
+                    },
+                    {
+                        "runnerId": "ARMTGYA31010513",
+                        "runnerName": "K",
+                        "runnerType": "K",
+                        "layPrices": [],
+                        "backPrices": [
+                            {
+                                "price": 12,
+                                "size": 15000
+                            }
+                        ]
+                    }
+                ],
+                "noValue": 0,
+                "noRate": 0,
+                "yesValue": 0,
+                "yesRate": 0,
+                "config": {
+                    "matchOdds": {
+                        "min": 100,
+                        "max": 50000,
+                        "oddLimits": 0,
+                        "stakeLimit": 0,
+                        "profitability": 0,
+                        "maxCredit": 0
+                    },
+                    "IsExposureEnable": false,
+                    "isSet": true
+                },
+                "maxOdd": 0,
+                "maxRunnersAllowed": 0,
+                "maxAllowedBetsOnRnrs": 0
+            }
+        ]
+    }
+}
+// MacParser(data,2)

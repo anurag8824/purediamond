@@ -423,25 +423,25 @@ const CasinoWrapper = (props: any) => {
 
   // console.log("dfgdsfsfssjkdhfglskdhfglsdhfgjshd")
 
-  const gameIdMap: Record<string, number> = {
+  const gameIdMap: Record<any , any> = {
     card32b: 3034,
     baccarat2: 3033,
-    dt20: 3035,
+    dt20: "fNq3T-BMmL1",
     lucky7B: 3032,
-    Tp1Day: 3031,
+    Tp1Day: "fNq3T-XRnLu",
     race2020: 3036,
-    teen20: 3030,
+    teen20:"fNq3T-FVmT3",
     worli2: 3040,
     Cards3J: 3039,
     Dd: 3041,
     queen: 3037,
-    warcasino: 3038,
+    warcasino: "fNq3T-TZOa3",
     cric: 3042,
     Andarbahar2: 3043,
     baccarat: 3044,
     cmatch20: 3045,
     cmeter2020: 3046,
-    "dragon tiger lion": 3047,
+    dtl20: "fNq3T-2qCsW",
     "test tp": 3048,
     teen8: 3049,
     poker6player: 3050,
@@ -450,10 +450,11 @@ const CasinoWrapper = (props: any) => {
     abj: 3053,
     worli: 3054,
     card32: 3055,
-    AAA: 3056,
+    AAA: "fNq3T-wVNlm",
+    aaa: "fNq3T-wVNlm",
     "dragon tiger 1 day": 3057,
-    lucky7: 3058,
-    dt20b: 3059,
+    lucky7: "fNq3T-hBSZ8",
+    dt20b:"fNq3T-cVhfT",
     Superover: 3060,
   };
 
@@ -510,13 +511,14 @@ const CasinoWrapper = (props: any) => {
                   }}
                 >
                   
-                  {liveMatchData && liveMatchData?.tv && gameId && (
+                  {liveMatchData && gameId && (
                     <iframe
                       title="stream"
                       width="100%"
                       height={isMobile ? "220" : "420"}
                       style={{ border: "0px" }}
-                      src={casinoMatchData?.tv}
+                      // src={casinoMatchData?.tv}
+                      src={`https://mac88-casino-stream.scoreswift.xyz/stream?stream_id=${gameId}`}
                     ></iframe>
                   )}
                   {/* <iframe src='https://diamond.igtechgaming.com/freecasino/tvop?id=lucky7' width="100%"></iframe> */}
@@ -629,13 +631,14 @@ const CasinoWrapper = (props: any) => {
                       // background: '#000',
                     }}
                   >
-                    {liveMatchData && liveMatchData?.tv && gameId && (
+                    {liveMatchData && gameId && (
                       <iframe
                         title="stream"
                         width="100%"
                         height={isMobile ? "250" : "420"}
                         style={{ border: "0px" }}
-                        src={casinoMatchData?.tv}
+                        // src={casinoMatchData?.tv}
+                         src={`https://mac88-casino-stream.scoreswift.xyz/stream?stream_id=${gameId}`}
 
                         sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
                         seamless
