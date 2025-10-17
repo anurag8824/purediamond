@@ -374,7 +374,7 @@ const Odds = () => {
   const scoreBoard = () => {
     if (currentMatch && currentMatch.sportId == '4333')
       return <Score matchId={currentMatch?.matchId} isT10={currentMatch?.isT10 || false} />
-    else if (currentMatch)
+    else if (currentMatch.inPlay === true)
       return (
         <iframe
           style={{ width: '100%', height: 'auto' }}
@@ -416,7 +416,7 @@ const Odds = () => {
           ) : (
             ''
           )}
-          {!isMobile && isTvShow && (
+          {!isMobile && isTvShow && currentMatch?.inPlay && (
             <div className='card-body p0'>
               <iframe
                 style={{ width: '100%', height: '250px' }}
@@ -428,7 +428,7 @@ const Odds = () => {
               LIVE TV 
             </div>
           )}
-          {isMobile && (
+          {isMobile && currentMatch?.inPlay && (
             <div className='card-body p0'>
               <iframe
                 style={{ width: '100%', height: '250px' }}
@@ -444,6 +444,8 @@ const Odds = () => {
     )
   }
   const { currentMatch, markets, fancies } = marketDataList
+
+  console.log(currentMatch , markets , fancies ,"cjhbshjdbjfsbjdjfsjdfjhsbjdfgbhjsd" )
 
   return !isMobile || (isMobile && userState?.user?.role != RoleType.user) ? (
     <MatchDetail
