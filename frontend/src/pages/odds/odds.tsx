@@ -374,7 +374,7 @@ const Odds = () => {
   const scoreBoard = () => {
     if (currentMatch && currentMatch.sportId == '4333')
       return <Score matchId={currentMatch?.matchId} isT10={currentMatch?.isT10 || false} />
-    else if (currentMatch.inPlay === true)
+    else if (currentMatch?.inPlay === true)
       return (
         <iframe
           style={{ width: '100%', height: 'auto' }}
