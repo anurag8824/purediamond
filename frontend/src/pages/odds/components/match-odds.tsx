@@ -133,7 +133,7 @@ class MatchOdds extends React.PureComponent<
 
   render(): React.ReactNode {
     const { data, getMarketBook } = this.props
-    ///console.log(data)
+    console.log(data ,"markkettjkdsatatat")
     const { runnersData } = this.state
     return (
       <div>
