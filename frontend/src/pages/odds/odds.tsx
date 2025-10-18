@@ -374,7 +374,7 @@ const Odds = () => {
   const scoreBoard = () => {
     if (currentMatch && currentMatch.sportId == '4333')
       return <Score matchId={currentMatch?.matchId} isT10={currentMatch?.isT10 || false} />
-    else if (currentMatch?.inPlay === true)
+    else if (new Date(currentMatch?.matchDateTime).getTime() < new Date().getTime())
       return (
         <iframe
           style={{ width: '100%', height: 'auto' }}
@@ -416,7 +416,7 @@ const Odds = () => {
           ) : (
             ''
           )}
-          {!isMobile && isTvShow && currentMatch?.inPlay && (
+          {!isMobile && isTvShow && new Date(currentMatch?.matchDateTime).getTime() < new Date().getTime() && (
             <div className='card-body p0'>
               <iframe
                 style={{ width: '100%', height: '250px' }}
@@ -428,7 +428,7 @@ const Odds = () => {
               LIVE TV 
             </div>
           )}
-          {isMobile && currentMatch?.inPlay && (
+          {isMobile && new Date(currentMatch?.matchDateTime).getTime() < new Date().getTime() && (
             <div className='card-body p0'>
               <iframe
                 style={{ width: '100%', height: '250px' }}
