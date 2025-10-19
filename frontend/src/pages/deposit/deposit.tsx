@@ -73,7 +73,7 @@ const Deposit = () => {
                 </div>
               </div>
               <div className='payment-ions-container'>
-                <div className='payment-icons'>
+                <div className='payment-icons' style={{width:"100%"}}>
                   <div className='glass' />
                   <div className='content'>
                     <div className='payment-icons-title'>
@@ -145,7 +145,7 @@ const Deposit = () => {
                     </div>
                   </div>
                 </div>
-                <div className='payment-icons'>
+                <div className='payment-icons' style={{width:"100%"}} >
                   <div className='glass' />
                   <div className='content'>
                     <div className='payment-icons-title'>
