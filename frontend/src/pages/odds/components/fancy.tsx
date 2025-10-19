@@ -259,7 +259,7 @@ class Fancy extends React.Component<
           <b>No</b>
         </div>
         <div className={`${isMobile ? 'box-2' : 'box-1'} float-left back text-center`}>
-          <b>Yeas</b>
+          <b>Yes</b>
         </div>
         {!isMobile && <div className='box-2 float-left' />}
       </div>
