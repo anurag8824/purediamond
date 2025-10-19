@@ -235,7 +235,7 @@ class Fancy extends React.Component<
         key={menu.type}
         onClick={(e) => this.onFancyType(menu.type)}
         style={{ width: `${menu.width}` }}
-        className='nav-item'
+        className='nav-item d-none'
       >
         <a
           href='#'
