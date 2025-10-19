@@ -9,7 +9,7 @@ import authService from '../../../services/auth.service'
 import { nFormatter } from '../../../utils/helper'
 import { selectUserData } from '../../../redux/actions/login/loginSlice'
 import { RoleType } from '../../../models/User'
-// import { isMobile } from 'react-device-detect'
+import { isMobile } from 'react-device-detect'
 
 type Props = {
   selections: any
@@ -18,7 +18,7 @@ type Props = {
   market: IMarket
 }
 
-const isMobile = true;
+// const isMobile = true;
 export const AvailableToBackLay = React.memo(({ selections, market, runner }: Props) => {
   console.log(selections,market,runner,"FGHJKLFGHJKLCGHJKL")
   const dispatch = useAppDispatch()
