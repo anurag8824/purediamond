@@ -197,7 +197,7 @@ const Header = () => {
                       </li>
                     </ul>
                   </li>
-{/* 
+
                   <li className='nav-item dropdown'>
                     <a>
                       <b>Transactions</b> <i className='fa fa-caret-down' />
@@ -214,7 +214,7 @@ const Header = () => {
                         </CustomLink>
                       </li>
                     </ul>
-                  </li> */}
+                  </li>
                   <li className='nav-item dropdown'>
                     <a>
                       <b>Live Casino</b> <i className='fa fa-caret-down' />

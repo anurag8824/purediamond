@@ -188,10 +188,10 @@ const Header = () => {
             </div> 
 
             <ul className='flex05 justify-content-end d-flex profile-right-side'>
-              {/* <div className='row-deposit-button mr-20'>
+              <div className='row-deposit-button mr-20'>
                 <CustomLink className='btn btn-deposit mr-10' to={'/deposit'}>Deposit</CustomLink>
                 <CustomLink className='btn btn-withdraw' to={'/withdraw'}>Withdraw</CustomLink>
-              </div> */}
+              </div>
 
 <button
   className="btn btn-success mr-2 d-n"
