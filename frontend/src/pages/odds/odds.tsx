@@ -374,7 +374,7 @@ const Odds = () => {
   const scoreBoard = () => {
     if (currentMatch && currentMatch.sportId == '4333')
       return <Score matchId={currentMatch?.matchId} isT10={currentMatch?.isT10 || false} />
-    else if (new Date(currentMatch?.matchDateTime).getTime() < new Date().getTime())
+    else if (new Date(currentMatch?.matchDateTime).getTime() < new Date().getTime() && !String(currentMatch?.matchId).startsWith('1313'))
       return (
         <iframe
           style={{ width: '100%', height: 'auto' }}
@@ -404,7 +404,7 @@ const Odds = () => {
     return (
       !currentMatch?.isT10 && (
         <div className='card m-b-10' style={{ border: '0px none' }}>
-          {!isMobile ? (
+          {!isMobile && new Date(currentMatch?.matchDateTime).getTime() < new Date().getTime()  && !String(currentMatch?.matchId).startsWith('1313') && (
             <div className='card-header'>
               <h6 onClick={() => setIsTvShow(!isTvShow)} className='card-title'>
                 Live Match
@@ -413,10 +413,8 @@ const Odds = () => {
                 </span>
               </h6>
             </div>
-          ) : (
-            ''
           )}
-          {!isMobile && isTvShow && new Date(currentMatch?.matchDateTime).getTime() < new Date().getTime() && (
+          {!isMobile && isTvShow && new Date(currentMatch?.matchDateTime).getTime() < new Date().getTime() && !String(currentMatch?.matchId).startsWith('1313') && (
             <div className='card-body p0'>
               <iframe
                 style={{ width: '100%', height: '250px' }}
@@ -428,7 +426,7 @@ const Odds = () => {
               LIVE TV 
             </div>
           )}
-          {isMobile && new Date(currentMatch?.matchDateTime).getTime() < new Date().getTime() && (
+          {isMobile && new Date(currentMatch?.matchDateTime).getTime() < new Date().getTime() && !String(currentMatch?.matchId).startsWith('1313') && (
             <div className='card-body p0'>
               <iframe
                 style={{ width: '100%', height: '250px' }}
