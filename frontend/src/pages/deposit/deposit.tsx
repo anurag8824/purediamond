@@ -102,7 +102,7 @@ const Deposit = () => {
                         </div>
                       </div>
                     </div>
-                    <div className='col-lg-12'  style={{padding:"7px"}}>
+                    <div className='col-lg-12 d-none'  style={{padding:"7px"}}>
                       <input type="number" className='form-control' 
                       placeholder='Enter UTR No'
                       disabled={amount && amount > 0 ? false : true}
@@ -110,7 +110,7 @@ const Deposit = () => {
                       value={preview.type=='upi' ? preview.utrno : ""}
                       onChange={(e) => handleUploadedUTR(e, 'upi')}/>
                     </div>
-                    <div className='p-2 w-100 d-flex align-items-center justify-content-between'>
+                    <div className='p-2 w-100 d-flexxx d-none align-items-center justify-content-between'>
                       <div className={`upload-ss ${amount && amount > 0 ? '' : 'pay-disable'}`}>
                         <input
                           type='file'

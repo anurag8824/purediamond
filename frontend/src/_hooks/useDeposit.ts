@@ -46,11 +46,17 @@ const useDeposit = () => {
 
   const handleUploadedUTR = (event: any, type: string) => {
     const file = event.target.value
-    console.log(file)
-    setPreview({ type, imagePath: preview.imagePath, utrno:file})
+    setPreview({
+      type,
+      imagePath: preview.imagePath,
+      utrno: type === preview.type ? file : '', // clear if type changed
+    })
   }
+  
   const onSubmit = async (data: any) => {
     if (!preview.imagePath) return toast.error('Image is required field')
+      if (!preview.type) return toast.error('Please select a payment method')
+
     const formData = new FormData()
     const amount = getValues('amount')
     formData.append('remark', 'ok')
