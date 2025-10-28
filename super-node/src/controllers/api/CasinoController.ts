@@ -1292,7 +1292,7 @@ const resultDetail = async (slug: string, mid: string): Promise<boolean> => {
 
       // await axios.post("http://localhost:3010/api/save-casino-match",convertResult)
       await axios.post(
-        "https://api.bxpro99.xyz/api/save-casino-match",
+        "https://api.betbhai365.cloud/api/save-casino-match",
         convertResult
       );
 
