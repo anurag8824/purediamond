@@ -423,7 +423,7 @@ const CasinoWrapper = (props: any) => {
 
   // console.log("dfgdsfsfssjkdhfglskdhfglsdhfgjshd")
 
-  const gameIdMap: Record<any , any> = {
+  const gameIdMapmacc: Record<any , any> = {
     card32b: 3034,
     baccarat2: 3033,
     dt20: "fNq3T-BMmL1",
@@ -455,6 +455,40 @@ const CasinoWrapper = (props: any) => {
     "dragon tiger 1 day": 3057,
     lucky7: "fNq3T-hBSZ8",
     dt20b:"fNq3T-cVhfT",
+    Superover: 3060,
+  };
+
+  const gameIdMap: Record<any, any> = {
+    card32b: "card32eu",
+    baccarat2: "baccarat2",
+    dt20: "dt20",
+    lucky7B: "lucky7eu",
+    Tp1Day: "teen",
+    // race2020: 3036,
+    teen20: "teen20",
+    worli2: "worli2",
+    Cards3J: "3cardj",
+    Dd: 3041,
+    queen: "queen",
+    warcasino: "war",
+    cric: "cricketv3",
+    Andarbahar2: "abj",
+    baccarat: "baccarat",
+    cmatch20: "cmatch20",
+    cmeter2020: "cmeter",
+    dtl20: "dtl20",
+    // "test tp": teen9,
+    teen8: 3049,
+    poker6player: "poker6",
+    onedaypoker: "poker",
+    onedaypoker20: "poker20",
+    abj: "ab20",
+    worli: "worli",
+    card32: "card32",
+    AAA: "aaa",
+    "dragon tiger 1 day": "dt6",
+    lucky7: "lucky7",
+    dt20b: "dt202",
     Superover: 3060,
   };
 
@@ -518,7 +552,10 @@ const CasinoWrapper = (props: any) => {
                       height={isMobile ? "220" : "420"}
                       style={{ border: "0px" }}
                       // src={casinoMatchData?.tv}
-                      src={`https://mac88-casino-stream.scoreswift.xyz/stream?stream_id=${gameId}`}
+                      // src={`https://mac88-casino-stream.scoreswift.xyz/stream?stream_id=${gameId}`}
+
+                      src={`https://live.cricketid.xyz/casino-tv?id=${gameId}`}
+
                     ></iframe>
                   )}
                   {/* <iframe src='https://diamond.igtechgaming.com/freecasino/tvop?id=lucky7' width="100%"></iframe> */}
