@@ -464,7 +464,8 @@ const CasinoWrapper = (props: any) => {
     dt20: "dt20",
     lucky7B: "lucky7eu",
     Tp1Day: "teen",
-    // race2020: 3036,
+    ddb:"btable",
+    race2020: 3036,
     teen20: "teen20",
     worli2: "worli2",
     Cards3J: "3cardj",
@@ -489,7 +490,11 @@ const CasinoWrapper = (props: any) => {
     "dragon tiger 1 day": "dt6",
     lucky7: "lucky7",
     dt20b: "dt202",
-    Superover: 3060,
+    Superover: "3060",
+    opentp:"teen8",
+    testtp:"testtp",
+    cricket2020:"cmatch20",
+    fivewicket:"cricketv3",
   };
 
   // Assume `gameCode` comes from API response
@@ -675,7 +680,9 @@ const CasinoWrapper = (props: any) => {
                         height={isMobile ? "250" : "420"}
                         style={{ border: "0px" }}
                         // src={casinoMatchData?.tv}
-                         src={`https://mac88-casino-stream.scoreswift.xyz/stream?stream_id=${gameId}`}
+                        //  src={`https://mac88-casino-stream.scoreswift.xyz/stream?stream_id=${gameId}`}
+
+                         src={`https://live.cricketid.xyz/casino-tv?id=${gameId}`}
 
                         sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
                         seamless

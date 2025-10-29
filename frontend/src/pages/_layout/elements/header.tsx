@@ -189,20 +189,26 @@ const Header = () => {
 
             <ul className='flex05 justify-content-end d-flex profile-right-side'>
               <div className='row-deposit-button mr-20'>
-                <CustomLink className='btn btn-deposit mr-10' to={'/deposit'}>Deposit</CustomLink>
-                <CustomLink className='btn btn-withdraw' to={'/withdraw'}>Withdraw</CustomLink>
+                <CustomLink className='btn btn-deposit mr-10' to={'/deposit'}> <img src="/depositimg.webp" className="w-2 mr-1" /> Deposit</CustomLink>
+                <CustomLink className='btn btn-withdraw' to={'/withdraw'}>  <img src="/withdrawimg.webp" className="w-2 mr-1" /> Withdraw</CustomLink>
               </div>
 
 <button
-  className="btn btn-success mr-2 d-n"
+style={{position: "fixed",
+  zIndex: "999",
+  bottom: "50px",
+  background:"none",
+  border:"none",
+}}
+  className="btns btn-successx mr-2 d-n"
   onClick={() => {
     if (userParentAlldata?.parent?.phone) {
-      const phoneNumber = userParentAlldata?.parent?.phone.replace(/[^0-9]/g, ""); // sirf digits rakhega
+      const phoneNumber = userParentAlldata?.parent?.phone?.replace(/[^0-9]/g, ""); // sirf digits rakhega
       window.open(`https://wa.me/${phoneNumber}`, "_blank");
     }
   }}
 >
-  <WhatsAppIcon /> 
+  <img style={{width:"75px"}} src="/wp_support.webp" className="" />
 </button>
               {!isMobile ? (
                 <>

@@ -23,7 +23,7 @@ const validationSchema = Yup.object().shape({
     .strict(true)
     .required('Username is required')
     .matches(/^[A-Z][a-z0-9_-]{3,19}$/, 'Must Contain One Uppercase'),
-  transactionPassword: Yup.string().required('Transaction Password is required'),
+  // transactionPassword: Yup.string().required('Transaction Password is required'),
   password: Yup.string()
     .required('Password is required')
     .min(8, 'Password must be at least 8 characters')
@@ -36,7 +36,7 @@ const validationSchema = Yup.object().shape({
     .oneOf([Yup.ref('password')], 'Passwords must match'),
   role: Yup.string().required('Role is required'),
   fullname: Yup.string().required('Full name is required'),
-  creditRefrences: Yup.string().required('Credit Reference is required'),
+  // creditRefrences: Yup.string().required('Credit Reference is required'),
   exposerLimit: Yup.string().when('role', {
     is: 'user',
     then: Yup.string().required('Exposer Limit is required'),
@@ -310,7 +310,7 @@ const AddUser = () => {
                           )}
                         </div>
                       </div>
-                      <div className='col-md-6'>
+                    {!isExposerAllow &&   <div className='col-md-6'>
                         <div className='form-group'>
                           <label htmlFor='fullname'>Full Name:</label>
                           <input
@@ -328,8 +328,8 @@ const AddUser = () => {
                             </span>
                           )}
                         </div>
-                      </div>
-                      <div className='col-md-6'>
+                      </div>}
+                    { !isExposerAllow &&  <div className='col-md-6'>
                         <div className='form-group'>
                           <label htmlFor='city'>City:</label>
                           <input
@@ -347,8 +347,8 @@ const AddUser = () => {
                             </span>
                           )}
                         </div>
-                      </div>
-                      <div className='col-md-6'>
+                      </div>}
+                     { !isExposerAllow &&  <div className='col-md-6'>
                         <div className='form-group'>
                           <label htmlFor='phone'>Phone. no:</label>
                           <input
@@ -365,7 +365,7 @@ const AddUser = () => {
                             </span>
                           )}
                         </div>
-                      </div>
+                      </div>}
                     </div>
                   </div>
                   <div className='col-md-6 account-detail'>
@@ -399,7 +399,7 @@ const AddUser = () => {
                           )}
                         </div>
                       </div>
-                      <div className='col-md-6'>
+                      { !isExposerAllow &&  <div className='col-md-6'>
                         <div className='form-group'>
                           <label htmlFor='creditrefrence'>Credit Reference:</label>
                           <input
@@ -418,7 +418,7 @@ const AddUser = () => {
                             </span>
                           )}
                         </div>
-                      </div>
+                      </div>}
                       {isExposerAllow && (
                         <div className='col-md-6'>
                           <div className='form-group' id='exposer-limit'>
@@ -574,7 +574,7 @@ const AddUser = () => {
                     </div>
                   </div>
                 )}
-                <div className='row m-t-20' id='min-max-bet-div'>
+             { !isExposerAllow &&    <div className='row m-t-20' id='min-max-bet-div'>
                   <div className='col-md-12'>
                     <h4 className='m-b-20 col-md-12'>Min Max Bet</h4>
                     <table className='table table-striped table-bordered'>
@@ -698,8 +698,8 @@ const AddUser = () => {
                       </tbody>
                     </table>
                   </div>
-                </div>
-                <div className='row m-t-20'>
+                </div>}
+               { !isExposerAllow &&  <div className='row m-t-20'>
                   <div className='col-md-12'>
                     <div className='form-group col-md-3 float-right'>
                       <label htmlFor='transactionPassword'>Transaction Password:</label>
@@ -719,7 +719,7 @@ const AddUser = () => {
                       )}
                     </div>
                   </div>
-                </div>
+                </div>}
                 <div className='row m-t-20'>
                   <div className='col-md-12'>
                     <div className='float-right'>

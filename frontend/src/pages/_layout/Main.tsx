@@ -15,13 +15,14 @@ import { useNavigateCustom } from './elements/custom-link'
 import { ToastContainer } from 'react-toastify'
 import { CONSTANTS } from '../../utils/constants'
 import { selectInitApp, selectLoader } from '../../redux/actions/common/commonSlice'
-import { isMobile } from 'react-device-detect'
+// import { isMobile } from 'react-device-detect'
 import Welcome from '../Rules/welcome'
 import { useWebsocketUser } from '../../context/webSocketUser'
 
-// const isMobile = true
+
 
 const Main = () => {
+  const isMobile = true
   const dispatch = useDispatch()
   const userState = useAppSelector<{ user: User }>(selectUserData)
   const loader = useAppSelector(selectLoader)

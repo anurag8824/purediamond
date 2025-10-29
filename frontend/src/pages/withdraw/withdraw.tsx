@@ -3,6 +3,7 @@ import useDeposit from '../../_hooks/useDeposit'
 import AddAccountModalPari from './AddBankModalPari'
 import AddUpiModalPari from './AddUpiModalPari'
 import useWithdraw from '../../_hooks/useWithdraw'
+import WithdrawStatement2 from '../withdrawstatement/withdrawstatement2'
 
 const Withdraw = () => {
   const {
@@ -158,6 +159,8 @@ const Withdraw = () => {
       </form>
       <AddAccountModalPari onSuccess={getBankAndUpiList} />
       <AddUpiModalPari onSuccess={getBankAndUpiList} />
+
+      <WithdrawStatement2 />
     </div>
   )
 }
