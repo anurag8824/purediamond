@@ -418,9 +418,9 @@ const ListClients = () => {
     <>
       <div className='container-fluid'>
         <div className='row'>
-          <div className='master-balance'>
+          <div className='master-balance d-none'>
             <div
-              className='text-center'
+              className='text-center '
               onClick={() => {
                 setuserresponse()
               }}
