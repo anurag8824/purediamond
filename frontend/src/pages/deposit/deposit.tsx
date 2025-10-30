@@ -138,30 +138,8 @@ const Deposit = () => {
                         onChange={(e) => handleUploadedUTR(e, "upi")}
                       />
                     </div>
-                    <div className="p-2 w-100 d-flexxx d-none align-items-center justify-content-between">
-                      <div
-                        className={`upload-ss ${
-                          amount && amount > 0 ? "" : "pay-disable"
-                        }`}
-                      >
-                        <input
-                          type="file"
-                          id="upload-14624"
-                          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                          //@ts-expect-error
-                          disabled={`${amount && amount > 0 ? "" : "disabled"}`}
-                          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                          //@ts-expect-error
-                          hidden="hidden"
-                          accept="image/png, image/jpg, image/jpeg"
-                          {...register("imageUrl")}
-                          onChange={(e) => handleUploadedFile(e, "upi")}
-                        />
-                        <label htmlFor="upload-14624">
-                          <i className="fas fa-plus-circle mr-1" />
-                          Choose File
-                        </label>
-                      </div>
+                    <div className="p-2 w-100 d-flexx d-none align-items-center justify-content-between">
+                    
 
                       <button
                         className={`payment-pay-now d-flex flex-wrap justify-content-center ${
@@ -282,25 +260,25 @@ const Deposit = () => {
                       />
                     </div>
                     <div className="p-2 w-100 gap-2 align-items-center justify-content-between">
-                      <div
+                    <div
                         className={`upload-ss ${
-                          amount != undefined ? "" : "pay-disable"
+                          amount && amount > 0 ? "" : "pay-disable"
                         }`}
                       >
                         <input
                           type="file"
-                          id="upload-14623"
+                          id="upload-14624"
                           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                           //@ts-expect-error
-                          disabled={`${amount != undefined ? "" : "disabled"}`}
+                          disabled={`${amount && amount > 0 ? "" : "disabled"}`}
                           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                           //@ts-expect-error
                           hidden="hidden"
                           accept="image/png, image/jpg, image/jpeg"
                           {...register("imageUrl")}
-                          onChange={(e) => handleUploadedFile(e, "bank")}
+                          onChange={(e) => handleUploadedFile(e, "upi")}
                         />
-                        <label htmlFor="upload-14623 mb-2">
+                        <label htmlFor="upload-14624">
                           <i className="fas fa-plus-circle mr-1" />
                           Choose File
                         </label>
@@ -331,10 +309,10 @@ const Deposit = () => {
 
 
                       <button
-                        className={`payment-pay-now d-flex flex-wrap justify-content-center ${
+                        className={`payment-pay-now d-flex flex-wrap justify-content-center bg-success text-white ${
                           preview?.imagePath && preview?.type == "bank"
                             ? ""
-                            : "pay-disable"
+                            : ""
                         }`}
                         type="submit"
                       >
