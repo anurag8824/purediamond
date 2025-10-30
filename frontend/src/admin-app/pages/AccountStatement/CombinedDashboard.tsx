@@ -29,6 +29,9 @@ const CombinedDashboard = () => {
   const [itemsPerPage] = React.useState<any>(50);
   const [pageCount, setPageCount] = React.useState<any>(0);
 
+    const [userbook, setUserBook] = React.useState<any>(false)
+     const [userBookData, setUserBookData] = React.useState<any>({})
+
   const [isOpen, setIsOpen] = React.useState(false);
   const [betHistory, setBetHistory] = React.useState<any>({});
   const [selectedStmt, setSelectedStmt] = React.useState<AccoutStatement>(
@@ -222,6 +225,21 @@ const CombinedDashboard = () => {
 
   console.log(dataDash);
 
+    const setuserresponse = () => {
+      if (!userbook) {
+        userService.getUserBook().then((res: AxiosResponse<any>) => {
+          setUserBook(true)
+          setUserBookData(res.data.data)
+        })
+      } else {
+        setUserBook(false)
+      }
+    }
+
+    React.useEffect(() => {
+      setuserresponse()
+    }, [])
+
   return (
     <>
       {mobileSubheader.subheaderdesktopadmin("Dashboard Data")}
@@ -389,7 +407,7 @@ const CombinedDashboard = () => {
               />
             </div>
 
-            <div className="container my-4">
+            <div className="container my-4 d-none">
               <div className="row">
                 <div className="col-6 col-lg-3">
                   <div className="dashboard-card">
@@ -442,6 +460,79 @@ const CombinedDashboard = () => {
                 
               </div>
             </div>
+
+
+            <div className='master-balance-detail m-t-20' id='master-balance-detail'>
+                <div className='master-balancef'>
+                  <div className='master-balance-detail m-t-20' id='master-balance-detail'>
+                    <div className='row gap-2'>
+                      <div className='col-md-4 border'>
+                        <label className='col-md-8 text-left  p-0'>
+                          Upper Level Credit Referance:
+                        </label>
+                        <span className='text-right col-md-4  p-0'>
+                          {userBookData.uplevelcr?.toFixed(2)}
+                        </span>
+                      </div>
+                      <div className='col-md-4 border'>
+                        <label className='col-md-8 text-left p-0'>Down level Occupy Balance:</label>
+                        <span className='text-right col-md-4  p-0'>
+                          {userBookData.downlineob?.toFixed(2)}
+                        </span>
+                      </div>
+                      <div className='col-md-4 border'>
+                        <label className='col-md-8 text-left p-0 '>
+                          Down Level Credit Referance:
+                        </label>
+                        <span className='text-right col-md-4  p-0'>
+                          {userBookData.downcr?.toFixed(2)}
+                        </span>
+                      </div>
+                      <div className='col-md-4 border'>
+                        <label className='col-md-8 text-left p-0'>Total Master Balance</label>
+                        <span className='text-right col-md-4 p-0'>
+                          {userBookData.totalmasterb?.toFixed(2)}
+                        </span>
+                      </div>
+                      <div className='col-md-4 border'>
+                        <label className='col-md-8 text-left p-0'>Upper Level:</label>
+                        <span className='text-right col-md-4 p-0'>
+                          {userBookData.upperlvell?.toFixed(2)}
+                        </span>
+                      </div>
+                      <div className='col-md-4 border'>
+                        <label className='col-md-8 text-left p-0'>Down Level Profit/Loss :</label>
+                        <span className='text-right col-md-4 p-0'>
+                          {userBookData.downpl?.toFixed(2)}
+                        </span>
+                      </div>
+                      <div className='col-md-4 border'>
+                        <label className='col-md-8 text-left p-0'>Available Balance:</label>
+                        <span className='text-right col-md-4 p-0'>
+                          {userBookData.availableB?.toFixed(2)}
+                        </span>
+                      </div>
+                      <div className='col-md-4 border'>
+                        <label className='col-md-8 text-left p-0'>
+                          Available Balance With Profit/Loss:
+                        </label>
+                        <span className='text-right col-md-4 p-0'>
+                          {userBookData.avpl?.toFixed(2)}
+                        </span>
+                      </div>
+                      <div  className='col-md-4 border'>
+                        <label className='col-md-8 text-left p-0'>My Profit/Loss:</label>
+                        <span className='text-right col-md-4 p-0'>
+                          {userBookData.mypl?.toFixed(2)}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
           </div>
         </div>
       </div>

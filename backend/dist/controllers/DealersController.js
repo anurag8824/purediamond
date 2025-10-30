@@ -133,10 +133,9 @@ class DealersController extends ApiController_1.ApiController {
                         }
                         updatedUserSetting = this.getUserSetting(userSetting, parentUser.userSetting);
                     }
-                    if (role === Role_1.RoleType.user) {
-                        if (!exposerLimit)
-                            this.fail(res, 'Exposer Limit is reuired field');
-                    }
+                    // if (role === RoleType.user) {
+                    //   if (!exposerLimit) this.fail(res, 'Exposer Limit is reuired field')
+                    // }
                     const newUserParentStr = (parentUser === null || parentUser === void 0 ? void 0 : parentUser.parentStr)
                         ? [...parentUser === null || parentUser === void 0 ? void 0 : parentUser.parentStr, parentUser._id]
                         : [parentUser._id];

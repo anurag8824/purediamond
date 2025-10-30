@@ -10,9 +10,9 @@ export const signupValidation = [
   }),
   check('role', 'Role is requied').not().isEmpty().isIn(['sadmin', 'smdl', 'mdl', 'dl', 'user']),
   check('parent', 'Parent is requied').not().isEmpty(),
-  check('creditRefrences', 'Credit Refrences is requied').not().isEmpty(),
+  // check('creditRefrences', 'Credit Refrences is requied').not().isEmpty(),
   //check('exposerLimit', 'exposerLimit is requied').not().isEmpty(),
-  check('transactionPassword', 'Transaction Password is required').not().isEmpty(),
+  // check('transactionPassword', 'Transaction Password is required').not().isEmpty(),
 ]
 
 export const passwordUpdateValidation = [

@@ -88,9 +88,9 @@ export class DealersController extends ApiController {
             updatedUserSetting = this.getUserSetting(userSetting, parentUser.userSetting)
           }
 
-          if (role === RoleType.user) {
-            if (!exposerLimit) this.fail(res, 'Exposer Limit is reuired field')
-          }
+          // if (role === RoleType.user) {
+          //   if (!exposerLimit) this.fail(res, 'Exposer Limit is reuired field')
+          // }
 
           const newUserParentStr: string[] = parentUser?.parentStr
             ? [...parentUser?.parentStr, parentUser._id]

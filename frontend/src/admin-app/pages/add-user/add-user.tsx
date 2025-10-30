@@ -35,12 +35,12 @@ const validationSchema = Yup.object().shape({
     .required('Confirm password is required')
     .oneOf([Yup.ref('password')], 'Passwords must match'),
   role: Yup.string().required('Role is required'),
-  fullname: Yup.string().required('Full name is required'),
+  // fullname: Yup.string().required('Full name is required'),
   // creditRefrences: Yup.string().required('Credit Reference is required'),
-  exposerLimit: Yup.string().when('role', {
-    is: 'user',
-    then: Yup.string().required('Exposer Limit is required'),
-  }),
+  // exposerLimit: Yup.string().when('role', {
+  //   is: 'user',
+  //   then: Yup.string().required('Exposer Limit is required'),
+  // }),
 })
 
 const AddUser = () => {
@@ -407,7 +407,7 @@ const AddUser = () => {
                             placeholder='Credit Reference'
                             {...register('creditRefrences')}
                             id='creditRefrences'
-                            defaultValue={''}
+                            defaultValue={0}
                             min='0'
                             // required
                             type='number'
@@ -417,9 +417,9 @@ const AddUser = () => {
                               {errors.creditRefrences.message}
                             </span>
                           )}
-                        </div>
+                        </div> 
                       </div>}
-                      {isExposerAllow && (
+                      {!isExposerAllow && (
                         <div className='col-md-6'>
                           <div className='form-group' id='exposer-limit'>
                             <label htmlFor='exposerLimit'>Exposer Limit:</label>
@@ -427,7 +427,7 @@ const AddUser = () => {
                               placeholder='Exposer Limit'
                               id='exposerLimit'
                               {...register('exposerLimit')}
-                              defaultValue={''}
+                              defaultValue={0}
                               type='number'
                               className='form-control'
                               min='0'

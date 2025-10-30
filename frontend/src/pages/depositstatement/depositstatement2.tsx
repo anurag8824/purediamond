@@ -25,7 +25,7 @@ const DepositStatement2 = () => {
   }, [])
 
   const getAccountStmt = (page: number) => {
-    const type = location.pathname == '/withdrawstatement' || "/withdraw" ? 'withdraw' : 'deposit'
+    const type = location.pathname == '/withdraw'  ? 'withdraw' : 'deposit'
     depositWithdrawService
       .getDepositWithdrawLists({ type: type, ...filterData })
       .then((res) => setDepositStatement(res?.data?.data))

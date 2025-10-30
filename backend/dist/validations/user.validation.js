@@ -12,9 +12,9 @@ exports.signupValidation = [
     }),
     (0, express_validator_1.check)('role', 'Role is requied').not().isEmpty().isIn(['sadmin', 'smdl', 'mdl', 'dl', 'user']),
     (0, express_validator_1.check)('parent', 'Parent is requied').not().isEmpty(),
-    (0, express_validator_1.check)('creditRefrences', 'Credit Refrences is requied').not().isEmpty(),
+    // check('creditRefrences', 'Credit Refrences is requied').not().isEmpty(),
     //check('exposerLimit', 'exposerLimit is requied').not().isEmpty(),
-    (0, express_validator_1.check)('transactionPassword', 'Transaction Password is required').not().isEmpty(),
+    // check('transactionPassword', 'Transaction Password is required').not().isEmpty(),
 ];
 exports.passwordUpdateValidation = [
     (0, express_validator_1.check)('username', 'Username is requied').not().isEmpty(),
