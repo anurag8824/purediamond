@@ -1941,7 +1941,7 @@ export default class CasinoController extends ApiController {
       if (type === "AAA") type = "aaa";
 
       let response = await axios.get(
-        `http://168.231.116.239:3000/tabledata2/${type}`
+        `http://72.61.18.12:3000/tabledata2/${type}`
       );
       let data = response.data;
 
