@@ -1018,11 +1018,11 @@ const fetchData = async (type: string) => {
     // type = type ===  ""
 
     const tableDataResponse = await axios.get(
-      `http://168.231.116.239:3000/tabledata2/${type}`
+      `http://72.61.18.12:3000/tabledata2/${type}`
     );
     // const iframeResponse = await axios.get(`http://168.231.116.239:3000/iframe/${type}`);
     const casinoResultResponse = await axios.get(
-      `http://168.231.116.239:3000/casinoresult2/${type}`
+      `http://72.61.18.12:3000/casinoresult2/${type}`
     );
     const iframeResponse: any = {};
 
@@ -1230,7 +1230,7 @@ const sids = async (data: any, type: any) => {
 const resultDetail = async (slug: string, mid: string): Promise<boolean> => {
   try {
     const res = await axios.get(
-      `http://168.231.116.239:3000/detailresult2/${slug}/${mid}`
+      `http://72.61.18.12:3000/detailresult2/${slug}/${mid}`
     );
     console.log(res.data, "Response for resultDetails");
 
