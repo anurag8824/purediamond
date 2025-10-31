@@ -30,6 +30,8 @@ const Role_1 = require("../models/Role");
 const AccountController_1 = require("./AccountController");
 const Balance_1 = require("../models/Balance");
 const Upi_1 = require("../models/Upi");
+const AccountStatement_1 = require("../models/AccountStatement");
+const UserChip_1 = require("../models/UserChip");
 class DepositWithdrawController extends ApiController_1.ApiController {
     constructor() {
         super(...arguments);
@@ -77,7 +79,51 @@ class DepositWithdrawController extends ApiController_1.ApiController {
                 return this.fail(res, e);
             }
         });
-        this.addDepositWithdraw = (req, res) => __awaiter(this, void 0, void 0, function* () {
+        this.calculatepnl = (userId, type = 'W') => __awaiter(this, void 0, void 0, function* () {
+            // const parent = await User.findOne(
+            //   {
+            //     parentStr: { $elemMatch: { $eq: Types.ObjectId(userId) } },
+            //     role: RoleType.user,
+            //   },
+            //   { _id: 1 },
+            // )
+            //   .distinct('_id')
+            //   .lean()
+            // if (user.role == RoleType.user) {
+            //   parent.push(userId)
+            // }
+            // const pnl = await AccoutStatement.aggregate([
+            //   { $match: { userId: { $in: parent }, betId: { $ne: null } } },
+            //   {
+            //     $group: {
+            //       _id: null,
+            //       totalAmount: { $sum: '$amount' },
+            //     },
+            //   },
+            // ]);
+            const bal = yield Balance_1.Balance.findOne({ userId: userId }).select({ profitLoss: 1 });
+            // const withdrawlsum = await AccoutStatement.aggregate([
+            //   {
+            //     $match: {
+            //       userId: Types.ObjectId(userId),
+            //       betId: { $eq: null },
+            //       txnId: { $eq: null },
+            //       txnType: TxnType.dr,
+            //     },
+            //   },
+            //   {
+            //     $group: {
+            //       _id: null,
+            //       totalAmount: { $sum: '$amount' },
+            //     },
+            //   },
+            // ])
+            // const withdAmt = withdrawlsum && withdrawlsum.length > 0 ? withdrawlsum[0].totalAmount : 0
+            // //const pnl_ = pnl && pnl.length > 0 ? pnl[0].totalAmount + withdAmt : 0
+            // const pnl_ = bal?.profitLoss ? bal?.profitLoss + withdAmt : 0
+            return (bal === null || bal === void 0 ? void 0 : bal.profitLoss) ? bal === null || bal === void 0 ? void 0 : bal.profitLoss : 0;
+        });
+        this.addDepositWithdrawOldddd = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
                 let user = req.user;
                 user = yield User_1.User.findOne({ _id: mongoose_1.Types.ObjectId(user === null || user === void 0 ? void 0 : user._id) });
@@ -92,6 +138,54 @@ class DepositWithdrawController extends ApiController_1.ApiController {
                     throw Error('Insufficient amount to withdrawal, Due to pending exposure or less amount');
                 }
                 yield DepositWithdraw_1.DepositWithdraw.create(Object.assign(Object.assign({ userId: user._id, parentId: parentUsers === null || parentUsers === void 0 ? void 0 : parentUsers.pop(), parentStr: user.parentStr, username: user.username }, req.body), { imageUrl: filePath, orderId: Date.now(), utrno: utrno }));
+                return this.success(res, { success: true }, `${req.body.type === 'deposit' ? 'Deposit' : 'Withdraw'} amount added successfully`);
+            }
+            catch (e) {
+                return this.fail(res, e.message);
+            }
+        });
+        this.addDepositWithdraw = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                let user = req.user;
+                user = yield User_1.User.findOne({ _id: mongoose_1.Types.ObjectId(user === null || user === void 0 ? void 0 : user._id) });
+                const filePath = req.file ? req.file.path : null;
+                const { type, utrno, amount, narration } = req.body;
+                const amt = Number(amount);
+                const parentUsers = [...user.parentStr];
+                const checkWithdraw = yield DepositWithdraw_1.DepositWithdraw.findOne({ userId: user._id, status: 'pending', type: type });
+                if (checkWithdraw)
+                    throw Error(`You have already created ${type} request!`);
+                const getBalWithExp = yield Balance_1.Balance.findOne({ userId: user._id });
+                if (getBalWithExp.balance - getBalWithExp.exposer < req.body.amount && type == "withdraw") {
+                    throw Error('Insufficient amount to withdrawal, Due to pending exposure or less amount');
+                }
+                if (type === 'withdraw') {
+                    // STEP 1: Deduct immediately
+                    const prevBal = yield this.getUserBalance(user._id.toString());
+                    const closeBal = prevBal - amt;
+                    // Add accounting entry
+                    const accStmt = new AccountStatement_1.AccoutStatement({
+                        userId: user._id,
+                        narration: narration || 'Withdrawal request (on hold)',
+                        amount: -amt,
+                        type: AccountStatement_1.ChipsType.fc,
+                        txnType: UserChip_1.TxnType.dr,
+                        openBal: prevBal,
+                        closeBal: closeBal,
+                        txnBy: user.username,
+                    });
+                    yield accStmt.save();
+                    // Update Balance
+                    const pnl = yield this.calculatepnl(user._id, 'W');
+                    const mainBal = yield this.getUserDepWithBalance(user._id);
+                    yield Balance_1.Balance.findOneAndUpdate({ userId: user._id }, {
+                        balance: closeBal,
+                        profitLoss: pnl - amt,
+                        mainBalance: mainBal,
+                    }, { new: true, upsert: true });
+                }
+                // STEP 2: Create the withdraw/deposit request
+                yield DepositWithdraw_1.DepositWithdraw.create(Object.assign(Object.assign({ userId: user._id, parentId: parentUsers === null || parentUsers === void 0 ? void 0 : parentUsers.pop(), parentStr: user.parentStr, username: user.username }, req.body), { imageUrl: filePath, orderId: Date.now(), utrno: utrno, status: 'pending' }));
                 return this.success(res, { success: true }, `${req.body.type === 'deposit' ? 'Deposit' : 'Withdraw'} amount added successfully`);
             }
             catch (e) {
@@ -133,7 +227,8 @@ class DepositWithdrawController extends ApiController_1.ApiController {
                 return this.fail(res, e);
             }
         });
-        this.updateDepositWithdraw = (req, res) => __awaiter(this, void 0, void 0, function* () {
+        ////oldddwala
+        this.updateDepositWithdrawoldddd = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
                 const user = req.user;
                 const _a = req.body, { id, status } = _a, rest = __rest(_a, ["id", "status"]);
@@ -167,6 +262,91 @@ class DepositWithdrawController extends ApiController_1.ApiController {
             catch (e) {
                 return this.fail(res, e);
             }
+        });
+        this.updateDepositWithdraw = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const user = req.user;
+                const _b = req.body, { id, status } = _b, rest = __rest(_b, ["id", "status"]);
+                const txn = yield DepositWithdraw_1.DepositWithdraw.findOne({
+                    _id: mongoose_1.Types.ObjectId(id),
+                    status: 'pending',
+                });
+                if (!txn)
+                    return this.fail(res, 'Entry not found');
+                txn.remark = req.body.narration;
+                if (status === 'approved') {
+                    // ✅ Already deducted at request time
+                    txn.status = 'approved';
+                    txn.remark = req.body.narration || 'Withdrawal approved';
+                    yield txn.save();
+                    return this.success(res, { success: true }, 'Withdrawal Approved');
+                }
+                else if (status === 'rejected') {
+                    // ❌ Need to reverse deduction
+                    const userId = txn.userId;
+                    const amt = txn.amount;
+                    const prevBal = yield this.getUserBalance(userId.toString());
+                    const closeBal = prevBal + amt;
+                    // Reverse accounting entry
+                    const accStmt = new AccountStatement_1.AccoutStatement({
+                        userId,
+                        narration: req.body.narration || 'Withdrawal rejected (amount refunded)',
+                        amount: amt,
+                        type: AccountStatement_1.ChipsType.fc,
+                        txnType: UserChip_1.TxnType.cr,
+                        openBal: prevBal,
+                        closeBal,
+                        txnBy: 'System',
+                    });
+                    yield accStmt.save();
+                    // Update balance
+                    const pnl = yield this.calculatepnl(userId, 'D');
+                    const mainBal = yield this.getUserDepWithBalance(userId);
+                    yield Balance_1.Balance.findOneAndUpdate({ userId }, { balance: closeBal, profitLoss: pnl + amt, mainBalance: mainBal }, { new: true, upsert: true });
+                    txn.status = 'rejected';
+                    txn.remark = req.body.narration || 'Withdrawal rejected';
+                    yield txn.save();
+                    return this.success(res, { success: true }, 'Withdrawal Rejected and amount refunded');
+                }
+                else {
+                    return this.fail(res, 'Invalid status');
+                }
+                // await DepositWithdraw.findOneAndUpdate({ _id: id }, { ...rest })
+            }
+            catch (e) {
+                return this.fail(res, e);
+            }
+        });
+    }
+    //old adddepostiwithdraw
+    getUserBalance(userId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const ac = yield AccountStatement_1.AccoutStatement.aggregate([
+                { $match: { userId: mongoose_1.Types.ObjectId(userId) } },
+                {
+                    $group: {
+                        _id: null,
+                        totalAmount: { $sum: '$amount' },
+                    },
+                },
+            ]);
+            const Balance_ = ac && ac.length > 0 ? ac[0].totalAmount : 0;
+            return Balance_;
+        });
+    }
+    getUserDepWithBalance(userId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const ac = yield AccountStatement_1.AccoutStatement.aggregate([
+                { $match: { userId: mongoose_1.Types.ObjectId(userId), type: AccountStatement_1.ChipsType.fc } },
+                {
+                    $group: {
+                        _id: null,
+                        totalAmount: { $sum: '$amount' },
+                    },
+                },
+            ]);
+            const Balance_ = ac && ac.length > 0 ? ac[0].totalAmount : 0;
+            return Balance_;
         });
     }
 }

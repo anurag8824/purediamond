@@ -73,6 +73,7 @@ const TwentyCricketItem = (props: any) => {
       : ''
 
    const totalDealerCard = lastOdds?.cards?.C1!='1' ? (calculateTotalNumbersFromString(lastOdds?.cards?.C1 || '')) : 0
+
    return (
     <div className={`score-box btn-theme ${clsstatus}`}>
       <img src={`imgs/casino/ball${imagename}.png`} className='img-fluid ball-image' />

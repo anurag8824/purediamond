@@ -46,7 +46,7 @@ const QueenBackItem = (props: any) => {
     const suspended = !liveMarketData.gstatus || liveMarketData.gstatus == 'SUSPENDED' || liveMarketData.gstatus == 'CLOSED' ? 'suspended' : ''
 
     return <>
-        <div className={`casino-odds-box casino-yn ${liveMatchData.slug=='race2020' ? 'race20win': ''}`}>
+        <div className={`casino-odds-box casino-yn ${liveMatchData?.slug=='race2020' ? 'race20win': ''}`}>
             <div
                 className={`back-border  ${suspended}`}
                 onClick={() => onBet(true, liveMarketData)}

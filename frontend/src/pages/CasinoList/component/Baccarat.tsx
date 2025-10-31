@@ -98,11 +98,13 @@ const Baccarat = (props: any) => {
   }
   const displayCard = (classn: any, cardIndex: any) => {
     const lastCard = lastOdds?.[`cards`]
+    console.log('lastCard', lastCard);
     return <div className={`player-card ${classn}`} style={{display:"flex"}}>
+      
       {cardIndex.map((Item: any, index: number) => {
               const clsbacrrat2 = Item == 5 ? 'rrotate' : ((Item == 6) ?'rrotate' : '')
         return <img key={index}
-          src={`/imgs/casino/cards/${lastCard?.[`C${Item}`]|| "patti_back"}.png`}
+        src={`/imgs/casino/cards/${lastCard?.[`C${Item}`] === "1" ? "patti_back" : lastCard?.[`C${Item}`]}.png`}
           className={`${clsbacrrat2} mr--1`}
           style={{marginRight:"5px"}}
         />

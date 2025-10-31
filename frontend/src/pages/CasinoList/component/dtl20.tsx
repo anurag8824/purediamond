@@ -168,7 +168,7 @@ const Dtl20Layout = (props: any) => {
     <div className='container ' style={{ marginTop: "-10px" }}>
       <div className='row casino-32A '>
         <div className='col-lg-12 col-12 m-b-10 main-market' style={{ padding: '0px' }}>
-          {isMobile && lastOdds ? <div className='card-inner card-dtl-mobile'> <div className='d-flex'>
+          {isMobile && lastOdds ? <div className=' card-dtl-mobile'> <div className='d-flex'>
             <div>
               <img
                 src={`https://dzm0kbaskt4pv.cloudfront.net/v11/static/front/img/cards/${lastOdds?.['cards']?.C1}.png`}

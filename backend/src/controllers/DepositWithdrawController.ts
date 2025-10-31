@@ -8,6 +8,8 @@ import { RoleType } from '../models/Role'
 import { AccountController } from './AccountController'
 import { Balance } from '../models/Balance'
 import { Upi } from '../models/Upi'
+import { AccoutStatement, ChipsType } from '../models/AccountStatement'
+import { TxnType } from '../models/UserChip'
 
 export class DepositWithdrawController extends ApiController {
   addBankAccount = async (req: Request, res: Response): Promise<any> => {
@@ -61,7 +63,87 @@ export class DepositWithdrawController extends ApiController {
     }
   }
 
-  addDepositWithdraw = async (req: Request, res: Response): Promise<any> => {
+  //old adddepostiwithdraw
+
+
+  async getUserBalance(userId: string) {
+    const ac = await AccoutStatement.aggregate([
+      { $match: { userId: Types.ObjectId(userId) } },
+      {
+        $group: {
+          _id: null,
+          totalAmount: { $sum: '$amount' },
+        },
+      },
+    ])
+    const Balance_ = ac && ac.length > 0 ? ac[0].totalAmount : 0
+    return Balance_
+  }
+
+  calculatepnl = async (userId: any, type: string = 'W') => {
+    // const parent = await User.findOne(
+    //   {
+    //     parentStr: { $elemMatch: { $eq: Types.ObjectId(userId) } },
+    //     role: RoleType.user,
+    //   },
+    //   { _id: 1 },
+    // )
+    //   .distinct('_id')
+    //   .lean()
+
+    // if (user.role == RoleType.user) {
+    //   parent.push(userId)
+    // }
+    // const pnl = await AccoutStatement.aggregate([
+    //   { $match: { userId: { $in: parent }, betId: { $ne: null } } },
+    //   {
+    //     $group: {
+    //       _id: null,
+    //       totalAmount: { $sum: '$amount' },
+    //     },
+    //   },
+    // ]);
+    const bal = await Balance.findOne({ userId: userId }).select({ profitLoss: 1 })
+
+    // const withdrawlsum = await AccoutStatement.aggregate([
+    //   {
+    //     $match: {
+    //       userId: Types.ObjectId(userId),
+    //       betId: { $eq: null },
+    //       txnId: { $eq: null },
+    //       txnType: TxnType.dr,
+    //     },
+    //   },
+    //   {
+    //     $group: {
+    //       _id: null,
+    //       totalAmount: { $sum: '$amount' },
+    //     },
+    //   },
+    // ])
+    // const withdAmt = withdrawlsum && withdrawlsum.length > 0 ? withdrawlsum[0].totalAmount : 0
+    // //const pnl_ = pnl && pnl.length > 0 ? pnl[0].totalAmount + withdAmt : 0
+    // const pnl_ = bal?.profitLoss ? bal?.profitLoss + withdAmt : 0
+    return bal?.profitLoss ? bal?.profitLoss : 0
+  }
+
+
+  async getUserDepWithBalance(userId: string) {
+    const ac = await AccoutStatement.aggregate([
+      { $match: { userId: Types.ObjectId(userId), type: ChipsType.fc } },
+      {
+        $group: {
+          _id: null,
+          totalAmount: { $sum: '$amount' },
+        },
+      },
+    ])
+    const Balance_ = ac && ac.length > 0 ? ac[0].totalAmount : 0
+    return Balance_
+  }
+
+
+  addDepositWithdrawOldddd = async (req: Request, res: Response): Promise<any> => {
     try {
       let user = req.user as IUserModel
       user = await User.findOne({ _id: Types.ObjectId(user?._id)})
@@ -96,6 +178,84 @@ export class DepositWithdrawController extends ApiController {
       return this.fail(res, e.message)
     }
   }
+
+
+
+  addDepositWithdraw = async (req: Request, res: Response): Promise<any> => {
+    try {
+      let user = req.user as IUserModel
+      user = await User.findOne({ _id: Types.ObjectId(user?._id)})
+      const filePath = req.file ? req.file.path : null
+      const { type, utrno ,amount ,narration } = req.body
+      const amt = Number(amount)
+      const parentUsers = [...user.parentStr!]
+      const checkWithdraw = await DepositWithdraw.findOne({ userId: user._id, status: 'pending', type: type })
+      if (checkWithdraw) throw Error(`You have already created ${type} request!`)
+
+      const getBalWithExp: any = await Balance.findOne({ userId: user._id })
+      if (getBalWithExp.balance - getBalWithExp.exposer < req.body.amount && type == "withdraw") {
+        throw Error('Insufficient amount to withdrawal, Due to pending exposure or less amount')
+      }
+
+
+
+      if (type === 'withdraw') {
+        // STEP 1: Deduct immediately
+        const prevBal = await this.getUserBalance(user._id.toString())
+        const closeBal = prevBal - amt
+  
+        // Add accounting entry
+        const accStmt = new AccoutStatement({
+          userId: user._id,
+          narration: narration || 'Withdrawal request (on hold)',
+          amount: -amt,
+          type: ChipsType.fc,
+          txnType: TxnType.dr,
+          openBal: prevBal,
+          closeBal: closeBal,
+          txnBy: user.username,
+        })
+        await accStmt.save()
+  
+        // Update Balance
+        const pnl = await this.calculatepnl(user._id, 'W')
+        const mainBal = await this.getUserDepWithBalance(user._id)
+        await Balance.findOneAndUpdate(
+          { userId: user._id },
+          {
+            balance: closeBal,
+            profitLoss: pnl - amt,
+            mainBalance: mainBal,
+          },
+          { new: true, upsert: true },
+        )
+      }
+
+      // STEP 2: Create the withdraw/deposit request
+    await DepositWithdraw.create({
+      userId: user._id,
+      parentId: parentUsers?.pop(),
+      parentStr: user.parentStr,
+      username: user.username,
+      ...req.body,
+      imageUrl: filePath,
+      orderId: Date.now(),
+      utrno: utrno,
+      status: 'pending',
+    })
+
+      return this.success(
+        res,
+        { success: true },
+        `${req.body.type === 'deposit' ? 'Deposit' : 'Withdraw'} amount added successfully`,
+      )
+    } catch (e: any) {
+      return this.fail(res, e.message)
+    }
+  }
+
+
+
 
   getDepositWithdraw = async (req: Request, res: Response): Promise<any> => {
     try {
@@ -138,7 +298,8 @@ export class DepositWithdrawController extends ApiController {
     }
   }
 
-  updateDepositWithdraw = async (req: Request, res: Response): Promise<any> => {
+  ////oldddwala
+  updateDepositWithdrawoldddd = async (req: Request, res: Response): Promise<any> => {
     try {
       const user = req.user as IUserModel
       const { id, status, ...rest } = req.body
@@ -177,4 +338,69 @@ export class DepositWithdrawController extends ApiController {
       return this.fail(res, e)
     }
   }
+
+
+  updateDepositWithdraw = async (req: Request, res: Response): Promise<any> => {
+    try {
+      const user = req.user as IUserModel
+      const { id, status, ...rest  } = req.body
+      const txn: any = await DepositWithdraw.findOne({
+        _id: Types.ObjectId(id),
+        status: 'pending',
+      })
+      if (!txn) return this.fail(res, 'Entry not found')
+      txn.remark = req.body.narration
+      if (status === 'approved') {
+      // ✅ Already deducted at request time
+      txn.status = 'approved'
+      txn.remark = req.body.narration || 'Withdrawal approved'
+      await txn.save()
+
+      return this.success(res, { success: true }, 'Withdrawal Approved')
+      } else if (status === 'rejected') {
+
+         // ❌ Need to reverse deduction
+      const userId = txn.userId
+      const amt = txn.amount
+      const prevBal = await this.getUserBalance(userId.toString())
+      const closeBal = prevBal + amt
+
+      // Reverse accounting entry
+      const accStmt = new AccoutStatement({
+        userId,
+        narration: req.body.narration || 'Withdrawal rejected (amount refunded)',
+        amount: amt,
+        type: ChipsType.fc,
+        txnType: TxnType.cr,
+        openBal: prevBal,
+        closeBal,
+        txnBy: 'System',
+      })
+      await accStmt.save()
+
+      // Update balance
+      const pnl = await this.calculatepnl(userId, 'D')
+      const mainBal = await this.getUserDepWithBalance(userId)
+      await Balance.findOneAndUpdate(
+        { userId },
+        { balance: closeBal, profitLoss: pnl + amt, mainBalance: mainBal },
+        { new: true, upsert: true },
+      )
+
+      txn.status = 'rejected'
+      txn.remark = req.body.narration || 'Withdrawal rejected'
+      await txn.save()
+
+      return this.success(res, { success: true }, 'Withdrawal Rejected and amount refunded')
+    } else {
+      return this.fail(res, 'Invalid status')
+    }
+
+      // await DepositWithdraw.findOneAndUpdate({ _id: id }, { ...rest })
+    } catch (e: any) {
+      return this.fail(res, e)
+    }
+  }
+
+
 }

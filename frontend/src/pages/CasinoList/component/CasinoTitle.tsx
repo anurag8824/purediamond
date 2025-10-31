@@ -428,21 +428,15 @@ const CasinoTitle = (props: any) => {
         <div className='card-inner'>
           {/* <h3 className='text-white'>DEALER</h3>{' '} */}
           <div className='d-flex'>
-            <img
-              src={`/imgs/casino/cards/${
-                cardData && cardData[8] ? cardData[8] : '1'
-              }.png`}
-            />
-            <img
-              src={`/imgs/casino/cards/${
-                cardData && cardData[17] ? cardData[17] : '1'
-              }.png`}
-            />
-            <img
-              src={`/imgs/casino/cards/${
-                cardData && cardData[26] ? cardData[26] : '1'
-              }.png`}
-            />
+          <img
+          src={`/imgs/casino/cards/${finalString[8] === "1" ? "patti_back" : finalString[8]}.png`}
+         />
+          <img
+          src={`/imgs/casino/cards/${finalString[17] === "1" ? "patti_back" : finalString[17]}.png`}
+         />
+        <img
+          src={`/imgs/casino/cards/${finalString[26] === "1" ? "patti_back" : finalString[26]}.png`}
+        />
           </div>
         </div>
       </div>
@@ -767,36 +761,62 @@ const CasinoTitle = (props: any) => {
     )
   }
 
+  // const fivecricket = () => {
+  //   const cardList = [
+  //     lastResult.C1,
+  //     lastResult.C2,
+  //     lastResult.C3,
+  //     lastResult.C4,
+  //     lastResult.C5,
+  //     lastResult.C6,
+  //   ]
+
+  //   console.log(cardList,"card list in five cricket")
+  //   return (
+  //     lastResult &&
+  //     lastResult.C1 && (
+  //       <div className='video-overlay' style={{ background: 'none' }}>
+  //         <div className='imgspace'>
+  //           {cardList &&
+  //             cardList?.map((Item: any, key: number) => {
+  //               return (
+  //                 <img
+  //                   alt=''
+  //                   className='mb-1'
+  //                   key={key}
+  //                   src={`/imgs/casino/cards/${Item}.png`}
+  //                 />
+  //               )
+  //             })}
+  //         </div>
+  //       </div>
+  //     )
+  //   )
+  // }
+
   const fivecricket = () => {
-    const cardList = [
-      lastResult.C1,
-      lastResult.C2,
-      lastResult.C3,
-      lastResult.C4,
-      lastResult.C5,
-      lastResult.C6,
-    ]
+    const cardString = lastResult?.C1 || ""       // "ACC|ACC|2CC|1|1|1"
+    const cardArray:any = cardString.split("|")       // ["ACC", "ACC", "2CC", "1", "1", "1"]
+  
     return (
       lastResult &&
       lastResult.C1 && (
-        <div className='video-overlay' style={{ background: 'none' }}>
-          <div className='imgspace'>
-            {cardList &&
-              cardList.map((Item: any, key: number) => {
-                return (
-                  <img
-                    alt=''
-                    className='mb-1'
-                    key={key}
-                    src={`/imgs/casino/cards/${Item}.png`}
-                  />
-                )
-              })}
+        <div className="video-overlay" style={{ background: "none" }}>
+          <div className="imgspace">
+            {cardArray?.map((card:any, index:any) => (
+              <img
+                key={index}
+                alt={`card-${index}`}
+                className="mb-1"
+                src={`/imgs/casino/cards/${card === "1" ? "patti_back" : card}.png`}
+              />
+            ))}
           </div>
         </div>
       )
     )
   }
+  
 
   const andarbahar = () => {
     const andarData = lastResult?.t3?.[0]?.aall?.split(',') || []
