@@ -1,18 +1,20 @@
 export const types: any = {
   lucky7: "lucky7",
+  lucky7eu: "lucky7eu",
   lucky7B: "lucky7B",
+  teen3: "teen3",
+  teen20b: "teen20b",
   queen: "Queen",
   aaa: "AAA",
   ddb: "ddb",
   baccarat: "baccarat",
   baccarat2: "baccarat2",
-  dt20: "dragontiger20A",
+  dt20: "dt20",
   card32: "card32a",
   Tp1Day: "Tp1Day",
   dt20b: "dt20b",
   onedaypoker: "onedaypoker",
   onedaypoker20: "onedaypoker20",
-  teen20: "t20Odds",
   dragontiger1Day: "dragontiger1Day",
   dtl20: "dtl20",
   race2020: "race2020",
@@ -30,16 +32,16 @@ export const types: any = {
   warcasino: "warcasino",
   worlimatka: "worlimatka",
   worliinstant: "worliinstant",
+  teen: "teen",
+  dt202: "dt202"
 };
-
-export const eventJson: any = {
-  
+export const eventJson :any = {
   lucky7: () => import("../event-json/lucky7.json"),
+  // teen3: () => import("../event-json/teen3.json"),
+  // teen20b: () => import("../event-json/teen20b.json"),
   lucky7B: () => import("../event-json/lucky7B.json"),
   queen: () => import("../event-json/queen.json"),
-  Queen: () => import("../event-json/queen.json"),
   aaa: () => import("../event-json/AAA.json"),
-  AAA: () => import("../event-json/AAA.json"),
   ddb: () => import("../event-json/ddb.json"),
   baccarat: () => import("../event-json/baccarat.json"),
   baccarat2: () => import("../event-json/baccarat2.json"),
@@ -49,7 +51,6 @@ export const eventJson: any = {
   dt20b: () => import("../event-json/dt20b.json"),
   onedaypoker: () => import("../event-json/onedaypoker.json"),
   onedaypoker20: () => import("../event-json/onedaypoker20.json"),
-  teen20: () => import("../event-json/teen20.json"),
   dragontiger1Day: () => import("../event-json/dragontiger1Day.json"),
   dtl20: () => import("../event-json/dtl20.json"),
   race2020: () => import("../event-json/race2020.json"),
@@ -67,4 +68,15 @@ export const eventJson: any = {
   warcasino: () => import("../event-json/warcasino.json"),
   worlimatka: () => import("../event-json/worlimatka.json"),
   worliinstant: () => import("../event-json/worliinstant.json"),
+  dt202: () => import("../event-json/dt20b.json")
 };
+
+export const newCasino = [
+  "teen3",
+  "teen20b",
+  "lucky7eu",
+  "lucky7",
+  "teen",
+  "dt202",
+  "dt20"
+];
