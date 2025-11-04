@@ -125,7 +125,7 @@ const CasinoWrapper = (props: any) => {
     /// const ref = useRef();
     casinoService.getLiveCasinoData(gameCode).then((res) => {
       // console.log(res,"responseis here")
-      const fullMarketData = res?.data;
+      const fullMarketData = res?.data?.data;
       console.log(res?.data,"fullMarketData")
       if (casinoMatchData?.match_id != fullMarketData?.match_id) {
         // dispatch(betPopup({ isOpen: false, betData: { ...betValues.betData, stack: 0, pnl: 0 } }))
@@ -279,13 +279,13 @@ const CasinoWrapper = (props: any) => {
             liveMatchData={liveMatchData}
           />
         );
-      case "lucky7B":
+      case "lucky7eu":
       case "lucky7":
         return (
           <LuckSeven lastOdds={updateOdds} liveMatchData={liveMatchData} />
         );
       case "dt20":
-      case "dt20b":
+      case "dt202":
         return (
           <DragonTigerA lastOdds={updateOdds} liveMatchData={liveMatchData} />
         );
@@ -300,14 +300,14 @@ const CasinoWrapper = (props: any) => {
             liveMatchData={liveMatchData}
           />
         );
-      case "Tp1Day":
+      case "teen":
         return (
           <OneDayTeen lastOdds={updateOdds} liveMatchData={liveMatchData} />
         );
       case "baccarat":
       case "baccarat2":
         return <Baccarat lastOdds={updateOdds} liveMatchData={liveMatchData} />;
-      case "poker6player":
+      case "poker6":
         return (
           <Sixplayerpoker lastOdds={updateOdds} liveMatchData={liveMatchData} />
         );
@@ -332,7 +332,7 @@ const CasinoWrapper = (props: any) => {
         return <Cmeter20 lastOdds={updateOdds} liveMatchData={liveMatchData} />;
       case "card32b":
         return <Card32B lastOdds={updateOdds} liveMatchData={liveMatchData} />;
-      case "onedaypoker":
+      case "poker":
         return (
           <Onedaypoker lastOdds={updateOdds} liveMatchData={liveMatchData} />
         );
@@ -340,7 +340,7 @@ const CasinoWrapper = (props: any) => {
         return (
           <Twentydaypoker lastOdds={updateOdds} liveMatchData={liveMatchData} />
         );
-      case "opentp":
+      case "teen8":
         return <OpenTeen lastOdds={updateOdds} liveMatchData={liveMatchData} />;
       case "testtp":
         return <TestTp lastOdds={updateOdds} liveMatchData={liveMatchData} />;
@@ -551,7 +551,7 @@ const CasinoWrapper = (props: any) => {
                   }}
                 >
                   
-                  {liveMatchData && gameId && (
+                  {liveMatchData && gameCode && (
                     <iframe
                       title="stream"
                       width="100%"
@@ -560,7 +560,7 @@ const CasinoWrapper = (props: any) => {
                       // src={casinoMatchData?.tv}
                       // src={`https://mac88-casino-stream.scoreswift.xyz/stream?stream_id=${gameId}`}
 
-                      src={`https://live.cricketid.xyz/casino-tv?id=${gameId}`}
+                      src={`https://sfront.starrexch.me/casino-tv?id=${gameCode}`}
 
                     ></iframe>
                   )}
@@ -571,7 +571,7 @@ const CasinoWrapper = (props: any) => {
                   {casinoMatchData && (
                     <CasinoTitle lastResult={casinoMatchData} />
                   )}
-                  {(gameCode == "onedaypoker" && casinoMatchData?.desc != "") ||
+                  {(gameCode == "poker" && casinoMatchData?.desc != "") ||
                   (gameCode == "onedaypoker20" && casinoMatchData?.desc != "")
                     ? oneDayPokerDescription(casinoMatchData?.desc)
                     : ""}
@@ -635,9 +635,9 @@ const CasinoWrapper = (props: any) => {
                       <MyBetComponent />
                     </div>
                   </div>
-                  {gameCode == "onedaypoker" && <OnedaypokerRules />}
+                  {gameCode == "poker" && <OnedaypokerRules />}
                   {gameCode == "Superover" && <SoRules />}
-                  {gameCode == "opentp" && <Openteenpatti />}
+                  {gameCode == "teen8" && <Openteenpatti />}
                   {gameCode == "fivewicket" && <Cricketv />}
                   {gameCode == "teen20" && <T20 />}
                 </div>
@@ -674,7 +674,7 @@ const CasinoWrapper = (props: any) => {
                       // background: '#000',
                     }}
                   >
-                    {liveMatchData && gameId && (
+                    {liveMatchData && gameCode && (
                       <iframe
                         title="stream"
                         width="100%"
@@ -683,7 +683,7 @@ const CasinoWrapper = (props: any) => {
                         // src={casinoMatchData?.tv}
                         //  src={`https://mac88-casino-stream.scoreswift.xyz/stream?stream_id=${gameId}`}
 
-                         src={`https://live.cricketid.xyz/casino-tv?id=${gameId}`}
+                        src={`https://sfront.starrexch.me/casino-tv?id=${gameCode}`}
 
                         sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
                         seamless
@@ -702,7 +702,7 @@ const CasinoWrapper = (props: any) => {
                     ) : (
                       ""
                     )}
-                    {(gameCode == "onedaypoker" && casinoMatchData?.desc) ||
+                    {(gameCode == "poker" && casinoMatchData?.desc) ||
                     (gameCode == "onedaypoker20" && casinoMatchData?.desc)
                       ? oneDayPokerDescription(casinoMatchData.desc)
                       : ""}
@@ -740,8 +740,8 @@ const CasinoWrapper = (props: any) => {
                 <PlaceBetBox stake={marketDataList.stake} />
               )}
               <LastResults lastResult={casinoMatchData} gameId={gameCode} />
-              {gameCode == "onedaypoker" && <OnedaypokerRules />}
-              {gameCode == "opentp" && <Openteenpatti />}
+              {gameCode == "poker" && <OnedaypokerRules />}
+              {gameCode == "teen8" && <Openteenpatti />}
               {gameCode == "fivewicket" && <Cricketv />}
               {gameCode == "teen20" && <T20 />}
               {gameCode == "Superover" && <SoRules />}
