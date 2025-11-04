@@ -451,7 +451,7 @@ def placebet(betObj, userInfo):
                 "userName": userInfo.get("username", ""),
                 "betClickTime": datetime.now(),
                 "matchId": int(match_id),
-                "marketId": market_id,
+                "marketId": str(market_id),
                 "selectionId": int(selectionId),
                 "selectionName": selectionName,
                 "matchName": matchName,
