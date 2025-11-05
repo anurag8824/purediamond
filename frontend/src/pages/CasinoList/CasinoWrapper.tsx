@@ -78,7 +78,7 @@ const CasinoWrapper = (props: any) => {
   const [rulesModel, setRulesModel] = React.useState<boolean>(false);
   const [casinoMatchData, setCasinoMatchData] = React.useState<any>({} as any);
   // const { gameCode:string } = useParams()
-  const { gameCode } = useParams<{ gameCode?: string }>();
+  const { gameCode } = useParams<{ gameCode?: any }>();
   const dispatch = useDispatch();
   const [liveMatchData, setLiveMatchData] = React.useState<any>({} as any);
   const [marketDataList, setMarketDataList] = React.useState<MarketData>(
@@ -479,7 +479,7 @@ const CasinoWrapper = (props: any) => {
     cmatch20: "cmatch20",
     cmeter2020: "cmeter",
     dtl20: "dtl20",
-    // "test tp": teen9,
+    testtp: "teen9",
     teen8: 3049,
     poker6player: "poker6",
     onedaypoker: "poker",
@@ -493,15 +493,36 @@ const CasinoWrapper = (props: any) => {
     dt20b: "dt202",
     Superover: "superover",
     opentp:"teen8",
-    testtp:"teen9",
     cricket2020:"cmatch20",
     fivewicket:"cricketv3",
   };
+
+  const fortv: Record<any, any> = {
+    testtp: "teen9",
+    AAA:"aaa",
+    ddb:"btable",
+    dragontiger1Day:"dt6",
+    onedaypoker20:"poker20",
+    card32b:"card32eu",
+    cmeter2020:"cmeter",
+    Cards3J:"3cardj",
+    Superover:"superover",
+    fivewicket:"cricketv3",
+    cricket2020:"cmatch20",
+    race2020:"race20",
+    warcasino:"war",
+    Andarbahar:"ab20",
+    Andarbahar2:"abj",
+    worliinstant:"worli2",
+    //other codes remain same
+  }
 
   // Assume `gameCode` comes from API response
   // const gameCode: string | undefined = liveMatchData?.gameCode;
 
   const gameId = gameCode ? gameIdMap?.[gameCode] ?? null : null;
+
+  const mappedCode = gameCode ? fortv?.[gameCode] ??  gameCode : gameCode; 
 
   return (
     <>
@@ -560,7 +581,8 @@ const CasinoWrapper = (props: any) => {
                       // src={casinoMatchData?.tv}
                       // src={`https://mac88-casino-stream.scoreswift.xyz/stream?stream_id=${gameId}`}
 
-                      src={`https://sfront.starrexch.me/casino-tv?id=${gameCode}`}
+                      // src={`https://sfront.starrexch.me/casino-tv?id=${gameCode}`}
+                      src={`https://sfront.starrexch.me/casino-tv?id=${mappedCode}`}
 
                     ></iframe>
                   )}
@@ -683,7 +705,9 @@ const CasinoWrapper = (props: any) => {
                         // src={casinoMatchData?.tv}
                         //  src={`https://mac88-casino-stream.scoreswift.xyz/stream?stream_id=${gameId}`}
 
-                        src={`https://sfront.starrexch.me/casino-tv?id=${gameCode}`}
+                        // src={`https://sfront.starrexch.me/casino-tv?id=${gameCode}`}
+
+                        src={`https://sfront.starrexch.me/casino-tv?id=${mappedCode}`}
 
                         sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
                         seamless
