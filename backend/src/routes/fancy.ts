@@ -1,11 +1,13 @@
 import { Router } from 'express'
 import { FancyController } from '../controllers/FancyController'
+import { CasCallbackController } from '../controllers/CasCallbackController'
 import Http from '../middlewares/Http'
 import Passport from '../passport/Passport'
 
 export class FancyRoutes {
   public router: Router
   public FancyController: FancyController = new FancyController()
+  casCallBackController: any
 
   constructor() {
     this.router = Router()
@@ -71,6 +73,8 @@ export class FancyRoutes {
       Passport.authenticateJWT,
       this.FancyController.apiupdateUserBal,
     )
+
+    this.router.post("/icasino-url",Passport.authenticateJWT, this.casCallBackController.getCasPlayUrl);
 
     // this.router.get(
     //   "/change-status-Fancy",
