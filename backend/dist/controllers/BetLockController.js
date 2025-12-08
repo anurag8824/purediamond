@@ -8,6 +8,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BetLockController = void 0;
 const mongoose_1 = require("mongoose");
@@ -16,6 +19,9 @@ const Match_1 = require("../models/Match");
 const Role_1 = require("../models/Role");
 const User_1 = require("../models/User");
 const ApiController_1 = require("./ApiController");
+const Balance_1 = require("../models/Balance");
+const CasCasino_1 = require("../models/CasCasino");
+const axios_1 = __importDefault(require("axios"));
 class BetLockController extends ApiController_1.ApiController {
     constructor() {
         super(...arguments);
@@ -116,6 +122,56 @@ class BetLockController extends ApiController_1.ApiController {
             catch (e) {
                 const err = e;
                 this.fail(res, err.message);
+            }
+        });
+        this.getCasPlayUrl = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            const { lobby_url, isMobile, ipAddress } = req.body;
+            const userInfo = req.user;
+            if (userInfo === null || userInfo === void 0 ? void 0 : userInfo.isDemo) {
+                return this.fail(res, "Sorry for inconvience! USE Real ID to play all these games.");
+            }
+            const userInfoLatest = yield User_1.User.findOne({ _id: userInfo === null || userInfo === void 0 ? void 0 : userInfo._id });
+            const platformId = "PARTNER_PLATFORM_ID_1";
+            const returnurl = "https://betbhai365.cloud/not-play";
+            // if (!userInfoLatest?.parentStr?.some((id: string) => collectUserId.includes(id))) {
+            //   this.fail(res, "Game Locked");
+            //   return;
+            // }
+            const balance = yield Balance_1.Balance.findOne({ userId: userInfo._id }, { balance: 1, exposer: 1, casinoexposer: 1 });
+            const finalBalance = ((balance === null || balance === void 0 ? void 0 : balance.balance) || 0) - ((balance === null || balance === void 0 ? void 0 : balance.exposer) || 0) - ((balance === null || balance === void 0 ? void 0 : balance.casinoexposer) || 0);
+            const gameInfo = yield CasCasino_1.CasCasino.findOne({
+                game_identifier: lobby_url,
+            });
+            if (gameInfo) {
+                const payload = {
+                    user: userInfo.username,
+                    platformId: platformId,
+                    platform: isMobile ? 'GPL_MOBILE' : "GPL_DESKTOP",
+                    lobby: false,
+                    lang: 'en',
+                    clientIp: ipAddress,
+                    gameId: parseInt(gameInfo.game_identifier),
+                    currency: 'INR',
+                    userId: userInfo._id,
+                    username: userInfo.username,
+                    balance: finalBalance,
+                    redirectUrl: returnurl
+                };
+                return axios_1.default
+                    .post('https://daimondexchang99.com/api/sessions', payload)
+                    .then((resData) => {
+                    var _a;
+                    const data = resData === null || resData === void 0 ? void 0 : resData.data;
+                    if ((data === null || data === void 0 ? void 0 : data.message) != "failed") {
+                        this.success(res, { gameInfo: gameInfo, payload: payload, url: (_a = resData === null || resData === void 0 ? void 0 : resData.data) === null || _a === void 0 ? void 0 : _a.url }, 'Data Found');
+                    }
+                    else {
+                        this.fail(res, "Game Not Found");
+                    }
+                });
+            }
+            else {
+                this.fail(res, "Game Not Found");
             }
         });
     }

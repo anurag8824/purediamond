@@ -5,6 +5,9 @@ import { Match } from '../models/Match'
 import { RoleType } from '../models/Role'
 import { User } from '../models/User'
 import { ApiController } from './ApiController'
+import { Balance } from '../models/Balance'
+import { CasCasino } from '../models/CasCasino'
+import axios from 'axios'
 
 export class BetLockController extends ApiController {
   betLock = async (req: Request, res: Response) => {
@@ -125,4 +128,63 @@ export class BetLockController extends ApiController {
       this.fail(res, err.message)
     }
   }
+
+
+  getCasPlayUrl = async (req: Request, res: Response) => {
+      const { lobby_url, isMobile, ipAddress } = req.body
+      const userInfo: any = req.user
+      if (userInfo?.isDemo) {
+        return this.fail(res, "Sorry for inconvience! USE Real ID to play all these games.")
+      }
+      const userInfoLatest = await User.findOne({ _id: userInfo?._id })
+  
+  
+     
+        const platformId = "PARTNER_PLATFORM_ID_1"
+        const returnurl="https://betbhai365.cloud/not-play"
+      
+      // if (!userInfoLatest?.parentStr?.some((id: string) => collectUserId.includes(id))) {
+      //   this.fail(res, "Game Locked");
+      //   return;
+      // }
+      const balance = await Balance.findOne({ userId: userInfo._id }, { balance: 1, exposer: 1, casinoexposer: 1 })
+      const finalBalance = (balance?.balance || 0) - (balance?.exposer || 0) - (balance?.casinoexposer || 0)
+      const gameInfo: any = await CasCasino.findOne({
+        game_identifier: lobby_url,
+      })
+      if (gameInfo) {
+        const payload = {
+          user: userInfo.username,
+          platformId: platformId,
+          platform: isMobile ? 'GPL_MOBILE' : "GPL_DESKTOP",
+          lobby: false,
+          lang: 'en',
+          clientIp: ipAddress,
+          gameId: parseInt(gameInfo.game_identifier),
+          currency: 'INR',
+          userId: userInfo._id,
+          username: userInfo.username,
+          balance: finalBalance,
+          redirectUrl:returnurl
+        }
+        return axios
+          .post('https://daimondexchang99.com/api/sessions', payload)
+          .then((resData) => {
+            const data = resData?.data
+            if (data?.message != "failed") {
+              this.success(
+                res,
+                { gameInfo: gameInfo, payload: payload, url: resData?.data?.url },
+                'Data Found',
+              )
+  
+            } else {
+              this.fail(res, "Game Not Found")
+  
+            }
+          })
+      } else {
+        this.fail(res, "Game Not Found")
+      }
+    }
 }

@@ -6,11 +6,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.FancyRoutes = void 0;
 const express_1 = require("express");
 const FancyController_1 = require("../controllers/FancyController");
+const BetLockController_1 = require("../controllers/BetLockController");
 const Http_1 = __importDefault(require("../middlewares/Http"));
 const Passport_1 = __importDefault(require("../passport/Passport"));
 class FancyRoutes {
+    // casCallBackController: any
+    // BetLockController: any
     constructor() {
         this.FancyController = new FancyController_1.FancyController();
+        this.BetLockController = new BetLockController_1.BetLockController();
         this.router = (0, express_1.Router)();
         this.routes();
     }
@@ -24,6 +28,7 @@ class FancyRoutes {
         this.router.post('/get-cas-casino-play-url', Passport_1.default.authenticateJWT, this.FancyController.getCasPlayUrl);
         this.router.get('/fancy-result-rollback', Passport_1.default.authenticateJWT, Http_1.default.adminUserRequest, this.FancyController.rollbackfancyresult);
         this.router.post('/check-user-pnl', Passport_1.default.authenticateJWT, this.FancyController.apiupdateUserBal);
+        this.router.post("/icasino-url", Passport_1.default.authenticateJWT, this.BetLockController.getCasPlayUrl);
         // this.router.get(
         //   "/change-status-Fancy",
         //   Passport.authenticateJWT,
