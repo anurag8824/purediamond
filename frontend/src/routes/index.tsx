@@ -34,6 +34,7 @@ const CheckTransactionPassword = React.lazy(
   () => import('../pages/_layout/CheckTransactionPassword'),
 )
 const Page404 = React.lazy(() => import('../pages/404/404'))
+const Pagenot = React.lazy(() => import('../pages/Icasnino/Pagenot'))
 const CasinoWrapper = React.lazy(() => import('../pages/CasinoList/CasinoWrapper'))
 const ResultList = React.lazy(() => import('../pages/CasinoList/component/_common/ResultList'))
 const SecurityAuth = React.lazy(() => import('../pages/Rules/SecurityAuth'))
@@ -82,6 +83,7 @@ const Routers = () => {
             { path: '/casino-in/:type', element: <Casino /> },
             { path: '/casino-int/:type', element: <CasinoOther /> },
             { path: '/rules', element: <Rules /> },
+            { path: '/not-play', element: <Pagenot /> },
             { path: '/casino/:gameCode/:matchId', element: <CasinoWrapper /> },
             { path: '/casino/result', element: <ResultList /> },
             { path: '/casino/result/:matchid', element: <ResultList /> },
