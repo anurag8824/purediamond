@@ -131,7 +131,7 @@ class BetLockController extends ApiController_1.ApiController {
                 return this.fail(res, "Sorry for inconvience! USE Real ID to play all these games.");
             }
             const userInfoLatest = yield User_1.User.findOne({ _id: userInfo === null || userInfo === void 0 ? void 0 : userInfo._id });
-            const platformId = "PARTNER_PLATFORM_ID_1";
+            const platformId = "cmfl6rytx0000pn0ifooykw0m";
             const returnurl = "https://betbhai365.cloud/not-play";
             // if (!userInfoLatest?.parentStr?.some((id: string) => collectUserId.includes(id))) {
             //   this.fail(res, "Game Locked");
@@ -158,7 +158,7 @@ class BetLockController extends ApiController_1.ApiController {
                     redirectUrl: returnurl
                 };
                 return axios_1.default
-                    .post('https://daimondexchang99.com/api/sessions', payload)
+                    .post('https://daimondexchang99.com/api/get-cas-casino-play-url', payload)
                     .then((resData) => {
                     var _a;
                     const data = resData === null || resData === void 0 ? void 0 : resData.data;

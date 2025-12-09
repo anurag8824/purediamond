@@ -1,0 +1,161 @@
+/* Add User / Create Client Page Styles */
+
+.add-user-page {
+  padding: 24px 0;
+}
+
+.add-user-card {
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e5e5e5;
+  overflow: hidden;
+}
+
+.add-user-section-header {
+  background: linear-gradient(135deg, #0f4c3a 0%, #1a7a5c 100%);
+  color: #fff;
+  padding: 12px 20px;
+  font-size: 15px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+.add-user-section-body {
+  padding: 20px;
+}
+
+.add-user-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.add-user-col {
+  flex: 1 1 calc(50% - 10px);
+  min-width: 280px;
+}
+
+.add-user-form-group {
+  margin-bottom: 16px;
+}
+
+.add-user-form-group label {
+  display: block;
+  font-weight: 600;
+  color: #1e3a5f;
+  margin-bottom: 6px;
+  font-size: 13px;
+}
+
+.add-user-form-group input,
+.add-user-form-group select {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #1f2937;
+  background: #fff;
+  transition: border-color 0.2s;
+}
+
+.add-user-form-group input:focus,
+.add-user-form-group select:focus {
+  outline: none;
+  border-color: #d4a017;
+  box-shadow: 0 0 0 2px rgba(212, 160, 23, 0.15);
+}
+
+.add-user-form-group input::placeholder {
+  color: #9ca3af;
+}
+
+.add-user-form-group .error {
+  display: block;
+  color: #dc2626;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+/* Partnership & Min/Max Bet Tables */
+.add-user-table-wrapper {
+  overflow-x: auto;
+  margin-bottom: 20px;
+}
+
+.add-user-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.add-user-table th {
+  background: #0f172a;
+  color: #facc15;
+  padding: 10px 12px;
+  font-size: 12px;
+  text-transform: uppercase;
+  text-align: center;
+  border: 1px solid #1e293b;
+}
+
+.add-user-table td {
+  padding: 10px 12px;
+  border: 1px solid #e5e7eb;
+  text-align: center;
+  background: #fff;
+}
+
+.add-user-table td:first-child {
+  background: #f9fafb;
+  font-weight: 600;
+  text-align: left;
+}
+
+.add-user-table input {
+  width: 80px;
+  padding: 6px 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  text-align: center;
+  font-size: 13px;
+}
+
+.add-user-table input:focus {
+  outline: none;
+  border-color: #d4a017;
+}
+
+/* Submit Footer */
+.add-user-footer {
+  padding: 20px;
+  background: #f9fafb;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.add-user-footer .btn {
+  min-width: 140px;
+}
+
+@media (max-width: 768px) {
+  .add-user-col {
+    flex: 1 1 100%;
+  }
+  
+  .add-user-table input {
+    width: 60px;
+  }
+}
+
+
+
+
+
+
+
+
