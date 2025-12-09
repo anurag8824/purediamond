@@ -140,7 +140,7 @@ export class BetLockController extends ApiController {
   
   
      
-        const platformId = "PARTNER_PLATFORM_ID_1"
+        const platformId = "cmfl6rytx0000pn0ifooykw0m"
         const returnurl="https://betbhai365.cloud/not-play"
       
       // if (!userInfoLatest?.parentStr?.some((id: string) => collectUserId.includes(id))) {
@@ -168,7 +168,7 @@ export class BetLockController extends ApiController {
           redirectUrl:returnurl
         }
         return axios
-          .post('https://daimondexchang99.com/api/sessions', payload)
+          .post('https://daimondexchang99.com/api/get-cas-casino-play-url', payload)
           .then((resData) => {
             const data = resData?.data
             if (data?.message != "failed") {
