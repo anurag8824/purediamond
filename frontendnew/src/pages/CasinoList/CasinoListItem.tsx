@@ -58,11 +58,11 @@ const CasinoListItem = (props: any) => {
     });
 }
 
-React.useEffect(() => {
-  if (gameUrl) {
-    window.open(gameUrl, "_blank");
-  }
-}, [gameUrl]);
+// React.useEffect(() => {
+//   if (gameUrl) {
+//     window.open(gameUrl, "_blank");
+//   }
+// }, [gameUrl]);
 
 
 
@@ -675,9 +675,9 @@ React.useEffect(() => {
     <>
     {loadingGame && <div className="loading-box">Loading…</div>}
 
-    {/* {gameUrl && (
+    {gameUrl && (
   <iframe src={gameUrl} className="casino-frame"></iframe>
-    )} */}
+    )}
 
 
       {/* {gamesList &&
