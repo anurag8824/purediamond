@@ -27,7 +27,8 @@ const MatchController_1 = require("../controllers/MatchController");
 const BetController_1 = require("../controllers/BetController");
 const SportsController_1 = __importDefault(require("../controllers/SportsController"));
 const deposit_withdraw_1 = require("./deposit-withdraw");
-const intcasino_1 = require("./intcasino");
+// import { CallbackRoutes } from './intcasino'
+const Icasino_1 = require("../controllers/Icasino");
 const router = express_1.default.Router();
 exports.routes = router;
 router.get('/api/t10', function (req, res) {
@@ -50,10 +51,14 @@ router.get('/api/result-market-auto', new FancyController_1.FancyController().de
 router.get('/api/result-market-fancy-auto', new FancyController_1.FancyController().setT10FancyResult);
 router.get('/api/get-business-fancy-list', new BetController_1.BetController().fancybetListSelection);
 router.post('/api/update-fancy-result', new FancyController_1.FancyController().updatefancyresultapi);
+router.post('/api/get-balance', new Icasino_1.CasCallbackController().getbalance);
+router.post('/api/get-bet-request', new Icasino_1.CasCallbackController().getBetrequest);
+router.post('/api/get-rollback-request', new Icasino_1.CasCallbackController().getrollback);
+router.post('/api/get-win-request', new Icasino_1.CasCallbackController().getCreditRequest);
 router.get('/api/resync_bookmaker_id', new SportsController_1.default().saveMatchResyncCron);
 router.use('/api', new t10_result_1.T10ResultRoutes().router);
 router.use('/api', new sports_1.SportRoutes().router);
-router.use('/api/callback', new intcasino_1.CallbackRoutes().router);
+// router.use('/api/callback', new CallbackRoutes().router)
 router.use('/api', Passport_1.default.authenticateJWT, Http_1.default.maintenance, new user_1.UserRoutes().router);
 router.use('/api', Passport_1.default.authenticateJWT, Http_1.default.maintenance, new todo_1.TodoRoutes().router);
 router.use('/api', Passport_1.default.authenticateJWT, Http_1.default.maintenance, new userStake_1.UserStakeRoutes().router);

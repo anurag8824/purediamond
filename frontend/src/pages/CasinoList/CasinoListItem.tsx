@@ -17,7 +17,7 @@ const CasinoListItem = (props: any) => {
   }
   return (
     <>
-          {gamesList &&
+          {/* {gamesList &&
             gamesList
             .filter((item: any) => !item.isDisable && item.match_id !== -1)
             .map((Item: any, key: number) => {
@@ -32,7 +32,7 @@ const CasinoListItem = (props: any) => {
                   </a>
                 </div>
               )
-            })}
+            })} */}
     </>
   )
 }

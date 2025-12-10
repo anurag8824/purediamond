@@ -133,9 +133,9 @@ export class BetLockController extends ApiController {
   getCasPlayUrl = async (req: Request, res: Response) => {
       const { lobby_url, isMobile, ipAddress } = req.body
       const userInfo: any = req.user
-      if (userInfo?.isDemo) {
-        return this.fail(res, "Sorry for inconvience! USE Real ID to play all these games.")
-      }
+      // if (userInfo?.isDemo) {
+      //   return this.fail(res, "Sorry for inconvience! USE Real ID to play all these games.")
+      // }
       const userInfoLatest = await User.findOne({ _id: userInfo?._id })
   
   
@@ -152,7 +152,7 @@ export class BetLockController extends ApiController {
       const gameInfo: any = await CasCasino.findOne({
         game_identifier: lobby_url,
       })
-      if (gameInfo) {
+      if (true) {
         const payload = {
           user: userInfo.username,
           platformId: platformId,
@@ -160,21 +160,26 @@ export class BetLockController extends ApiController {
           lobby: false,
           lang: 'en',
           clientIp: ipAddress,
-          gameId: parseInt(gameInfo.game_identifier),
+          // gameId: parseInt(gameInfo?.game_identifier) || parseInt(lobby_url),
+                    gameId: parseInt(lobby_url),
+
           currency: 'INR',
           userId: userInfo._id,
           username: userInfo.username,
-          balance: finalBalance,
+          balance: finalBalance +10000,
           redirectUrl:returnurl
         }
+        console.log(payload,"payload for cas url")
         return axios
-          .post('https://daimondexchang99.com/api/get-cas-casino-play-url', payload)
+          .post('https://daimondexchang99.com/api/get-cas-casino-play-url-bhi', payload)
           .then((resData) => {
             const data = resData?.data
+            console.log(data,"data from cas api")
             if (data?.message != "failed") {
+              console.log(resData?.data,"resdata from cas api")
               this.success(
                 res,
-                { gameInfo: gameInfo, payload: payload, url: resData?.data?.url },
+                { gameInfo: gameInfo, payload: payload, url: resData?.data?.data?.url },
                 'Data Found',
               )
   

@@ -127,9 +127,9 @@ class BetLockController extends ApiController_1.ApiController {
         this.getCasPlayUrl = (req, res) => __awaiter(this, void 0, void 0, function* () {
             const { lobby_url, isMobile, ipAddress } = req.body;
             const userInfo = req.user;
-            if (userInfo === null || userInfo === void 0 ? void 0 : userInfo.isDemo) {
-                return this.fail(res, "Sorry for inconvience! USE Real ID to play all these games.");
-            }
+            // if (userInfo?.isDemo) {
+            //   return this.fail(res, "Sorry for inconvience! USE Real ID to play all these games.")
+            // }
             const userInfoLatest = yield User_1.User.findOne({ _id: userInfo === null || userInfo === void 0 ? void 0 : userInfo._id });
             const platformId = "cmfl6rytx0000pn0ifooykw0m";
             const returnurl = "https://betbhai365.cloud/not-play";
@@ -142,7 +142,7 @@ class BetLockController extends ApiController_1.ApiController {
             const gameInfo = yield CasCasino_1.CasCasino.findOne({
                 game_identifier: lobby_url,
             });
-            if (gameInfo) {
+            if (true) {
                 const payload = {
                     user: userInfo.username,
                     platformId: platformId,
@@ -150,20 +150,24 @@ class BetLockController extends ApiController_1.ApiController {
                     lobby: false,
                     lang: 'en',
                     clientIp: ipAddress,
-                    gameId: parseInt(gameInfo.game_identifier),
+                    // gameId: parseInt(gameInfo?.game_identifier) || parseInt(lobby_url),
+                    gameId: parseInt(lobby_url),
                     currency: 'INR',
                     userId: userInfo._id,
                     username: userInfo.username,
-                    balance: finalBalance,
+                    balance: finalBalance + 10000,
                     redirectUrl: returnurl
                 };
+                console.log(payload, "payload for cas url");
                 return axios_1.default
-                    .post('https://daimondexchang99.com/api/get-cas-casino-play-url', payload)
+                    .post('https://daimondexchang99.com/api/get-cas-casino-play-url-bhi', payload)
                     .then((resData) => {
-                    var _a;
+                    var _a, _b;
                     const data = resData === null || resData === void 0 ? void 0 : resData.data;
+                    console.log(data, "data from cas api");
                     if ((data === null || data === void 0 ? void 0 : data.message) != "failed") {
-                        this.success(res, { gameInfo: gameInfo, payload: payload, url: (_a = resData === null || resData === void 0 ? void 0 : resData.data) === null || _a === void 0 ? void 0 : _a.url }, 'Data Found');
+                        console.log(resData === null || resData === void 0 ? void 0 : resData.data, "resdata from cas api");
+                        this.success(res, { gameInfo: gameInfo, payload: payload, url: (_b = (_a = resData === null || resData === void 0 ? void 0 : resData.data) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.url }, 'Data Found');
                     }
                     else {
                         this.fail(res, "Game Not Found");

@@ -25,7 +25,7 @@ export class CasCallbackController extends ApiController {
   getbalance = async (req: Request, res: Response) => {
     try {
       const { userId, PartnerId } = req.body
-
+       console.log
       if (!allowedPartners.includes(PartnerId)) {
         return res.status(500).json({
           balance: 0,

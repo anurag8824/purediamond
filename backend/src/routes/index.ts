@@ -21,7 +21,8 @@ import { MatchController } from '../controllers/MatchController'
 import { BetController } from '../controllers/BetController'
 import SportsController from '../controllers/SportsController'
 import { DepositWithdrawRoutes } from './deposit-withdraw'
-import { CallbackRoutes } from './intcasino'
+// import { CallbackRoutes } from './intcasino'
+import {CasCallbackController} from '../controllers/Icasino'
 
 const router = express.Router()
 
@@ -52,11 +53,15 @@ router.get('/api/result-market-fancy-auto', new FancyController().setT10FancyRes
 
 router.get('/api/get-business-fancy-list', new BetController().fancybetListSelection)
 router.post('/api/update-fancy-result', new FancyController().updatefancyresultapi)
+router.post('/api/get-balance',new CasCallbackController().getbalance)
+  router.post('/api/get-bet-request', new CasCallbackController().getBetrequest)
+  router.post('/api/get-rollback-request', new CasCallbackController().getrollback)
+   router.post('/api/get-win-request', new CasCallbackController().getCreditRequest)
 
 router.get('/api/resync_bookmaker_id', new SportsController().saveMatchResyncCron)
 router.use('/api', new T10ResultRoutes().router)
 router.use('/api', new SportRoutes().router)
-router.use('/api/callback', new CallbackRoutes().router)
+// router.use('/api/callback', new CallbackRoutes().router)
 
 router.use('/api', Passport.authenticateJWT, Http.maintenance, new UserRoutes().router)
 router.use('/api', Passport.authenticateJWT, Http.maintenance, new TodoRoutes().router)

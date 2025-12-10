@@ -13,6 +13,10 @@ class CasinoService {
     return api.post(`get-cas-casino-play-url`, data)
   }
 
+  getplaycasinotwo(data:any) {
+    return api.post(`icasino-url`, data)
+  }
+
   getCasinoDataById(id: any) {
     return api.get(`get-casino-data-by-id/${id}`)
   }
