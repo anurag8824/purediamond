@@ -137,152 +137,56 @@ const Header = () => {
               <div className='bar2' />
               <div className='bar3' />
             </div> */}
+            {/* Balance and Upline Info Box */}
+            <div className='balance-upline-box'>
+              <div className='balance-info'>
+                <span className='label'>Bal :</span>
+                <span className='value'>2001</span>
+              </div>
+              <div className='upline-info'>
+                <span className='label'>Upline :</span>
+                <span className='value'>0</span>
+              </div>
+            </div>
+
             <nav className='navbar navbar-expand-md btco-hover-menu'>
               <div className='collapse navbar-collapse'>
                 <ul className='list-unstyled navbar-nav'>
-
-                <li className='nav-item'>
-                    <CustomLink to={`/combined-dashboard`}>
-                      <b>Dashboard</b>
-                    </CustomLink>
-                  </li>
-
-                  <li className='nav-item'>
-                    <CustomLink to={`/list-clients/${userState?.user?.username}`}>
-                      <b>List of clients</b>
-                    </CustomLink>
-                  </li>
-
-                  <li className='nav-item'>
-                    <CustomLink to={'/market-analysis'}>
-                      <b>Market Analysis</b>
-                    </CustomLink>
-                  </li>
+                  
+                  {/* Market Dropdown */}
                   <li className='nav-item dropdown'>
                     <a>
-                      <b>Reports</b> <i className='fa fa-caret-down' />
+                      <b>Market</b> <i className='fa fa-caret-down' />
                     </a>
                     <ul className='dropdown-menu' aria-labelledby='navbarDropdownMenuLink'>
                       <li>
-                        <CustomLink to='/accountstatement' className='dropdown-item'>
-                          <b>{"Account's Statement"}</b>
-                        </CustomLink>
-                      </li>
-                      <li>
-                        <CustomLink to='/unsettledbet' className='dropdown-item'>
-                          <b>Current Bets</b>
-                        </CustomLink>
-                      </li>
-                      {userState?.user?.role === RoleType.admin && (
-                        <li>
-                          <CustomLink to='/unsettledbet/deleted' className='dropdown-item'>
-                            <b>Deleted Bets</b>
-                          </CustomLink>
-                        </li>
-                      )}
-                      {/* <li>
-                        <a href='greport.html' className='dropdown-item'>
-                          <b>General Report</b>
-                        </a>
-                      </li> */}
-                      <li>
-                        <CustomLink to='/game-reports' className='dropdown-item'>
-                          <b>Game Reports</b>
-                        </CustomLink>
-                      </li>
-                      <li>
-                        <CustomLink to='/profitloss' className='dropdown-item'>
-                          <b>Profit And Loss</b>
+                        <CustomLink to={'/market-analysis'} className='dropdown-item'>
+                          <b>Market Analysis</b>
                         </CustomLink>
                       </li>
                     </ul>
                   </li>
 
+                  {/* Client List Dropdown */}
                   <li className='nav-item dropdown'>
                     <a>
-                      <b>Transactions</b> <i className='fa fa-caret-down' />
+                      <b>Client List</b> <i className='fa fa-caret-down' />
                     </a>
                     <ul className='dropdown-menu' aria-labelledby='navbarDropdownMenuLink'>
                       <li>
-                        <CustomLink to='/depositstatement' className='dropdown-item'>
-                          <b>{"Deposit"}</b>
-                        </CustomLink>
-                      </li>
-                      <li>
-                        <CustomLink to='/withdrawstatement' className='dropdown-item'>
-                          <b>Withdraw</b>
+                        <CustomLink to={`/list-clients/${userState?.user?.username}`} className='dropdown-item'>
+                          <b>List of Clients</b>
                         </CustomLink>
                       </li>
                     </ul>
                   </li>
-                  <li className='nav-item dropdown'>
-                    <a>
-                      <b>Live Casino</b> <i className='fa fa-caret-down' />
-                    </a>
-                    <ul
-                      className='dropdown-menu'
-                      aria-labelledby='navbarDropdownMenuLink'
-                      style={{ height: '400px', overflowY: 'scroll' }}
-                    >
-                      {gameList?.length > 0 &&
-                        gameList.map((Item: any, key: number) => {
-                          return (
-                            <li key={key}>
-                              <CustomLink to={`/casino/${Item.slug}`} className='dropdown-item'>
-                                <b>{Item.title}</b>
-                              </CustomLink>
-                            </li>
-                          )
-                        })}
-                    </ul>
+
+                  {/* Create Client Button */}
+                  <li className='nav-item'>
+                    <CustomLink to={'/add-user'}>
+                      <b>Create Client</b>
+                    </CustomLink>
                   </li>
-                 
-                    <li className='nav-item dropdown'>
-                      <a>
-                        <b>Settings</b> <i className='fa fa-caret-down' />
-                      </a>
-                      <ul className='dropdown-menu' aria-labelledby='navbarDropdownMenuLink'>
-                      {(userState?.user?.role === RoleType.admin) && (<>
-                        <li>
-                          <CustomLink to='/sports-list/active-matches' className='dropdown-item'>
-                            <b>{'Block Markets'}</b>
-                          </CustomLink>
-                        </li>
-                        <li>
-                          <CustomLink to='/messages' className='dropdown-item'>
-                            <b>{'Messages'}</b>
-                          </CustomLink>
-                        </li>
-                        <li>
-                          <CustomLink to={'/sports-list/matches'} className='dropdown-item'>
-                            <b>Add Match List</b>
-                          </CustomLink>
-                        </li>
-
-                        <li>
-                          <CustomLink to='/casino-list' className='dropdown-item'>
-                            <b>{'Casino List'}</b>
-                          </CustomLink>
-                        </li>
-                      </>
-                      )}
-
-                      <li>
-                        <CustomLink to='/payment-method' className='dropdown-item'>
-                          <b>{'Payment Method'}</b>
-                        </CustomLink>
-                      </li>
-
-                      <li>
-                        <CustomLink to='/update-whatsapp' className='dropdown-item'>
-                          <b>{'Update Whatsapp'}</b>
-                        </CustomLink>
-                      </li>
-
-
-
-                      </ul>
-                    </li>
                 
                 </ul>
               </div>
@@ -292,7 +196,126 @@ const Header = () => {
                 <span onClick={() => setShowMenu(!showMenu)}>
                   {userState?.user?.username} <i className='fa fa-caret-down' />
                 </span>
-                <ul style={{ display: showMenu ? 'block' : 'none' }}>
+                <ul style={{ display: showMenu ? 'block' : 'none' }} className='profile-dropdown-menu'>
+                  <li>
+                    <CustomLink to='/'>
+                      <b>Home</b>
+                    </CustomLink>
+                  </li>
+                  <li>
+                    <CustomLink to={`/combined-dashboard`}>
+                      <b>Dashboard</b>
+                    </CustomLink>
+                  </li>
+                  <li className='dropdown-submenu'>
+                    <a href='#'>
+                      <b>Reports</b>
+                    </a>
+                    <ul className='dropdown-menu'>
+                      <li>
+                        <CustomLink to='/accountstatement'>
+                          <b>{"Account's Statement"}</b>
+                        </CustomLink>
+                      </li>
+                      <li>
+                        <CustomLink to='/unsettledbet'>
+                          <b>Current Bets</b>
+                        </CustomLink>
+                      </li>
+                      {userState?.user?.role === RoleType.admin && (
+                        <li>
+                          <CustomLink to='/unsettledbet/deleted'>
+                            <b>Deleted Bets</b>
+                          </CustomLink>
+                        </li>
+                      )}
+                      <li>
+                        <CustomLink to='/game-reports'>
+                          <b>Game Reports</b>
+                        </CustomLink>
+                      </li>
+                      <li>
+                        <CustomLink to='/profitloss'>
+                          <b>Profit And Loss</b>
+                        </CustomLink>
+                      </li>
+                    </ul>
+                  </li>
+                  <li className='dropdown-submenu'>
+                    <a href='#'>
+                      <b>Transactions</b>
+                    </a>
+                    <ul className='dropdown-menu'>
+                      <li>
+                        <CustomLink to='/depositstatement'>
+                          <b>{"Deposit"}</b>
+                        </CustomLink>
+                      </li>
+                      <li>
+                        <CustomLink to='/withdrawstatement'>
+                          <b>Withdraw</b>
+                        </CustomLink>
+                      </li>
+                    </ul>
+                  </li>
+                  <li className='dropdown-submenu'>
+                    <a href='#'>
+                      <b>Live Casino</b>
+                    </a>
+                    <ul className='dropdown-menu' style={{ height: '300px', overflowY: 'scroll' }}>
+                      {gameList?.length > 0 &&
+                        gameList.map((Item: any, key: number) => {
+                          return (
+                            <li key={key}>
+                              <CustomLink to={`/casino/${Item.slug}`}>
+                                <b>{Item.title}</b>
+                              </CustomLink>
+                            </li>
+                          )
+                        })}
+                    </ul>
+                  </li>
+                  <li className='dropdown-submenu'>
+                    <a href='#'>
+                      <b>Settings</b>
+                    </a>
+                    <ul className='dropdown-menu'>
+                      {userState?.user?.role === RoleType.admin && (
+                        <>
+                          <li>
+                            <CustomLink to='/sports-list/active-matches'>
+                              <b>{'Block Markets'}</b>
+                            </CustomLink>
+                          </li>
+                          <li>
+                            <CustomLink to='/messages'>
+                              <b>{'Messages'}</b>
+                            </CustomLink>
+                          </li>
+                          <li>
+                            <CustomLink to={'/sports-list/matches'}>
+                              <b>Add Match List</b>
+                            </CustomLink>
+                          </li>
+                          <li>
+                            <CustomLink to='/casino-list'>
+                              <b>{'Casino List'}</b>
+                            </CustomLink>
+                          </li>
+                        </>
+                      )}
+                      <li>
+                        <CustomLink to='/payment-method'>
+                          <b>{'Payment Method'}</b>
+                        </CustomLink>
+                      </li>
+                      <li>
+                        <CustomLink to='/update-whatsapp'>
+                          <b>{'Update Whatsapp'}</b>
+                        </CustomLink>
+                      </li>
+                    </ul>
+                  </li>
                   <li>
                     <CustomLink to='/change-password'>
                       <b>Change Password</b>

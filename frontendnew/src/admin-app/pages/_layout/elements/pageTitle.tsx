@@ -55,6 +55,30 @@ const PageTitle = () => {
     } else if (path.includes('client-details')) {
       return 'CLIENT DETAILS'
     }
+    // Added mappings for newly created admin pages
+    else if (path.includes('accountstatement-old') || path.includes('account-statement-old')) {
+      return 'OLD A/C STATEMENTS'
+    } else if (path.includes('top-clients') && !path.includes('top-clients-new')) {
+      return 'TOP CLIENTS'
+    } else if (path.includes('top-clients-new')) {
+      return 'TOP CLIENTS NEW'
+    } else if (path.includes('sport-report') && !path.includes('sport-report-new')) {
+      return 'SPORT REPORT'
+    } else if (path.includes('sport-report-new')) {
+      return 'SPORT REPORT NEW'
+    } else if (path.includes('weekly-report')) {
+      return 'WEEKLY REPORT'
+    } else if (path.includes('settlement-report')) {
+      return 'SETTLEMENT REPORT'
+    } else if (path.includes('chip-summary')) {
+      return 'CHIP SUMMARY'
+    } else if (path.includes('balance-sheet')) {
+      return 'BALANCE SHEET'
+    } else if (path.includes('export')) {
+      return 'EXPORT'
+    } else if (path.includes('profile')) {
+      return 'PROFILE'
+    }
     
     return 'DASHBOARD'
   }

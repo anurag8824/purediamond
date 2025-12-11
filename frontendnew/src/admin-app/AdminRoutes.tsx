@@ -29,12 +29,25 @@ const MarketAnalysis = React.lazy(
 const AccountStatementAdmin = React.lazy(
   () => import('../admin-app/pages/AccountStatement/AccountStatementAdmin'),
 )
+const AccountStatementOld = React.lazy(
+  () => import('../admin-app/pages/AccountStatement/AccountStatementOld'),
+)
 const DepositStatementAdmin = React.lazy(
   () => import('../admin-app/pages/transaction-statement/DepositStatementAdmin'),
 )
 const WithdrawStatementAdmin = React.lazy(
   () => import('../admin-app/pages/transaction-statement/WithdrawStatementAdmin'))
 const ProfitLossAdmin = React.lazy(() => import('../admin-app/pages/PlReport/ProfitLossAdmin'))
+const TopClients = React.lazy(() => import('../admin-app/pages/top-clients/TopClients'))
+const TopClientsNew = React.lazy(() => import('../admin-app/pages/top-clients/TopClientsNew'))
+const SportReport = React.lazy(() => import('../admin-app/pages/sport-report/SportReport'))
+const SportReportNew = React.lazy(() => import('../admin-app/pages/sport-report/SportReportNew'))
+const WeeklyReport = React.lazy(() => import('../admin-app/pages/weekly-report/WeeklyReport'))
+const SettlementReport = React.lazy(() => import('../admin-app/pages/settlement-report/SettlementReport'))
+const ChipSummary = React.lazy(() => import('../admin-app/pages/chip-summary/ChipSummary'))
+const BalanceSheet = React.lazy(() => import('../admin-app/pages/balance-sheet/BalanceSheet'))
+const ExportPage = React.lazy(() => import('../admin-app/pages/export/Export'))
+const Profile = React.lazy(() => import('../admin-app/pages/profile/Profile'))
 const UnsetteleBetHistoryAdmin = React.lazy(
   () => import('../admin-app/pages/UnsetteleBetHistory/UnsetteleBetHistoryAdmin'),
 )
@@ -99,10 +112,21 @@ const AdminRoutes = () => {
               : []),
             { path: 'change-password', element: <ChangePassword /> },
             { path: 'accountstatement', element: <AccountStatementAdmin /> },
+            { path: 'accountstatement-old', element: <AccountStatementOld /> },
 
             { path: 'combined-dashboard', element: <CombinedDashboard /> },
 
             { path: 'profitloss', element: <ProfitLossAdmin /> },
+            { path: 'top-clients', element: <TopClients /> },
+            { path: 'top-clients-new', element: <TopClientsNew /> },
+            { path: 'sport-report', element: <SportReport /> },
+            { path: 'sport-report-new', element: <SportReportNew /> },
+            { path: 'weekly-report', element: <WeeklyReport /> },
+            { path: 'settlement-report', element: <SettlementReport /> },
+            { path: 'chip-summary', element: <ChipSummary /> },
+            { path: 'balance-sheet', element: <BalanceSheet /> },
+            { path: 'export', element: <ExportPage /> },
+            { path: 'profile', element: <Profile /> },
             { path: 'unsettledbet', element: <UnsetteleBetHistoryAdmin /> },
             { path: 'unsettledbet/:type', element: <UnsetteleBetHistoryAdmin /> },
             { path: 'casino/:gameCode', element: <CasinoWrapper /> },

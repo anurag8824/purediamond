@@ -230,11 +230,57 @@
   width: auto;
 }
 
+/* Header Right - Contains Balance Box and Navigation */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex: 1;
+  justify-content: flex-end;
+}
+
+/* Balance and Upline Box */
+.admin-top-header .balance-upline-box {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 8px 20px;
+  background: #fff;
+  border: 2px solid #000;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  height: auto;
+  min-width: 140px;
+}
+
+.admin-top-header .balance-info,
+.admin-top-header .upline-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.admin-top-header .balance-info .label,
+.admin-top-header .upline-info .label {
+  font-weight: 600;
+  color: #000;
+  font-size: 14px;
+}
+
+.admin-top-header .balance-info .value,
+.admin-top-header .upline-info .value {
+  font-weight: 700;
+  color: #000;
+  font-size: 16px;
+}
+
 /* Header Navigation */
 .header-nav {
   flex: 0 0 auto;
   max-width: 1000px;
-  margin: 0 8px 0 0;
+  margin: 0;
   overflow: visible;
 }
 
@@ -294,8 +340,7 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   z-index: 10000;
   border: 1px solid #333;
-  /* Override Bootstrap default of display:none */
-  display: block !important;
+  display: block;
 }
 
 .dropdown-menu li {
@@ -401,6 +446,51 @@
   right: 0;
   left: auto;
   min-width: 220px;
+}
+
+/* Profile dropdown look to match screenshot (white + gold, large rows) */
+.dropdown-menu.profile-menu {
+  background: #ffffff;
+  border: 1px solid #e5e5e5;
+  border-radius: 3px;
+  padding: 0;
+  min-width: 280px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.dropdown-menu.profile-menu li a {
+  color: #c7923a;
+  background: #ffffff;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 12px 16px;
+}
+
+.dropdown-menu.profile-menu li a:hover {
+  background: #fff8e6;
+  color: #a87124;
+}
+
+.dropdown-menu.profile-menu .dropdown-divider {
+  background: #ededed;
+  height: 1px;
+  margin: 0;
+}
+
+.dropdown-menu.profile-menu .logout-item a {
+  background: #8b0000;
+  color: #ffffff;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 16px 20px;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+.dropdown-menu.profile-menu .logout-item a:hover {
+  background: #a40909;
+  color: #fff;
 }
 
 .casino-dropdown {
@@ -762,4 +852,150 @@
   border-color: #ff9800;
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(255, 193, 7, 0.3);
+}
+
+/* Balance and Upline Box Styles */
+.header-bottom .balance-upline-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 20px;
+  padding: 10px 20px;
+  background: #fff;
+  border: 2px solid #000;
+  border-radius: 5px;
+  margin-right: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  vertical-align: middle;
+  height: 42px;
+}
+
+.header-bottom .balance-info,
+.header-bottom .upline-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.header-bottom .balance-info .label,
+.header-bottom .upline-info .label {
+  font-weight: 600;
+  color: #000;
+  font-size: 14px;
+}
+
+.header-bottom .balance-info .value,
+.header-bottom .upline-info .value {
+  font-weight: 700;
+  color: #000;
+  font-size: 16px;
+}
+
+/* Ensure header items align properly */
+.header-bottom .container-fluid {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-bottom .navbar {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+/* Profile Dropdown Menu Styles */
+.username ul.profile-dropdown-menu {
+  min-width: 220px !important;
+  max-height: 500px;
+  overflow-y: auto;
+  background: #fff;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  padding: 5px 0;
+}
+
+.username ul.profile-dropdown-menu li {
+  border-bottom: 1px solid #eee;
+  list-style: none;
+}
+
+.username ul.profile-dropdown-menu li:last-child {
+  border-bottom: none;
+}
+
+.username ul.profile-dropdown-menu > li > a {
+  display: block;
+  padding: 10px 15px;
+  color: #333;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+.username ul.profile-dropdown-menu > li > a:hover {
+  background: #f5f5f5;
+}
+
+.username ul.profile-dropdown-menu .dropdown-submenu {
+  position: relative;
+}
+
+.username ul.profile-dropdown-menu .dropdown-submenu > a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  color: #333;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.username ul.profile-dropdown-menu .dropdown-submenu > a::after {
+  content: '\f105';
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  margin-left: 10px;
+}
+
+.username ul.profile-dropdown-menu .dropdown-submenu > a:hover {
+  background: #f5f5f5;
+}
+
+.username ul.profile-dropdown-menu .dropdown-submenu .dropdown-menu {
+  position: absolute;
+  left: 100%;
+  top: 0;
+  display: none;
+  min-width: 200px;
+  background: #fff;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  z-index: 1001;
+  padding: 5px 0;
+}
+
+.username ul.profile-dropdown-menu .dropdown-submenu:hover > .dropdown-menu {
+  display: block;
+}
+
+.username ul.profile-dropdown-menu .dropdown-submenu .dropdown-menu li {
+  border-bottom: 1px solid #eee;
+  list-style: none;
+}
+
+.username ul.profile-dropdown-menu .dropdown-submenu .dropdown-menu li:last-child {
+  border-bottom: none;
+}
+
+.username ul.profile-dropdown-menu .dropdown-submenu .dropdown-menu a {
+  padding: 10px 15px;
+  display: block;
+  color: #333;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+.username ul.profile-dropdown-menu .dropdown-submenu .dropdown-menu a:hover {
+  background: #f5f5f5;
 }
