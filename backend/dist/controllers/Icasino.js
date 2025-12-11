@@ -35,6 +35,7 @@ class CasCallbackController extends ApiController_1.ApiController {
         this.getbalance = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
                 const { userId, PartnerId } = req.body;
+                console.log(req.body, "req.body balance");
                 // if (!allowedPartners.includes(PartnerId)) {
                 //   return res.status(500).json({
                 //     balance: 0,
