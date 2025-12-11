@@ -166,7 +166,7 @@ export class BetLockController extends ApiController {
           currency: 'INR',
           userId: userInfo._id,
           username: userInfo.username,
-          balance: finalBalance +10000,
+          balance: finalBalance,
           redirectUrl:returnurl
         }
         console.log(payload,"payload for cas url")
