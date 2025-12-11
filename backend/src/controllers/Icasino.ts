@@ -25,14 +25,14 @@ export class CasCallbackController extends ApiController {
   getbalance = async (req: Request, res: Response) => {
     try {
       const { userId, PartnerId } = req.body
-       console.log
-      if (!allowedPartners.includes(PartnerId)) {
-        return res.status(500).json({
-          balance: 0,
-          status: 'OP_FAILURE',
-          bet_status: 'N'
-        });
-      }
+    
+      // if (!allowedPartners.includes(PartnerId)) {
+      //   return res.status(500).json({
+      //     balance: 0,
+      //     status: 'OP_FAILURE',
+      //     bet_status: 'N'
+      //   });
+      // }
       const balance = await Balance.findOne({ userId: Types.ObjectId(userId) })
       if (balance) {
         return res.status(200).json({

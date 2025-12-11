@@ -35,14 +35,13 @@ class CasCallbackController extends ApiController_1.ApiController {
         this.getbalance = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
                 const { userId, PartnerId } = req.body;
-                console.log;
-                if (!allowedPartners.includes(PartnerId)) {
-                    return res.status(500).json({
-                        balance: 0,
-                        status: 'OP_FAILURE',
-                        bet_status: 'N'
-                    });
-                }
+                // if (!allowedPartners.includes(PartnerId)) {
+                //   return res.status(500).json({
+                //     balance: 0,
+                //     status: 'OP_FAILURE',
+                //     bet_status: 'N'
+                //   });
+                // }
                 const balance = yield Balance_1.Balance.findOne({ userId: mongoose_1.Types.ObjectId(userId) });
                 if (balance) {
                     return res.status(200).json({
