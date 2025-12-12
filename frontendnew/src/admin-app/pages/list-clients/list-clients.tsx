@@ -50,6 +50,8 @@ const ListClients = () => {
     search: '',
   })
 
+  const newtype = useParams().type;
+
   const roles = React.useMemo(() => {
     const { user } = userState
     const allOptions = Object.keys(RoleType)
@@ -344,6 +346,11 @@ const ListClients = () => {
     if (!users?.items) return []
     
     const filteredUsers = users.items.filter((user: User) => {
+      const shouldFilterByType =
+                          newtype && newtype.trim() !== "";
+                        if (shouldFilterByType && user.role !== newtype) {
+                          return null;
+                        }
       if (activeDeactive !== user.isLogin && user.role !== RoleType.admin) return false
       return true
     })
@@ -381,7 +388,7 @@ const ListClients = () => {
       <div className='list-clients-container'>
         <div className='container-fluid'>
           {/* Top Controls */}
-          <div className='clients-top-controls'>
+          <div className='clients-top-controls d-none'>
             <div className='clients-top-left'>
               {(userState.user.role == RoleType.admin ||
                 userState.user.role == RoleType.sadmin) && (
@@ -417,7 +424,7 @@ const ListClients = () => {
           </div>
 
           {/* Tabs */}
-          <div className='clients-tabs'>
+          <div className='clients-tabs mt-4'>
             <button
               className={activeDeactive ? 'active' : ''}
               onClick={(e) => typesOfClients(e as any, 'true')}
@@ -447,8 +454,8 @@ const ListClients = () => {
                 <option value=''>Sorting</option>
                 <option value='pl_asc'>PL ASC</option>
                 <option value='pl_desc'>PL DESC</option>
-                <option value='exp_asc'>Expose ASC</option>
-                <option value='exp_desc'>Expose DESC</option>
+                <option value='exp_asc'>Exposer ASC</option>
+                <option value='exp_desc'>Exposer DESC</option>
               </select>
             </div>
             <button className='clients-search-btn' onClick={() => getList({ ...searchObj, search: 'true' })}>
@@ -544,6 +551,12 @@ const ListClients = () => {
                         <CustomLink to={`/bank-deposit/${user.username}`}>
                           <button className='action-btn btn-deposit' title='Bank Deposit'>
                             BANK DEPOSIT
+                          </button>
+                        </CustomLink>
+
+                        <CustomLink    to={`/accountstatement/${user?._id}`}>
+                          <button className='action-btn btn-deposit' title='Bank Deposit'>
+                            ACCOUNT STATEMENT
                           </button>
                         </CustomLink>
                         <CustomLink to={`/bank-withdraw/${user.username}`}>

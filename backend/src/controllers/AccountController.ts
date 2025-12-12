@@ -13,6 +13,7 @@ import { paginationPipeLine } from '../util/aggregation-pipeline-pagination'
 import { IUserModel, User } from '../models/User'
 import { RoleType } from '../models/Role'
 import UserSocket from '../sockets/user-socket'
+import Notice from '../models/Notice'
 
 export class AccountController extends ApiController {
   constructor() {
@@ -719,4 +720,57 @@ export class AccountController extends ApiController {
       return this.fail(res, e)
     }
   }
+
+  notice = async(req:Request,res:Response)=>{
+    console.log(req.body,"data from settelement hahhahahah")
+   try {
+     const { userNotice, adminNotice } = req.body;
+     let notice = await Notice.findOne();
+ 
+ 
+     if (notice) {
+       // Update the existing document
+       notice.fnotice = userNotice;
+       notice.bnotice = adminNotice;
+       await notice.save();
+     } else {
+       // Create a new notice document if it doesn't exist
+       notice = await Notice.create({
+         fnotice: userNotice,
+         bnotice: adminNotice,
+       });
+     }
+ 
+ 
+     return this.success(res, {message: "Notice saved successfully", data: notice})
+   } catch (error) {
+    console.error("Error saving notice:", error);
+    return this.success(res, {error:error})
+
+    
+   }
+
+  
+  
+
+
+
+    
+  }
+
+     // API to fetch current notices
+     getNotice = async (req: Request, res: Response) => {
+      try {
+        const notice = await Notice.findOne();
+  
+        if (!notice) {
+          return res.json({ success: true, message: "No notices found", data: {} });
+        }
+  
+        return res.json({ success: true, data: notice });
+      } catch (error) {
+        console.error("Error fetching notice:", error);
+        return res.status(500).json({ success: false, message: "Internal Server Error" });
+      }
+    };
 }

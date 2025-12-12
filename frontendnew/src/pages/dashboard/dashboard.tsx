@@ -18,6 +18,10 @@ import MatchListMobile from './elements/match-list-mobile'
 import CasinoListItem from '../CasinoList/CasinoListItem'
 import casinoService from '../../services/casino.service'
 import betService from '../../services/bet.service'
+
+
+import providersData from './providers.json';
+
 import {
   selectCasinoMatchList,
   setHomePageCasinoMatch,
@@ -260,6 +264,61 @@ const Dashboard = () => {
                   matchList={matchList}
                 />
               )}
+
+
+<div className="row mx-0" style={{ marginBottom: "2px" }}>
+  <div className="col-3 position-relative" style={{ paddingLeft: "1px", paddingRight: "1px" }}>
+    <img
+      className="img-fluid"
+      src="https://speedcdn.io/frontend_config/diam/images/17627625602470028.gif"
+      alt=""
+    />
+  </div>
+  <div className="col-3 position-relative" style={{ paddingLeft: "1px", paddingRight: "1px" }}>
+    <img
+      className="img-fluid"
+      src="https://speedcdn.io/frontend_config/diam/images/17627625664266101.gif"
+      alt=""
+    />
+  </div>
+  <div className="col-3 position-relative" style={{ paddingLeft: "1px", paddingRight: "1px" }}>
+    <img
+      className="img-fluid"
+      src="https://speedcdn.io/frontend_config/diam/images/17627625734204431.gif"
+      alt=""
+    />
+  </div>
+  <div className="col-3 position-relative" style={{ paddingLeft: "1px", paddingRight: "1px" }}>
+    <img
+      className="img-fluid"
+      src="https://speedcdn.io/frontend_config/diam/images/17650463849494368.gif"
+      alt=""
+    />
+  </div>
+</div>
+
+<h2
+  className="newheading"
+  style={{
+    display: "block",
+    width: "100%",
+    marginBottom: "2px",
+    fontSize: "16px",
+    background: "var(--theme2-bg)",
+    padding: "5px 10px",
+    fontWeight: 600,
+    textTransform: "uppercase",
+    position: "relative",
+    color: "white",
+  }}
+>
+  <span>My Favourites</span>
+</h2>
+
+
+
+
+
               {location.pathname.includes('in-play') || !isMobile ? (
                 <div className='home-page'>
                 <div className='casino-list mt-2' style={{marginLeft:!isMobile?"-6px":""}}>
@@ -270,6 +329,41 @@ const Dashboard = () => {
               ) : (
                 ''
               )}
+
+
+<h2
+  className="newheading"
+  style={{
+    display: "block",
+    width: "100%",
+    marginBottom: "2px",
+    fontSize: "16px",
+    background: "var(--theme2-bg)",
+    padding: "5px 10px",
+    fontWeight: 600,
+    textTransform: "uppercase",
+    position: "relative",
+    color: "white",
+  }}
+>
+  <span>our providers</span>
+</h2>
+
+
+
+
+<div className="row mx-0 mt-0">
+      <div style={{ display: "contents" }} className="csn_div">
+        {providersData.map((item) => (
+          <div key={item.id} className="csn_thumb" style={{ width: "calc(25% - 2px)", margin: "1px" }}>
+            <img className="img-fluid" src={item.image} alt={item.title} />
+          </div>
+        ))}
+      </div>
+    </div>
+
+
+
             </div>
           </div>
         </div>

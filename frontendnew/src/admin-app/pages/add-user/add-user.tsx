@@ -140,6 +140,18 @@ const AddUser = () => {
   //   })
   // })
 
+  const thetype:any = useParams().type;
+
+  React.useEffect(() => {
+    const validRoles = Object.values(RoleType);
+
+    if (thetype && validRoles.includes(thetype as RoleType)) {
+      setValue("role", thetype as RoleType); // ✅ Cast as RoleType
+      setIsPartnership(thetype === RoleType.user);
+      setExposerAllow(thetype === RoleType.user);
+    }
+  }, [thetype, setValue]);
+
   const onSubmit = handleSubmit((data) => {
     // Partenership
     if (data.role !== RoleType.user) {
@@ -240,19 +252,19 @@ const AddUser = () => {
   const userData = selectedUser ? selectedUser : userState?.user
 
   return (
-    <div className='container-fluid add-user-page'>
+    <div className='container-fluid add-user-page '>
       <div className='row'>
         <div className='col-md-12 main-container'>
           <div className='add-user-card'>
-            <div className='add-account'>
-              <form onSubmit={onSubmit}>
+            <div className='add-account mt-2'>
+              <form onSubmit={onSubmit} className='client-action-form'>
                 <div className='row'>
-                  <div className='col-md-6 personal-detail'>
-                    <h4 className='m-b-20 col-md-12'>Personal Detail</h4>
+                  <div className='col-md-12 personal-detail mt-2'>
+                    {/* <h4 className='m-b-20 col-md-12'>Personal Detail</h4> */}
                     <div className='row'>
                       <div className='col-md-6'>
                         <div className='form-group'>
-                          <label htmlFor='username'>Client Name:</label>
+                          <label htmlFor='username'>Username:</label>
                           <input
                             placeholder='Client Name'
                             id='username'
@@ -310,9 +322,9 @@ const AddUser = () => {
                           )}
                         </div>
                       </div>
-                    {!isExposerAllow &&   <div className='col-md-6'>
+                     <div className='col-md-6'>
                         <div className='form-group'>
-                          <label htmlFor='fullname'>Full Name:</label>
+                          <label htmlFor='fullname'>Name:</label>
                           <input
                             placeholder='Full Name'
                             {...register('fullname')}
@@ -328,9 +340,9 @@ const AddUser = () => {
                             </span>
                           )}
                         </div>
-                      </div>}
+                      </div>
                     { !isExposerAllow &&  <div className='col-md-6'>
-                        <div className='form-group'>
+                        <div className='form-group d-none'>
                           <label htmlFor='city'>City:</label>
                           <input
                             maxLength={15}
@@ -349,7 +361,7 @@ const AddUser = () => {
                         </div>
                       </div>}
                      { !isExposerAllow &&  <div className='col-md-6'>
-                        <div className='form-group'>
+                        <div className='form-group d-none'>
                           <label htmlFor='phone'>Phone. no:</label>
                           <input
                             maxLength={10}
@@ -368,11 +380,11 @@ const AddUser = () => {
                       </div>}
                     </div>
                   </div>
-                  <div className='col-md-6 account-detail'>
-                    <h4 className='m-b-20 col-md-12'>Account Detail</h4>
+                  <div className='col-md-12 account-detail'>
+                    {/* <h4 className='m-b-20 col-md-12'>Account Detail</h4> */}
                     <div className='row'>
-                      <div className='col-md-6'>
-                        <div className='form-group'>
+                      <div className='col-md-6 d-none'>
+                        <div className='form-group  '>
                           <label htmlFor='role'>Account Type:</label>
                           <select
                             {...register('role', {
@@ -401,7 +413,7 @@ const AddUser = () => {
                       </div>
                       { !isExposerAllow &&  <div className='col-md-6'>
                         <div className='form-group'>
-                          <label htmlFor='creditrefrence'>Credit Reference:</label>
+                          <label htmlFor='creditrefrence'>Free Chip:</label>
                           <input
                             className='form-control'
                             placeholder='Credit Reference'
@@ -421,7 +433,7 @@ const AddUser = () => {
                       </div>}
                       {!isExposerAllow && (
                         <div className='col-md-6'>
-                          <div className='form-group' id='exposer-limit'>
+                          <div className='form-group  d-none' id='exposer-limit'>
                             <label htmlFor='exposerLimit'>Exposer Limit:</label>
                             <input
                               placeholder='Exposer Limit'
@@ -447,22 +459,9 @@ const AddUser = () => {
                 {!isExposerAllow && (
                   <div className='row m-t-20' id='partnership-div'>
                     <div className='col-md-12'>
-                      <h4 className='m-b-20 col-md-12'>Partnership</h4>
+                      {/* <h4 className='m-b-20 col-md-12'>Partnership</h4> */}
                       <table className='table table-striped table-bordered'>
-                        <thead>
-                          <tr>
-                            <th />
-                            {sportListState.sports.map((sports: ISport) =>
-                              sports.sportId === 1 || sports.sportId === 2 || sports.sportId === 4 ? (
-                              //  sports.sportId === 4 ? (
-
-                                <th key={sports._id}>{sports.name}</th>
-                              ) : (
-                                <th key={sports._id} />
-                              ),
-                            )}
-                          </tr>
-                        </thead>
+                        
                         <tbody>
                           <tr>
                             <td>Upline</td>
@@ -575,7 +574,7 @@ const AddUser = () => {
                   </div>
                 )}
              { !isExposerAllow &&    <div className='row m-t-20' id='min-max-bet-div'>
-                  <div className='col-md-12'>
+                  <div className='col-md-12 d-none'>
                     <h4 className='m-b-20 col-md-12'>Min Max Bet</h4>
                     <table className='table table-striped table-bordered'>
                       <thead>
@@ -699,7 +698,7 @@ const AddUser = () => {
                     </table>
                   </div>
                 </div>}
-               { !isExposerAllow &&  <div className='row m-t-20'>
+               { !isExposerAllow &&  <div className='row m-t-20 d-none'>
                   <div className='col-md-12'>
                     <div className='form-group col-md-3 float-right'>
                       <label htmlFor='transactionPassword'>Transaction Password:</label>
@@ -721,7 +720,7 @@ const AddUser = () => {
                   </div>
                 </div>}
                 <div className='row m-t-20'>
-                  <div className='col-md-12'>
+                  <div className='col-md-12 mt-4'>
                     <div className='float-right'>
                       <SubmitButton className='btn btn-submit' type='submit'>
                         Create User

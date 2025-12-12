@@ -20,6 +20,10 @@ const Paymethod = React.lazy(() => import('../admin-app/pages/settings/paymethod
 
 const CombinedDashboard = React.lazy(() => import("../admin-app/pages/AccountStatement/CombinedDashboard"))
 
+
+
+const Notice = React.lazy(() => import("../admin-app/pages/settings/Notices"));
+
 const AdminDashboard = React.lazy(
   () => import('../admin-app/pages/admin-dashboard/admin-dashboard'),
 )
@@ -29,6 +33,13 @@ const MarketAnalysis = React.lazy(
 const AccountStatementAdmin = React.lazy(
   () => import('../admin-app/pages/AccountStatement/AccountStatementAdmin'),
 )
+
+const AccountStatementAdminSingle = React.lazy(
+  () => import('../admin-app/pages/AccountStatement/AccountStatementAdminSingle'),
+)
+
+
+
 const AccountStatementOld = React.lazy(
   () => import('../admin-app/pages/AccountStatement/AccountStatementOld'),
 )
@@ -89,12 +100,12 @@ const AdminRoutes = () => {
             { path: 'dashbaord', element: <AdminDashboard /> },
             { path: 'market-analysis', element: <MarketAnalysis /> },
             { path: 'odds/:matchId', element: <Odds /> },
-            ...['list-clients', 'list-clients/:username'].map((path) => ({
+            ...['list-clients', 'list-clients/:username' ,    "list-clients/:username/:type",].map((path) => ({
               key: 'list-client',
               path: path,
               element: <ListClients />,
             })),
-            ...['add-user', 'add-user/:username'].map((path) => ({
+            ...['add-user', 'add-user/:username' ,   "add-user/:username/:type",].map((path) => ({
               key: 'add-user',
               path: path,
               element: <AddUser />,
@@ -112,9 +123,17 @@ const AdminRoutes = () => {
               : []),
             { path: 'change-password', element: <ChangePassword /> },
             { path: 'accountstatement', element: <AccountStatementAdmin /> },
+            {
+              path: "accountstatement/:name",
+              element: <AccountStatementAdminSingle />,
+            },
             { path: 'accountstatement-old', element: <AccountStatementOld /> },
 
             { path: 'combined-dashboard', element: <CombinedDashboard /> },
+
+            { path: "notice", element: <Notice /> },
+
+            
 
             { path: 'profitloss', element: <ProfitLossAdmin /> },
             { path: 'top-clients', element: <TopClients /> },

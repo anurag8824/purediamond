@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from '../../../../redux/hooks'
 // import userService from '../../../../services/user.service'
 import casinoService from '../../../../services/casino.service'
 
+import UserService from "../../../../services/user.service";
 interface TopHeaderProps {
   onMenuToggle?: () => void
 }
@@ -21,6 +22,8 @@ const TopHeader = ({ onMenuToggle }: TopHeaderProps) => {
   const [showMenu, setShowMenu] = React.useState<boolean>(false)
   const [showMarketDropdown, setShowMarketDropdown] = React.useState<boolean>(false)
   const [showClientListDropdown, setShowClientListDropdown] = React.useState<boolean>(false)
+  const [showCreateDropdown, setShowCreateDropdown] = React.useState<boolean>(false)
+
   const [showReportsInProfile, setShowReportsInProfile] = React.useState<boolean>(false)
   const [showTransactionsInProfile, setShowTransactionsInProfile] = React.useState<boolean>(false)
   const [showCasinoInProfile, setShowCasinoInProfile] = React.useState<boolean>(false)
@@ -61,7 +64,68 @@ const TopHeader = ({ onMenuToggle }: TopHeaderProps) => {
     }, 1)
   }
 
+
+
+  const getRoleOptions = (): { key: RoleType; label: string }[] => {
+    const userRole = userState?.user?.role as RoleType;
+
+    const allRoles = {
+      admin: "Super Admin",
+      sadmin: "Admin",
+      suadmin: "Sub Admin",
+      smdl: "Master",
+      mdl: "Super",
+      dl: "Agent",
+      user: "Client",
+    };
+
+    const roleMap: Record<RoleType, RoleType[]> = {
+      [RoleType.admin]: [
+        RoleType.sadmin,
+        RoleType.smdl,
+        RoleType.mdl,
+        RoleType.dl,
+        RoleType.user,
+      ],
+      [RoleType.sadmin]: [RoleType.smdl, RoleType.mdl,  RoleType.dl, RoleType.user,],
+
+      [RoleType.smdl]: [RoleType.mdl, RoleType.dl, RoleType.user],
+      [RoleType.mdl]: [RoleType.dl, RoleType.user],
+      [RoleType.dl]: [RoleType.user],
+      [RoleType.user]: [],
+    };
+
+    const allowedRoles = roleMap[userRole] || [];
+
+    return allowedRoles.map((key) => ({
+      key,
+      label: allRoles[key],
+    }));
+  };
+
   // Search removed from header
+
+  const [newbalance, setNewbalance] = React.useState<any>();
+
+  const [shared, setShared] = React.useState();
+  const [detail, setDetail] = React.useState<any>({});
+
+
+  React.useEffect(() => {
+    // const userState = useAppSelector<{ user: User }>(selectUserData);
+    const username: any = userState?.user?.username;
+
+    console.log(username, "testagentmaster");
+    UserService.getParentUserDetail(username).then(
+      (res: AxiosResponse<any>) => {
+        console.log(res, "check balance for parent");
+        const thatb = res?.data?.data[0];
+        setDetail(thatb);
+        setNewbalance(thatb?.balance?.balance);
+        setShared(thatb?.share);
+      }
+    );
+  }, [userState]);
 
   return (
     <div className='admin-top-header'>
@@ -77,11 +141,11 @@ const TopHeader = ({ onMenuToggle }: TopHeaderProps) => {
           <div className='balance-upline-box'>
             <div className='balance-info'>
               <span className='label'>Bal :</span>
-              <span className='value'>2001</span>
+              <span className='value'>{newbalance?.toFixed()}</span>
             </div>
             <div className='upline-info'>
               <span className='label'>Upline :</span>
-              <span className='value'>0</span>
+              <span className='value'>{detail?.parentBalance?.balance?.toFixed()}</span>
             </div>
           </div>
 
@@ -93,6 +157,7 @@ const TopHeader = ({ onMenuToggle }: TopHeaderProps) => {
                   e.stopPropagation()
                   setShowMarketDropdown(!showMarketDropdown)
                   setShowClientListDropdown(false)
+                  setShowCreateDropdown(false)
                   setShowMenu(false)
                 }}>
                   Market <i className='fas fa-caret-down'></i>
@@ -102,15 +167,15 @@ const TopHeader = ({ onMenuToggle }: TopHeaderProps) => {
                   <li>
                     <CustomLink to='/market-analysis'>Market Analysis</CustomLink>
                   </li>
-                  <li>
+                  {/* <li>
                     <CustomLink to='/multi-market'>Multi Market</CustomLink>
-                  </li>
+                  </li> */}
                   <li>
                     <CustomLink to='/unsettledbet'>Unsettled Bets</CustomLink>
                   </li>
-                  <li>
+                  {/* <li>
                     <CustomLink to='/casino-history'>Int Casino History</CustomLink>
-                  </li>
+                  </li> */}
                 </ul>
                 )}
               </li>
@@ -121,26 +186,89 @@ const TopHeader = ({ onMenuToggle }: TopHeaderProps) => {
                   e.stopPropagation()
                   setShowClientListDropdown(!showClientListDropdown)
                   setShowMarketDropdown(false)
+                  setShowCreateDropdown(false)
                   setShowMenu(false)
                 }}>
                   Client List <i className='fas fa-caret-down'></i>
                 </button>
                 {showClientListDropdown && (
                 <ul className='dropdown-menu profile-menu'>
-                  <li>
+                  {/* <li>
                     <CustomLink to={`/list-clients/${userState?.user?.username}`}>List of Clients</CustomLink>
-                  </li>
-                  <li>
+                  </li> */}
+
+                  {getRoleOptions().map((role) => (
+                        <li key={role.key}>
+                          <CustomLink
+                            to={`/list-clients/${userState?.user?.username}/${role.key}`}
+                            // onClick={() => setDropdownOpen(!dropdownOpen)}
+                            //  onClick={toggleDrawer}
+                            // onClick={() => { toggleDrawer(); setDropdownOpen(!dropdownOpen) ; setActiveMenu("User");}}
+                            // className="dropdown-item hover:bg-gray-400"
+                          >
+                            {/* <b className=" mobile-style ml-20 text-lg text-white  md:flex md:flex-row flex flex-col text-left gap-1"> */}
+                              {/* <ListIcon className="text-yellow-600" /> */}
+                            <span style={{background:"#CC9647" ,color:"white" , padding:"4px 10px"}}>{role.label.charAt(0)}</span>  {role.label}
+                              {/* ({userList?.items?.filter((i: any) => i.role === `${role.key}`)?.length}) */}
+                            {/* </b> */}
+                          </CustomLink>
+                        </li>
+                      ))}
+
+
+                  {/* <li>
                     <CustomLink to='/blocked-clients'>Blocked Clients</CustomLink>
-                  </li>
+                  </li> */}
+                </ul>
+                )}
+              </li>
+
+
+              {/* Create Client  */}
+              <li className='dropdown'>
+                <button onClick={(e) => {
+                  e.stopPropagation()
+                  setShowCreateDropdown(!showCreateDropdown)
+                  setShowClientListDropdown(false)
+                  setShowMarketDropdown(false)
+                  setShowMenu(false)
+                }}>
+                  Create User <i className='fas fa-caret-down'></i>
+                </button>
+                {showCreateDropdown && (
+                <ul className='dropdown-menu profile-menu'>
+                   {/* <li>
+                <CustomLink to={`/add-user/${userState?.user?.username}`}>Create User</CustomLink>
+              </li> */}
+
+
+              {getRoleOptions().map((role) => (
+                        <li key={role.key}>
+                          <CustomLink
+                            to={`/add-user/${userState?.user?.username}/${role.key}`}
+                            // onClick={() => setDropdownOpen(!dropdownOpen)}
+                            //  onClick={toggleDrawer}
+                            // onClick={() => { toggleDrawer(); setDropdownOpen(!dropdownOpen) ; setActiveMenu("User");}}
+                            // className="dropdown-item hover:bg-gray-400"
+                          >
+                            {/* <b className=" mobile-style ml-20 text-lg text-white  md:flex md:flex-row flex flex-col text-left gap-1"> */}
+                              {/* <ListIcon className="text-yellow-600" /> */}
+                              <span style={{background:"#CC9647" ,color:"white" , padding:"4px 10px"}}>{role.label.charAt(0)}</span>  {role.label}
+                              {/* ({userList?.items?.filter((i: any) => i.role === `${role.key}`)?.length}) */}
+                            {/* </b> */}
+                          </CustomLink>
+                        </li>
+                      ))}
+
+
                 </ul>
                 )}
               </li>
 
               {/* Create Client Button */}
-              <li>
+              {/* <li>
                 <CustomLink to={`/add-user/${userState?.user?.username}`}>Create Client</CustomLink>
-              </li>
+              </li> */}
 
               {/* Profile dropdown with Home, Dashboard, Reports, Transactions, Settings, and Live Casino moved inside */}
               <li className='dropdown profile-dropdown'>
@@ -149,11 +277,13 @@ const TopHeader = ({ onMenuToggle }: TopHeaderProps) => {
                   setShowMenu(!showMenu)
                   setShowMarketDropdown(false)
                   setShowClientListDropdown(false)
+                  setShowCreateDropdown(false)
                   if (!showMenu) {
                     setShowReportsInProfile(false)
                     setShowTransactionsInProfile(false)
                     setShowCasinoInProfile(false)
                     setShowSettingsInProfile(false)
+      
                   }
                 }}>
                   {userState?.user?.username} <i className='fas fa-caret-down'></i>
@@ -165,9 +295,9 @@ const TopHeader = ({ onMenuToggle }: TopHeaderProps) => {
                     <li><CustomLink to='/accountstatement'>A/C Statement</CustomLink></li>
                     <li><CustomLink to='/accountstatement-old'>Old A/C Statement</CustomLink></li>
                     <li><CustomLink to='/top-clients'>Top Clients</CustomLink></li>
-                    <li><CustomLink to='/top-clients-new'>Top Clients New</CustomLink></li>
+                    {/* <li><CustomLink to='/top-clients-new'>Top Clients New</CustomLink></li> */}
                     <li><CustomLink to='/sport-report'>Sport Report</CustomLink></li>
-                    <li><CustomLink to='/sport-report-new'>Sport Report New</CustomLink></li>
+                    {/* <li><CustomLink to='/sport-report-new'>Sport Report New</CustomLink></li> */}
                     <li><CustomLink to='/weekly-report'>Weekly Report</CustomLink></li>
                     <li><CustomLink to='/settlement-report'>Settlement Report</CustomLink></li>
                     <li><CustomLink to='/chip-summary'>Chip Smry</CustomLink></li>
@@ -175,6 +305,8 @@ const TopHeader = ({ onMenuToggle }: TopHeaderProps) => {
                     <li><CustomLink to='/export'>Export</CustomLink></li>
                     <li><CustomLink to='/profile'>Profile</CustomLink></li>
                     <li><CustomLink to='/change-password'>Change Password</CustomLink></li>
+                    <li><CustomLink  to="/notice" >Notice</CustomLink></li>
+
 
                     {/*
                     The following items are commented out for now per request:

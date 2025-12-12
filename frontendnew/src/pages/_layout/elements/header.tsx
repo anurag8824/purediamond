@@ -212,16 +212,16 @@ const Header = () => {
                   className='btn btn-deposit' 
                   to={'/deposit'}
                   style={{
-                    backgroundColor: '#28a745',
+                    background: "linear-gradient(180deg, #007b15, #138e00)",
                     color: '#fff',
-                    border: 'none',
+                    border: "1px solid #fff",
                     padding: '8px 20px',
                     borderRadius: '4px',
                     display: 'flex',
                     alignItems: 'center',
                     gap: '6px',
                     fontSize: '14px',
-                    fontWeight: '600',
+                    fontWeight: '900',
                     textTransform: 'uppercase',
                     textDecoration: 'none'
                   }}
@@ -233,16 +233,16 @@ const Header = () => {
                   className='btn btn-withdraw' 
                   to={'/withdraw'}
                   style={{
-                    backgroundColor: '#dc3545',
+                    background: "linear-gradient(180deg, #7b0000, #d10000)",
                     color: '#fff',
-                    border: 'none',
+                    border: "1px solid #fff",
                     padding: '8px 20px',
                     borderRadius: '4px',
                     display: 'flex',
                     alignItems: 'center',
                     gap: '6px',
                     fontSize: '14px',
-                    fontWeight: '600',
+                    fontWeight: '900',
                     textTransform: 'uppercase',
                     textDecoration: 'none'
                   }}

@@ -9167,9 +9167,9 @@ footer p {
 }
 .slot-iframe {
   position: fixed;
-  left: 260;
+  left: 0px;
   top: 100%;
-  width: calc(100% - 263px);
+  width: 100%;
   z-index: 10;
 }
 
@@ -9179,14 +9179,14 @@ footer p {
 }
 
 .slot-iframe.show {
-  top: 125px;
+  top: 0px;
   transition: all 0.3s ease-out;
   -webkit-transition: all 0.3s ease-out;
   -moz-transition: all 0.3s ease-out;
   -ms-transition: all 0.3s ease-out;
   -o-transition: all 0.3s ease-out;
   z-index: 1000;
-  height: calc(100vh - 125px);
+  height: 100%;
 }
 
 .slot-iframe .slot-header,

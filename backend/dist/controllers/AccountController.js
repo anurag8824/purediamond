@@ -22,6 +22,7 @@ const aggregation_pipeline_pagination_1 = require("../util/aggregation-pipeline-
 const User_1 = require("../models/User");
 const Role_1 = require("../models/Role");
 const user_socket_1 = __importDefault(require("../sockets/user-socket"));
+const Notice_1 = __importDefault(require("../models/Notice"));
 class AccountController extends ApiController_1.ApiController {
     constructor() {
         super();
@@ -342,6 +343,45 @@ class AccountController extends ApiController_1.ApiController {
             }
             catch (e) {
                 return this.fail(res, e);
+            }
+        });
+        this.notice = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            console.log(req.body, "data from settelement hahhahahah");
+            try {
+                const { userNotice, adminNotice } = req.body;
+                let notice = yield Notice_1.default.findOne();
+                if (notice) {
+                    // Update the existing document
+                    notice.fnotice = userNotice;
+                    notice.bnotice = adminNotice;
+                    yield notice.save();
+                }
+                else {
+                    // Create a new notice document if it doesn't exist
+                    notice = yield Notice_1.default.create({
+                        fnotice: userNotice,
+                        bnotice: adminNotice,
+                    });
+                }
+                return this.success(res, { message: "Notice saved successfully", data: notice });
+            }
+            catch (error) {
+                console.error("Error saving notice:", error);
+                return this.success(res, { error: error });
+            }
+        });
+        // API to fetch current notices
+        this.getNotice = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const notice = yield Notice_1.default.findOne();
+                if (!notice) {
+                    return res.json({ success: true, message: "No notices found", data: {} });
+                }
+                return res.json({ success: true, data: notice });
+            }
+            catch (error) {
+                console.error("Error fetching notice:", error);
+                return res.status(500).json({ success: false, message: "Internal Server Error" });
             }
         });
         this.saveUserDepositFC = this.saveUserDepositFC.bind(this);

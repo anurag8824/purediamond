@@ -215,8 +215,8 @@ const AdminHome = () => {
                     return (
                       <tr key={match.matchId} onClick={() => currentMatch(match)} className='match-row'>
                         <td className='match-info'>
-                          <div className='match-name'>{match.name}</div>
-                          <div className='match-date'>{new Date(match.matchDateTime).toLocaleString()}</div>
+                          <div className='match-name'>{match?.name}</div>
+                          <div className='match-date'>{new Date(match?.matchDateTime).toLocaleString()}</div>
                         </td>
                         {memoOdds(market?.marketId)}
                       </tr>

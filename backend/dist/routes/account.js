@@ -30,6 +30,8 @@ class AccountRoutes {
         this.router.get('/get-casino-data-by-id/:slug', Passport_1.default.authenticateJWT, this.CasinoController.getCasinoData);
         this.router.get("/html-cards/:type/:roundId", Passport_1.default.authenticateJWT, this.CasinoController.htmlCards);
         this.router.get("/done-results/:type", Passport_1.default.authenticateJWT, this.CasinoController.results);
+        this.router.post("/notice", Passport_1.default.authenticateJWT, this.AccountController.notice);
+        this.router.get("/getnotice", Passport_1.default.authenticateJWT, this.AccountController.getNotice);
         this.router.post('/profit-loss', Passport_1.default.authenticateJWT, this.AccountController.profitloss);
     }
 }

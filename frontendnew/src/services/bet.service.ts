@@ -33,6 +33,17 @@ class BetService {
   usersLockClientList(data: { ids: Array<string>; lock: boolean; type: string }) {
     return api.post(`users-lock`, data)
   }
+
+  notice(data: any) {
+    // throw new Error("Method not implemented.");
+    return api.post("notice", data)
+  }
+
+
+  getnotice() {
+    // throw new Error("Method not implemented.");
+    return api.get("getnotice")
+  }
  
 }
 export default new BetService()
