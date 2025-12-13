@@ -39,6 +39,8 @@ const Dashboard = () => {
   const location = useLocation()
   const gamesList = useAppSelector<any>(selectCasinoMatchList)
 
+  // const isMobile = true;
+
   const { sportId, status } = useParams()
   console.log(sportId, status, "from parmas in sports")
   React.useEffect(() => {
@@ -267,28 +269,28 @@ const Dashboard = () => {
 
 
 <div className="row mx-0" style={{ marginBottom: "2px" }}>
-  <div className="col-3 position-relative" style={{ paddingLeft: "1px", paddingRight: "1px" }}>
+  <div className={isMobile ? "col-6 position-relative " : "col-3 position-relative" } style={{ paddingLeft: "1px", paddingRight: "1px" }}>
     <img
       className="img-fluid"
       src="https://speedcdn.io/frontend_config/diam/images/17627625602470028.gif"
       alt=""
     />
   </div>
-  <div className="col-3 position-relative" style={{ paddingLeft: "1px", paddingRight: "1px" }}>
+  <div className={isMobile ? "col-6 position-relative " : "col-3 position-relative" } style={{ paddingLeft: "1px", paddingRight: "1px" }}>
     <img
       className="img-fluid"
       src="https://speedcdn.io/frontend_config/diam/images/17627625664266101.gif"
       alt=""
     />
   </div>
-  <div className="col-3 position-relative" style={{ paddingLeft: "1px", paddingRight: "1px" }}>
+  <div className={isMobile ? "col-6 position-relative " : "col-3 position-relative" } style={{ paddingLeft: "1px", paddingRight: "1px" }}>
     <img
       className="img-fluid"
       src="https://speedcdn.io/frontend_config/diam/images/17627625734204431.gif"
       alt=""
     />
   </div>
-  <div className="col-3 position-relative" style={{ paddingLeft: "1px", paddingRight: "1px" }}>
+  <div className={isMobile ? "col-6 position-relative " : "col-3 position-relative" } style={{ paddingLeft: "1px", paddingRight: "1px" }}>
     <img
       className="img-fluid"
       src="https://speedcdn.io/frontend_config/diam/images/17650463849494368.gif"
@@ -353,21 +355,24 @@ const Dashboard = () => {
 
 
 <div className="row mx-0 mt-0">
-      <div style={{ display: "contents" }} className="csn_div">
-        {providersData.map((item) => (
-          <div key={item.id} className="csn_thumb" style={{ width: "calc(25% - 2px)", margin: "1px" }}>
-            {/* <img className="img-fluid" src={item.image} alt={item.title} /> */}
-             <CustomLink to={`/casino-list-int/${item.id}`}>
+  {providersData?.map((item) => (
+    <div
+      key={item.id}
+      className="col-4 col-md-3 px-1"
+    >
+      <div className="csn_thumb">
+        <CustomLink to={`/casino-list-int/${item.id}`}>
           <img
-            className="img-fluid"
+            className="img-fluid w-100"
             src={item.image}
             alt={item.title}
           />
         </CustomLink>
-          </div>
-        ))}
       </div>
     </div>
+  ))}
+</div>
+
 
 
 

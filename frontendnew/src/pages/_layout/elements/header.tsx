@@ -208,50 +208,62 @@ const Header = () => {
               gap: '12px'
             }}>
               {/* Deposit/Withdraw Buttons */}
-              <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                <CustomLink 
-                  className='btn btn-deposit' 
-                  to={'/deposit'}
-                  style={{
-                    background: "linear-gradient(180deg, #007b15, #138e00)",
-                    color: '#fff',
-                    border: "1px solid #fff",
-                    // padding: '8px 20px',
-                    borderRadius: '4px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    // gap: '6px',
-                    fontSize: '14px',
-                    fontWeight: '900',
-                    textTransform: 'uppercase',
-                    textDecoration: 'none'
-                  }}
-                >
-                  <img src="/depositimg.webp" style={{ width: '18px', height: '18px' }} alt="" /> 
-                  Deposit
-                </CustomLink>
-                <CustomLink 
-                  className='btn btn-withdraw' 
-                  to={'/withdraw'}
-                  style={{
-                    background: "linear-gradient(180deg, #7b0000, #d10000)",
-                    color: '#fff',
-                    border: "1px solid #fff",
-                    // padding: '8px 20px',
-                    borderRadius: '4px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    // gap: '6px',
-                    fontSize: '9px',
-                    fontWeight: '900',
-                    textTransform: 'uppercase',
-                    textDecoration: 'none'
-                  }}
-                >
-                  <img src="/withdrawimg.webp" style={{ width: '18px', height: '18px' }} alt="" /> 
-                  Withdrawal
-                </CustomLink>
-              </div>
+             {!isMobile ? 
+             
+             <div className="w-100 px-2">
+  <div
+    className="d-flex gap-2"
+    style={{ width: '100%' , gap: "5px", }}
+  >
+    <CustomLink
+      to="/deposit"
+      className="btn btn-deposit flex-fill d-flex justify-content-center align-items-center"
+      style={{
+        background: "linear-gradient(180deg, #007b15, #138e00)",
+        color: '#fff',
+        border: "1px solid #fff",
+        borderRadius: '4px',
+        fontSize: '14px',
+        fontWeight: '900',
+        textTransform: 'uppercase',
+        textDecoration: 'none',
+        height: '42px'
+      }}
+    >
+      <img
+        src="/depositimg.webp"
+        alt=""
+        style={{ width: 18, height: 18, marginRight: 6 }}
+      />
+      Deposit
+    </CustomLink>
+
+    <CustomLink
+      to="/withdraw"
+      className="btn btn-withdraw flex-fill d-flex justify-content-center align-items-center"
+      style={{
+        background: "linear-gradient(180deg, #7b0000, #d10000)",
+        color: '#fff',
+        border: "1px solid #fff",
+        borderRadius: '4px',
+        fontSize: '14px',
+        fontWeight: '900',
+        textTransform: 'uppercase',
+        textDecoration: 'none',
+        height: '42px'
+      }}
+    >
+      <img
+        src="/withdrawimg.webp"
+        alt=""
+        style={{ width: 18, height: 18, marginRight: 6 }}
+      />
+      Withdraw
+    </CustomLink>
+  </div>
+</div> :   
+              
+              ""}
 
               {/* Search Icon */}
               {!isMobile ? (
@@ -302,6 +314,7 @@ const Header = () => {
                   </li>
                 </>
               ) : null}
+
 
               {/* Balance and Exposure */}
               <li style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
@@ -486,9 +499,76 @@ const Header = () => {
                 }
               }}
             >
-              <img style={{ width: "65px" }} src="/wp_support.webp" alt="WhatsApp Support" />
+            <img
+  src="/wp_support.webp"
+  alt="WhatsApp Support"
+  style={{
+    width: '65px',
+    animation: 'simple-scale 1s linear 1s infinite alternate',
+  }}
+/>
+
             </button>
           </div>
+
+       { isMobile ?   <div className="w-100 px-2">
+  <div
+    className="d-flex gap-2"
+    style={{ width: '100%' , gap: "5px", }}
+  >
+    <CustomLink
+      to="/deposit"
+      className="btn btn-deposit flex-fill d-flex justify-content-center align-items-center"
+      style={{
+        background: "linear-gradient(180deg, #007b15, #138e00)",
+        color: '#fff',
+        border: "1px solid #fff",
+        borderRadius: '4px',
+        fontSize: '14px',
+        fontWeight: '900',
+        textTransform: 'uppercase',
+        textDecoration: 'none',
+        height: '42px'
+      }}
+    >
+      <img
+        src="/depositimg.webp"
+        alt=""
+        style={{ width: 18, height: 18, marginRight: 6 }}
+      />
+      Deposit
+    </CustomLink>
+
+    <CustomLink
+      to="/withdraw"
+      className="btn btn-withdraw flex-fill d-flex justify-content-center align-items-center"
+      style={{
+        background: "linear-gradient(180deg, #7b0000, #d10000)",
+        color: '#fff',
+        border: "1px solid #fff",
+        borderRadius: '4px',
+        fontSize: '14px',
+        fontWeight: '900',
+        textTransform: 'uppercase',
+        textDecoration: 'none',
+        height: '42px'
+      }}
+    >
+      <img
+        src="/withdrawimg.webp"
+        alt=""
+        style={{ width: 18, height: 18, marginRight: 6 }}
+      />
+      Withdraw
+    </CustomLink>
+  </div>
+</div> : ""}
+
+
+          
+
+
+          
           {isMobile ? <Marqueemessge message={userMessage} /> : ""}
           {!isMobile ? <NavMenu /> : <NavMobileMenu />}
         </div>

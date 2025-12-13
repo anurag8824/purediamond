@@ -9178,6 +9178,17 @@ footer p {
   height: calc(100% - 47px);
 }
 
+
+@keyframes simple-scale {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.1);
+  }
+}
+
+
 .slot-iframe.show {
   top: 0px;
   transition: all 0.3s ease-out;

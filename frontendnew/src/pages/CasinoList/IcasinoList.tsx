@@ -12,6 +12,8 @@ import { useParams } from "react-router-dom";
 
 const IcasinoListItem = () => {
 
+  // const isMobile = true
+
   const gamesList = useAppSelector<any>(selectCasinoMatchList)
   const navigate = useNavigateCustom()
   const casinoWidth = isMobile ? 'col-3' : 'col11'
@@ -153,6 +155,7 @@ const IcasinoListItem = () => {
     gap: "15px",
     paddingTop: "30px",
     paddingBottom: "30px",
+    margin : "0 6px",
   }}
 >
   {MacJson.length > 0 &&
