@@ -1147,7 +1147,12 @@ const CasinoListItem = (props: any) => {
 
   return (
     <>
-    {loadingGame && <div className="loading-box">Loading…</div>}
+    {loadingGame && <div className="fullscreen-loader">
+    <div className="loader-card">
+      <div className="spinner"></div>
+      <div className="loader-text">Loading Casino…</div>
+    </div>
+  </div>}
 
     {gameUrl&&(<div className="slot-iframe show">
    

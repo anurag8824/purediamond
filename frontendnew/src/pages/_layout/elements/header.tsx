@@ -188,12 +188,12 @@ const Header = () => {
               <CustomLink
                 to='/match/4/in-play'
                 className={isMobile ? "" : 'logo'}
-                style={{ display: 'flex', alignItems: 'center' }}
+                style={{ display: 'flex', alignItems: 'center'  }}
               >
                 <img 
                   src='/imgs/logo.png' 
                   className='logo-icon' 
-                  style={{ height: '35px', width: 'auto' }}
+                  style={{ height: '35px', width: 'auto' , marginLeft: isMobile ? "30px" : "80px"}}
                 />
               </CustomLink>
             </div>

@@ -91,7 +91,15 @@ const IcasinoListItem = () => {
   return (
     <>
       {/* ================= LOADING ================= */}
-      {loadingGame && <div className="loading-box">Loading…</div>}
+      {loadingGame && (
+  <div className="fullscreen-loader">
+    <div className="loader-card">
+      <div className="spinner"></div>
+      <div className="loader-text">Loading Casino…</div>
+    </div>
+  </div>
+)}
+
 
       {/* ================= IFRAME ================= */}
       {gameUrl && (
@@ -147,7 +155,7 @@ const IcasinoListItem = () => {
           </div>
           </div> */}
 
-          <div
+          {/* <div
   // className="col-12"
   style={{
     display: "flex",
@@ -199,7 +207,47 @@ const IcasinoListItem = () => {
         </div>
       );
     })}
+</div> */}
+
+
+<div className="row px-2 py-4">
+  {MacJson.length > 0 &&
+    MacJson
+      .filter((item: any) => item.code !== "")
+      .map((Item: any, key: number) => (
+        <div
+          key={key}
+          className="col-6 col-md-2 mb-4 d-flex justify-content-center"
+        >
+          <a
+            href="#"
+            onClick={(e) => onIntcasinoClick(e, Item.gameId)}
+            style={{ textDecoration: "none", color: "inherit" , width: "100%"}}
+          >
+            <div
+              style={{
+                width: "100%",
+                height: "150px",
+                backgroundImage: `url(${Item.image})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                borderRadius: "10px",
+              }}
+            />
+            <div
+              style={{
+                marginTop: "8px",
+                fontWeight: "bold",
+                textAlign: "center",
+              }}
+            >
+              {Item.name}
+            </div>
+          </a>
+        </div>
+      ))}
 </div>
+
 
     </>
   )

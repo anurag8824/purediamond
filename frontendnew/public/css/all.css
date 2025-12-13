@@ -20,7 +20,7 @@
   width: 220px !important;
   height: 60px !important;
   object-fit: contain !important;
-  margin-left: 10px !important;
+  margin-left: 60px !important;
   margin-right: 30px !important;
   vertical-align: middle !important;
 }
@@ -33,6 +33,59 @@
     transform: scale(1.1);
   }
 } 
+
+
+
+/* ================= FULL SCREEN LOADER ================= */
+.fullscreen-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Loader Card */
+.loader-card {
+  background: rgba(20, 20, 20, 0.9);
+  padding: 30px 40px;
+  border-radius: 14px;
+  box-shadow: 0 0 40px rgba(0, 255, 120, 0.35);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Spinner */
+.spinner {
+  width: 60px;
+  height: 60px;
+  border: 4px solid rgba(255, 255, 255, 0.15);
+  border-top: 4px solid #00ff84;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Text */
+.loader-text {
+  margin-top: 15px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* Animation */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 
 .row-deposit-button .btn-deposit {
   background: #43b864 !important;

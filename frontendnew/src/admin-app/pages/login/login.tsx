@@ -38,10 +38,10 @@ const Login = () => {
       })
 
       if (userState.user.role && ['admin', '1', '2', '3'].includes(userState.user.role)) {
-        return navigate.go('/market-analysis')
+        return navigate.go('/')
       }
 
-      return navigate.go('/market-analysis')
+      return navigate.go('/')
     }
   }, [userState])
 
