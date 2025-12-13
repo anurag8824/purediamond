@@ -107,7 +107,7 @@ const Main = () => {
         {isMobile && <Outlet></Outlet>}
       </div>
       <Footer />
-      {welcomeState.status ? <Welcome /> : ''}
+      {/* {welcomeState.status ? <Welcome /> : ''} */}
     </div>
   )
 }

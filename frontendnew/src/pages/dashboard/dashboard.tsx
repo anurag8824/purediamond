@@ -269,7 +269,7 @@ const Dashboard = () => {
 
 
 <div className="row mx-0" style={{ marginBottom: "2px" }}>
-  <div className={isMobile ? "col-6 position-relative " : "col-3 position-relative" } style={{ paddingLeft: "1px", paddingRight: "1px" }}>
+  <div className={isMobile ? "col-6 position-relative " : "col-3 position-relative" } style={{ paddingLeft: "1px", paddingRight: "1px" ,marginBottom: "2px" }}>
     <img
       className="img-fluid"
       src="https://speedcdn.io/frontend_config/diam/images/17627625602470028.gif"

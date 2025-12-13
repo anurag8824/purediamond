@@ -9,7 +9,7 @@ const CasinoList = () => {
         <span className='card-header-title'>Casino Games</span>
       </div>
       <div className='col-12'>
-        <div className='card-content pt30 pb30'>
+        <div className='card-content home-page casino-list pt30 pb30'>
           <CasinoListItem />
         </div>
       </div>
