@@ -1194,26 +1194,7 @@ const CasinoListItem = (props: any) => {
             );
           })}
 
-{jiliJson &&
-        jiliJson
-          .filter((item) => item.code !== "") // agar blank code wale nahi dikhane
-          .map((Item, key) => {
-            return (
-              <div className="casino-list-item">
-                <a
-                  href="#"
-                  onClick={(e) => onIntcasinoClick(e, Item.gameId)}
-                >
-                  <div
-                    className="casino-list-item-banner"
-                    style={{ backgroundImage: `url(${Item.image})` }}
-                  ></div>
 
-                  <div className="casino-list-name">{Item.name}</div>
-                </a>
-              </div>
-            );
-          })}
           
 
     </>

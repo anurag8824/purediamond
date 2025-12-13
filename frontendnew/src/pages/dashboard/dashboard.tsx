@@ -8,7 +8,7 @@ import { useAppSelector } from '../../redux/hooks'
 import { selectSportList, setCurrentMatch } from '../../redux/actions/sports/sportSlice'
 import IMatch from '../../models/IMatch'
 import { useDispatch } from 'react-redux'
-import { useNavigateCustom } from '../_layout/elements/custom-link'
+import {CustomLink, useNavigateCustom } from '../_layout/elements/custom-link'
 import { useWebsocket } from '../../context/webSocket'
 import GameTab from '../_layout/elements/game-tab'
 import { isMobile } from 'react-device-detect'
@@ -356,7 +356,14 @@ const Dashboard = () => {
       <div style={{ display: "contents" }} className="csn_div">
         {providersData.map((item) => (
           <div key={item.id} className="csn_thumb" style={{ width: "calc(25% - 2px)", margin: "1px" }}>
-            <img className="img-fluid" src={item.image} alt={item.title} />
+            {/* <img className="img-fluid" src={item.image} alt={item.title} /> */}
+             <CustomLink to={`/casino-list-int/${item.id}`}>
+          <img
+            className="img-fluid"
+            src={item.image}
+            alt={item.title}
+          />
+        </CustomLink>
           </div>
         ))}
       </div>

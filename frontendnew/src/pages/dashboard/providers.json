@@ -1,22 +1,23 @@
 [
     {
-      "id": 1,
-      "title": "our providers",
-      "image": "https://speedcdn.io/frontend_config/diam/images/17627624134368811.webp"
-    },
-    {
-      "id": 2,
-      "title": "our providers",
+     
+        "id": 1,
+      "title": "Mac88",
       "image": "https://speedcdn.io/frontend_config/diam/images/17627624232498773.webp"
     },
     {
+     "id": 2,
+      "title": "Mac88_Virtual",
+      "image": "https://speedcdn.io/frontend_config/diam/images/17627624134368811.webp"
+    },
+    {
       "id": 3,
-      "title": "our providers",
+      "title": "Mac88_Excite",
       "image": "https://speedcdn.io/frontend_config/diam/images/17627624307580326.webp"
     },
     {
       "id": 4,
-      "title": "our providers",
+      "title": "Creed",
       "image": "https://speedcdn.io/frontend_config/diam/images/17627624367177485.webp"
     },
     {

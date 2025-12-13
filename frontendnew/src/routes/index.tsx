@@ -16,6 +16,7 @@ const CasinoReport = React.lazy(() => import('../pages/CasinoReport/CasinoReport
 const ChangePassword = React.lazy(() => import('../pages/ChangePassword/ChangePassword'))
 const Dashboard = React.lazy(() => import('../pages/dashboard/dashboard'))
 const Login = React.lazy(() => import('../pages/login/login'))
+const IcasinoListItem = React.lazy(() => import('../pages/CasinoList/IcasinoList'))
 
 
 const Odds = React.lazy(() => import('../pages/odds/odds'))
@@ -67,6 +68,7 @@ const Routers = () => {
             { index: true, element: <Dashboard /> },
             { path: 'dashbaord', element: <Dashboard /> },
             { path: 'match/:sportId', element: <Dashboard /> },
+            { path: '/casino-list-int/:id', element: <IcasinoListItem /> },
             { path: 'match/:sportId/:status?', element: <Dashboard /> },
             { path: 'odds/:matchId', element: <Odds /> },
             { path: 'button-values', element: <ButtonValues /> },

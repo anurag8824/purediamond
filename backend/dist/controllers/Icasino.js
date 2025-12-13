@@ -47,7 +47,7 @@ class CasCallbackController extends ApiController_1.ApiController {
                 if (balance) {
                     return res.status(200).json({
                         bet_status: "Y",
-                        balance: (balance === null || balance === void 0 ? void 0 : balance.balance) - (balance === null || balance === void 0 ? void 0 : balance.exposer),
+                        balance: ((balance === null || balance === void 0 ? void 0 : balance.balance) - (balance === null || balance === void 0 ? void 0 : balance.exposer)).toString(),
                         status: 'OP_SUCCESS',
                     });
                 }
@@ -71,13 +71,13 @@ class CasCallbackController extends ApiController_1.ApiController {
             console.log(req.body, "req.body betrequest");
             try {
                 const { userId, token, PartnerId, transactionId, debitAmount, gameId, roundId, reqId } = req.body;
-                if (!allowedPartners.includes(PartnerId)) {
-                    return res.status(500).json({
-                        balance: 0,
-                        status: 'OP_FAILURE',
-                        bet_status: 'N'
-                    });
-                }
+                //  if (!allowedPartners.includes(PartnerId)) {
+                //   return res.status(500).json({
+                //     balance: 0,
+                //     status: 'OP_FAILURE',
+                //     bet_status: 'N'
+                //   });
+                // }
                 if (!gameId || !roundId || isNaN(debitAmount) || !transactionId || !userId || !reqId) {
                     return res.status(500).json({
                         balance: 0,
@@ -198,13 +198,13 @@ class CasCallbackController extends ApiController_1.ApiController {
         this.getCreditRequest = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
                 const { userId, token, PartnerId, transactionId, creditAmount, gameId, roundId, reqId } = req.body;
-                if (!allowedPartners.includes(PartnerId)) {
-                    return res.status(500).json({
-                        balance: 0,
-                        status: 'OP_FAILURE',
-                        bet_status: 'N'
-                    });
-                }
+                // if (!allowedPartners.includes(PartnerId)) {
+                //     return res.status(500).json({
+                //       balance: 0,
+                //       status: 'OP_FAILURE',
+                //       bet_status: 'N'
+                //     });
+                //   }
                 if (!gameId || !roundId || isNaN(creditAmount) || !transactionId || !userId || !reqId) {
                     return res.status(500).json({
                         balance: 0,
@@ -334,13 +334,13 @@ class CasCallbackController extends ApiController_1.ApiController {
         this.getrollback = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
                 const { userId, token, PartnerId, transactionId, rollbackAmount, gameId, roundId, reqId } = req.body;
-                if (!allowedPartners.includes(PartnerId)) {
-                    return res.status(500).json({
-                        balance: 0,
-                        status: 'OP_FAILURE',
-                        bet_status: 'N'
-                    });
-                }
+                //  if (!allowedPartners.includes(PartnerId)) {
+                //     return res.status(500).json({
+                //       balance: 0,
+                //       status: 'OP_FAILURE',
+                //       bet_status: 'N'
+                //     });
+                //   }
                 if (!gameId || !roundId || !rollbackAmount || !transactionId || !userId || !reqId) {
                     return res.status(500).json({
                         balance: 0,

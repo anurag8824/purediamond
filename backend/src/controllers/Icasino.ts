@@ -39,7 +39,7 @@ export class CasCallbackController extends ApiController {
       if (balance) {
         return res.status(200).json({
           bet_status: "Y",
-          balance: balance?.balance - balance?.exposer,
+          balance: (balance?.balance - balance?.exposer).toString(),
           status: 'OP_SUCCESS',
         })
       } else {
@@ -64,13 +64,13 @@ export class CasCallbackController extends ApiController {
     try {
       const { userId, token, PartnerId, transactionId, debitAmount, gameId, roundId, reqId } =
         req.body
-       if (!allowedPartners.includes(PartnerId)) {
-        return res.status(500).json({
-          balance: 0,
-          status: 'OP_FAILURE',
-          bet_status: 'N'
-        });
-      }
+      //  if (!allowedPartners.includes(PartnerId)) {
+      //   return res.status(500).json({
+      //     balance: 0,
+      //     status: 'OP_FAILURE',
+      //     bet_status: 'N'
+      //   });
+      // }
       if (!gameId || !roundId || isNaN(debitAmount) || !transactionId || !userId || !reqId) {
         return res.status(500).json({
           balance: 0,
@@ -196,13 +196,13 @@ export class CasCallbackController extends ApiController {
     try {
       const { userId, token, PartnerId, transactionId, creditAmount, gameId, roundId, reqId } =
         req.body
-      if (!allowedPartners.includes(PartnerId)) {
-          return res.status(500).json({
-            balance: 0,
-            status: 'OP_FAILURE',
-            bet_status: 'N'
-          });
-        }
+      // if (!allowedPartners.includes(PartnerId)) {
+      //     return res.status(500).json({
+      //       balance: 0,
+      //       status: 'OP_FAILURE',
+      //       bet_status: 'N'
+      //     });
+      //   }
       if (!gameId || !roundId || isNaN(creditAmount) || !transactionId || !userId || !reqId) {
         return res.status(500).json({
           balance: 0,
@@ -336,13 +336,13 @@ export class CasCallbackController extends ApiController {
     try {
       const { userId, token, PartnerId, transactionId, rollbackAmount, gameId, roundId, reqId } =
         req.body
-     if (!allowedPartners.includes(PartnerId)) {
-        return res.status(500).json({
-          balance: 0,
-          status: 'OP_FAILURE',
-          bet_status: 'N'
-        });
-      }
+    //  if (!allowedPartners.includes(PartnerId)) {
+    //     return res.status(500).json({
+    //       balance: 0,
+    //       status: 'OP_FAILURE',
+    //       bet_status: 'N'
+    //     });
+    //   }
       if (!gameId || !roundId || !rollbackAmount || !transactionId || !userId || !reqId) {
         return res.status(500).json({
           balance: 0,
