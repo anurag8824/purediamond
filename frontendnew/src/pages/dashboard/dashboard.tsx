@@ -360,7 +360,7 @@ const Dashboard = () => {
       key={item.id}
       className="col-4 col-md-3 px-1"
     >
-      <div className="csn_thumb">
+      <div className="csn_thumb mb-2">
         <CustomLink to={`/casino-list-int/${item.id}`}>
           <img
             className="img-fluid w-100"
