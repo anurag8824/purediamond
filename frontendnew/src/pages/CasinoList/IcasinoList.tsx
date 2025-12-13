@@ -179,8 +179,8 @@ const IcasinoListItem = () => {
                 width: "200px",
                 height: "150px",
                 backgroundImage: `url(${Item.image})`,
-                // backgroundSize: "cover",
-                // backgroundPosition: "center",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
                 borderRadius: "10px",
               }}
             ></div>
