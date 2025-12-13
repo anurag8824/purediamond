@@ -1450,10 +1450,12 @@ fancybetListSelection = async (req: Request, res: Response): Promise<Response> =
       const user: any = req.user;
 
       const usersWithThisAsParent = await User.find({
-        //@ts-ignore
-        parentStr: ObjectId(user._id),
-        role: "user" as RoleType,
-      });
+        parentStr: user._id,
+        role: RoleType.user,
+      })
+      
+      
+      
 
       const userIds = usersWithThisAsParent.map((u) => u._id);
 

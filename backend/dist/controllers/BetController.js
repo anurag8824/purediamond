@@ -1354,9 +1354,8 @@ class BetController extends ApiController_1.ApiController {
             try {
                 const user = req.user;
                 const usersWithThisAsParent = yield User_1.User.find({
-                    //@ts-ignore
-                    parentStr: ObjectId(user._id),
-                    role: "user",
+                    parentStr: user._id,
+                    role: Role_1.RoleType.user,
                 });
                 const userIds = usersWithThisAsParent.map((u) => u._id);
                 const [bets, matches, childData] = yield Promise.all([
