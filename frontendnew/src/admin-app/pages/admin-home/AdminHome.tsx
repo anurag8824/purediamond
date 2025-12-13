@@ -170,6 +170,8 @@ const AdminHome = () => {
     }
   }
 
+  console.log(filteredSports,"sportsss")
+
   return (
     <div className='admin-home-page'>
       <div className='admin-home-container'>
@@ -186,8 +188,8 @@ const AdminHome = () => {
                 {sport.sportId === 2 && '🎾'}
                 {sport.sportId === 1 && '⚽'}
               </div>
-              <div className='sport-name'>{sport.name}</div>
-              <div className='sport-count'>{sport.marketCount?.toString() || '0'}</div>
+              <div className='sport-name'>{sport?.name}</div>
+              {/* <div className='sport-count'>{sport?.marketCount?.toString() || '0'}</div> */}
             </div>
           ))}
         </div>

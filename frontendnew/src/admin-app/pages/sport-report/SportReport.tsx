@@ -2,6 +2,7 @@ import React from 'react'
 import moment from 'moment'
 import MarqueeAnnouncement from '../_layout/elements/marqueeAnnouncement'
 import '../reports.css'
+import accountService from '../../../services/account.service'
 
 const SportReport = () => {
   const [filter, setFilter] = React.useState<any>({
@@ -9,10 +10,72 @@ const SportReport = () => {
     endDate: moment().format('YYYY-MM-DD'),
   })
 
+
+  const prepareSportReport = (
+    bets: any[],
+    startDate?: string,
+    endDate?: string,
+    isLifetime: boolean = false
+  ) => {
+    let filteredBets = bets
+  
+    if (!isLifetime && startDate && endDate) {
+      const start = moment(startDate).startOf('day')
+      const end = moment(endDate).endOf('day')
+  
+      filteredBets = bets.filter(bet =>
+        moment(bet.updatedAt).isBetween(start, end, null, '[]')
+      )
+    }
+  
+    let cricketTotal = 0
+    let casinoTotal = 0
+  
+    filteredBets.forEach(bet => {
+      const pl = bet.profitLoss || 0
+  
+      if (bet.bet_on == 'MATCH_ODDS' || bet.bet_on == 'FANCY') {
+        cricketTotal += pl
+      }
+  
+      if (bet.bet_on == 'CASINO') {
+        casinoTotal += pl
+      }
+    })
+  
+    return [
+      { name: 'Cricket', total: cricketTotal },
+      { name: 'Casino', total: casinoTotal },
+    ]
+  }
+  
+
+  const [allBets, setAllBets] = React.useState<any[]>([])
+
+  
+
   const [items, setItems] = React.useState<any[]>([
-    { name: 'Casino 1', total: 0 },
-    { name: 'Casino 2', total: 0 },
+    
   ])
+
+
+  React.useEffect(() => {
+    accountService.allbetsdata().then((res: any) => {
+      const bets = res?.data?.data?.bets || []
+      setAllBets(bets)
+  
+      const report = prepareSportReport(
+        bets,
+        filter.startDate,
+        filter.endDate,
+        false
+      )
+  
+      setItems(report)
+    })
+  }, [])
+  
+  
 
   const handleChange = (e: any) => {
     setFilter({ ...filter, [e.target.name]: e.target.value })
@@ -20,20 +83,31 @@ const SportReport = () => {
 
   const handleSearch = (e: any) => {
     e.preventDefault()
-    // TODO: call backend API to populate items
-    // For now keep zeros like the screenshot
-    setItems((prev) => prev.map((it) => ({ ...it, total: 0 })))
+  
+    const report = prepareSportReport(
+      allBets,
+      filter.startDate,
+      filter.endDate,
+      false
+    )
+  
+    setItems(report)
   }
+  
 
   const handleLifetime = (e: any) => {
     e.preventDefault()
-    // TODO: lifetime behavior - show aggregated totals
-    // For now show same zeros
-    setItems((prev) => prev.map((it) => ({ ...it, total: 0 })))
+  
+    const report = prepareSportReport(allBets, undefined, undefined, true)
+    setItems(report)
   }
+  
 
-  const totalSum = items.reduce((acc: number, it: any) => acc + (it.total || 0), 0)
-
+  const totalSum = items.reduce(
+    (acc: number, it: any) => acc + (it.total || 0),
+    0
+  )
+  
   return (
     <>
       <MarqueeAnnouncement />
@@ -56,7 +130,14 @@ const SportReport = () => {
 
                   <div style={{ display: 'flex', gap: 12 }}>
                     <button className='report-search-btn' type='submit'>SEARCH</button>
-                    <button className='report-search-btn' onClick={handleLifetime}>LIFETIME SEARCH</button>
+                    <button
+  type="button"
+  className='report-search-btn'
+  onClick={handleLifetime}
+>
+  LIFETIME SEARCH
+</button>
+
                   </div>
                 </form>
               </div>
@@ -64,12 +145,20 @@ const SportReport = () => {
               <h4 style={{ margin: '10px 0' }}>Sports Details({moment(filter.startDate).format('DD/MM/YYYY')} - {moment(filter.endDate).format('DD/MM/YYYY')})</h4>
 
               <div className='report-table-wrapper'>
-                <table className='report-table' style={{ minWidth: '400px' }}>
+                <table className='report-table' style={{ minWidth: '400px'  }}>
                   <tbody>
                     {items.map((it, idx) => (
                       <tr key={idx}>
                         <td style={{ textAlign: 'left', paddingLeft: 20 }}>{it.name}</td>
-                        <td style={{ textAlign: 'center', color: '#dc2626', fontWeight: 700 }}>{it.total}</td>
+                        <td
+  style={{
+    textAlign: 'center',
+    fontWeight: 700,
+    color: it.total >= 0 ? '#16a34a' : '#dc2626'
+  }}
+>
+  {it.total.toFixed(2)}
+</td>
                       </tr>
                     ))}
                     <tr>

@@ -2,14 +2,67 @@ import React from 'react'
 import moment from 'moment'
 import MarqueeAnnouncement from '../_layout/elements/marqueeAnnouncement'
 import '../reports.css'
+import { AxiosResponse } from 'axios'
+import accountService from '../../../services/account.service'
 
 const TopClients = () => {
-  const [filter, setFilter] = React.useState<any>({
-    startDate: moment().subtract(7, 'days').format('YYYY-MM-DD'),
+  const [filter, setFilter] = React.useState({
+    startDate: moment().subtract(3, 'days').format('YYYY-MM-DD'),
     endDate: moment().format('YYYY-MM-DD'),
   })
 
+
+  const prepareTopClients = (bets: any[], startDate: string, endDate: string) => {
+    const start = moment(startDate).startOf('day')
+    const end = moment(endDate).endOf('day')
+  
+    const filteredBets = bets.filter(bet =>
+      moment(bet.updatedAt).isBetween(start, end, null, '[]')
+    )
+  
+    const userMap: any = {}
+  
+    filteredBets.forEach(bet => {
+      const username = bet.userName
+      const pl = bet.profitLoss || 0
+  
+      if (!userMap[username]) {
+        userMap[username] = {
+          username,
+          total: 0,
+        }
+      }
+  
+      userMap[username].total += pl
+    })
+  
+    return Object.values(userMap).sort(
+      (a: any, b: any) => b.total - a.total
+    )
+  }
+  
+  
+
   const [items, setItems] = React.useState<any[]>([])
+
+
+  const [allBets, setAllBets] = React.useState<any[]>([])
+
+React.useEffect(() => {
+  accountService.allbetsdata().then((res: AxiosResponse) => {
+    console.log('All Bets Data:', res.data);
+    const bets = res?.data?.data?.bets || []
+    setAllBets(bets)
+
+    const topClients = prepareTopClients(
+      bets,
+      filter.startDate,
+      filter.endDate
+    )
+    setItems(topClients)
+  })
+}, [])
+
 
   const handleChange = (e: any) => {
     setFilter({ ...filter, [e.target.name]: e.target.value })
@@ -17,12 +70,24 @@ const TopClients = () => {
 
   const handleSearch = (e: any) => {
     e.preventDefault()
-    // TODO: replace with real API call; currently empty
-    // For now keep items empty to match screenshot layout
-    setItems([])
+  
+    const topClients = prepareTopClients(
+      allBets,
+      filter.startDate,
+      filter.endDate
+    )
+  
+    setItems(topClients)
   }
+  
 
-  const totalSum = items.reduce((acc: number, it: any) => acc + (it.total || 0), 0)
+  const totalSum = items.reduce(
+    (acc: number, it: any) => acc + (it.total || 0),
+    0
+  )
+  
+
+
 
   return (
     <>

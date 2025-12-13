@@ -56,5 +56,10 @@ export class BetRoute {
       this.betLockController.getChildUserList,
     )
     this.router.post('/users-lock', Passport.authenticateJWT, this.betLockController.usersLock)
+
+    this.router.get('/allbetsdata', Passport.authenticateJWT, this.betController.allbetsdata)
+
+
+
   }
 }

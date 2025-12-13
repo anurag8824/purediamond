@@ -1340,6 +1340,45 @@ class BetController extends ApiController_1.ApiController {
                 return this.fail(res, e);
             }
         });
+        this.allbetsdata = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            function convertDecimalFields(obj) {
+                const converted = Object.assign({}, obj);
+                for (const key in converted) {
+                    const val = converted[key];
+                    if (val && typeof val === "object" && val._bsontype === "Decimal128") {
+                        converted[key] = parseFloat(val.toString());
+                    }
+                }
+                return converted;
+            }
+            try {
+                const user = req.user;
+                const usersWithThisAsParent = yield User_1.User.find({
+                    //@ts-ignore
+                    parentStr: ObjectId(user._id),
+                    role: "user",
+                });
+                const userIds = usersWithThisAsParent.map((u) => u._id);
+                const [bets, matches, childData] = yield Promise.all([
+                    Bet_1.Bet.find({
+                        userId: { $in: userIds },
+                        bet_on: { $ne: "CASINO" },
+                        status: { $ne: "deleted" },
+                    }),
+                    Match_1.Match.find({}),
+                    User_1.User.find({ parentId: user._id }),
+                ]);
+                return this.success(res, {
+                    status: true,
+                    users: usersWithThisAsParent,
+                    userIds,
+                    bets,
+                });
+            }
+            catch (e) {
+                return this.fail(res, e);
+            }
+        });
     }
 }
 exports.BetController = BetController;

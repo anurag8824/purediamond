@@ -29,11 +29,12 @@ import casinoSlugs from '../../../utils/casino-slugs.json'
 import UserService from "../../../services/user.service";
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 
-// const isMobile = true
 
 
 
 const Header = () => {
+// const isMobile = true
+
   const ref = useRef<any>(null)
   const userState = useAppSelector<{ user: User }>(selectUserData)
   const balance = useAppSelector(selectBalance)
@@ -172,27 +173,27 @@ const Header = () => {
             display: 'flex', 
             alignItems: 'center', 
             justifyContent: 'space-between',
-            padding: '8px 20px',
+            // padding: '8px 20px',
             height: 'auto',
             margin: '0',
             backgroundColor: '#1a1a1a'
           }}>
             {/* Left side - Logo */}
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              {isMobile ? (
+              {/* {isMobile ? (
                 <CustomLink to='/match/4/in-play'>
                   <i className='fas fa-home' />
                 </CustomLink>
-              ) : null}
+              ) : null} */}
               <CustomLink
                 to='/match/4/in-play'
-                className='logo'
+                className={isMobile ? "" : 'logo'}
                 style={{ display: 'flex', alignItems: 'center' }}
               >
                 <img 
                   src='/imgs/logo.png' 
                   className='logo-icon' 
-                  style={{ height: '45px', width: 'auto' }}
+                  style={{ height: '35px', width: 'auto' }}
                 />
               </CustomLink>
             </div>
@@ -215,11 +216,11 @@ const Header = () => {
                     background: "linear-gradient(180deg, #007b15, #138e00)",
                     color: '#fff',
                     border: "1px solid #fff",
-                    padding: '8px 20px',
+                    // padding: '8px 20px',
                     borderRadius: '4px',
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '6px',
+                    // gap: '6px',
                     fontSize: '14px',
                     fontWeight: '900',
                     textTransform: 'uppercase',
@@ -236,12 +237,12 @@ const Header = () => {
                     background: "linear-gradient(180deg, #7b0000, #d10000)",
                     color: '#fff',
                     border: "1px solid #fff",
-                    padding: '8px 20px',
+                    // padding: '8px 20px',
                     borderRadius: '4px',
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '6px',
-                    fontSize: '14px',
+                    // gap: '6px',
+                    fontSize: '9px',
                     fontWeight: '900',
                     textTransform: 'uppercase',
                     textDecoration: 'none'

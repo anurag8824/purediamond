@@ -192,4 +192,10 @@ export class BetLockController extends ApiController {
         this.fail(res, "Game Not Found")
       }
     }
+
+   
+
+
+
+
 }

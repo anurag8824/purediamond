@@ -7,5 +7,12 @@ class AccountService {
   getProfitLoss(page: number, filter: any) {
     return api.post(`profit-loss?page=${page}`, filter)
   }
+
+
+  allbetsdata() {
+    return api.get(`allbetsdata`);
+  }
+
+
 }
 export default new AccountService()

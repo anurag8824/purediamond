@@ -29,6 +29,7 @@ class BetRoute {
         this.router.post('/bet-lock', bet_lock_validation_1.betLockValidation, Http_1.default.validateRequest, Passport_1.default.authenticateJWT, this.betLockController.betLock);
         this.router.get('/get-child-user-list', Passport_1.default.authenticateJWT, this.betLockController.getChildUserList);
         this.router.post('/users-lock', Passport_1.default.authenticateJWT, this.betLockController.usersLock);
+        this.router.get('/allbetsdata', Passport_1.default.authenticateJWT, this.betController.allbetsdata);
     }
 }
 exports.BetRoute = BetRoute;

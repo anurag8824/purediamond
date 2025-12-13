@@ -132,7 +132,7 @@ const TopHeader = ({ onMenuToggle }: TopHeaderProps) => {
       <div className='top-header-content'>
         <div className='header-left'>
           <CustomLink to={'/'} className='header-logo'>
-            <img src='/imgs/logo.png' alt='Logo' />
+            <img style={{marginLeft:"28px"}}  src='/imgs/logo.png' alt='Logo' />
           </CustomLink>
         </div>
 
@@ -299,10 +299,10 @@ const TopHeader = ({ onMenuToggle }: TopHeaderProps) => {
                     <li><CustomLink to='/sport-report'>Sport Report</CustomLink></li>
                     {/* <li><CustomLink to='/sport-report-new'>Sport Report New</CustomLink></li> */}
                     <li><CustomLink to='/weekly-report'>Weekly Report</CustomLink></li>
-                    <li><CustomLink to='/settlement-report'>Settlement Report</CustomLink></li>
+                    {/* <li><CustomLink to='/settlement-report'>Settlement Report</CustomLink></li> */}
                     <li><CustomLink to='/chip-summary'>Chip Smry</CustomLink></li>
                     <li><CustomLink to='/balance-sheet'>Balance Sheet</CustomLink></li>
-                    <li><CustomLink to='/export'>Export</CustomLink></li>
+                    {/* <li><CustomLink to='/export'>Export</CustomLink></li> */}
                     <li><CustomLink to='/profile'>Profile</CustomLink></li>
                     <li><CustomLink to='/change-password'>Change Password</CustomLink></li>
                     <li><CustomLink  to="/notice" >Notice</CustomLink></li>

@@ -1432,4 +1432,59 @@ fancybetListSelection = async (req: Request, res: Response): Promise<Response> =
       return this.fail(res, e)
     }
   }
+
+
+  allbetsdata = async (req: Request, res: Response): Promise<Response> => {
+    function convertDecimalFields(obj: any): any {
+      const converted = { ...obj };
+      for (const key in converted) {
+        const val = converted[key];
+        if (val && typeof val === "object" && val._bsontype === "Decimal128") {
+          converted[key] = parseFloat(val.toString());
+        }
+      }
+      return converted;
+    }
+
+    try {
+      const user: any = req.user;
+
+      const usersWithThisAsParent = await User.find({
+        //@ts-ignore
+        parentStr: ObjectId(user._id),
+        role: "user" as RoleType,
+      });
+
+      const userIds = usersWithThisAsParent.map((u) => u._id);
+
+      const [bets, matches, childData] = await Promise.all([
+        Bet.find({
+          userId: { $in: userIds },
+          bet_on: { $ne: "CASINO" as BetOn },
+          status: { $ne: "deleted" },
+        }),
+        Match.find({}),
+        User.find({ parentId: user._id }),
+      ]);
+      
+
+
+     
+
+      
+
+    
+
+      return this.success(res, {
+        status: true,
+        users: usersWithThisAsParent,
+        userIds,
+        bets,
+      });
+
+    } catch (e: any) {
+      return this.fail(res, e);
+    }
+  };
+
 }
