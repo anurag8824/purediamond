@@ -24,6 +24,16 @@
   margin-right: 30px !important;
   vertical-align: middle !important;
 }
+
+@keyframes simple-scale {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.1);
+  }
+} 
+
 .row-deposit-button .btn-deposit {
   background: #43b864 !important;
   color: #fff !important;
