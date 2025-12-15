@@ -47,7 +47,7 @@ class CasCallbackController extends ApiController_1.ApiController {
                 if (balance) {
                     return res.status(200).json({
                         bet_status: "Y",
-                        balance: ((balance === null || balance === void 0 ? void 0 : balance.balance) - (balance === null || balance === void 0 ? void 0 : balance.exposer)).toString(),
+                        balance: ((balance === null || balance === void 0 ? void 0 : balance.balance) - (balance === null || balance === void 0 ? void 0 : balance.exposer)),
                         status: 'OP_SUCCESS',
                     });
                 }

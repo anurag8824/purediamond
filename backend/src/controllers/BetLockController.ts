@@ -171,7 +171,7 @@ export class BetLockController extends ApiController {
         }
         console.log(payload,"payload for cas url")
         return axios
-          .post('https://daimondexchang99.com/api/get-cas-casino-play-url-bhi', payload)
+          .post('https://daimondexchang99.com/api/get-play-bhi', payload)
           .then((resData) => {
             const data = resData?.data
             console.log(data,"data from cas api")

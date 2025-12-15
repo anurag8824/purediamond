@@ -39,7 +39,7 @@ export class CasCallbackController extends ApiController {
       if (balance) {
         return res.status(200).json({
           bet_status: "Y",
-          balance: (balance?.balance - balance?.exposer).toString(),
+          balance: (balance?.balance - balance?.exposer),
           status: 'OP_SUCCESS',
         })
       } else {
