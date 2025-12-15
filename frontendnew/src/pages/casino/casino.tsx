@@ -31,7 +31,7 @@ const Casino = () => {
     <>
       <div className='container-fluid container-fluid-5 cas-in-list'>
         <div className='row row5'>
-          <div className='col-xl-2 d-none d-xl-flex ' style={{marginTop:"5px"}}>
+          <div className='col-xl-2 d-nonexsino d-xl-flex ' style={{marginTop:"5px"}}>
             <ul className="nav nav-pills casino-sub-tab">
               {casinoNavItems.map((Item: any, key: number) => {
                 return <li className="nav-item" key={key}>
@@ -45,6 +45,7 @@ const Casino = () => {
               <div className='casino-list mt-2' style={{ marginLeft: "-6px" }}>
                 <CasinoListItem2 />
               </div>
+              {/*  */}
             </div>
           </div>
         </div>

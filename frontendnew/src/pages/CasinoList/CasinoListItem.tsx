@@ -1147,6 +1147,9 @@ const CasinoListItem = (props: any) => {
 
   return (
     <>
+
+   
+
     {loadingGame && <div className="fullscreen-loader">
     <div className="loader-card">
       <div className="spinner"></div>
@@ -1154,10 +1157,14 @@ const CasinoListItem = (props: any) => {
     </div>
   </div>}
 
+
+
     {gameUrl&&(<div className="slot-iframe show">
    
           <iframe scrolling="no" allow="fullscreen;" src={gameUrl} style={{width:"100%",border:"0px",height:"100%"}}></iframe>
       </div>)}
+
+      
 
 
       {/* {gamesList &&
@@ -1176,6 +1183,9 @@ const CasinoListItem = (props: any) => {
                 </div>
               )
             })} */}
+
+
+        
 
             
       {MacJson &&

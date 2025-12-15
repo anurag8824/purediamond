@@ -21,6 +21,9 @@ const TopHeader = ({ onMenuToggle }: TopHeaderProps) => {
   
   const [showMenu, setShowMenu] = React.useState<boolean>(false)
   const [showMarketDropdown, setShowMarketDropdown] = React.useState<boolean>(false)
+  const [showTxnDropdown, setShowTxnDropdown] = React.useState<boolean>(false)
+
+
   const [showClientListDropdown, setShowClientListDropdown] = React.useState<boolean>(false)
   const [showCreateDropdown, setShowCreateDropdown] = React.useState<boolean>(false)
 
@@ -159,6 +162,7 @@ const TopHeader = ({ onMenuToggle }: TopHeaderProps) => {
                   setShowClientListDropdown(false)
                   setShowCreateDropdown(false)
                   setShowMenu(false)
+                  setShowTxnDropdown(false)
                 }}>
                   Market <i className='fas fa-caret-down'></i>
                 </button>
@@ -180,6 +184,8 @@ const TopHeader = ({ onMenuToggle }: TopHeaderProps) => {
                 )}
               </li>
 
+
+
               {/* Client List Dropdown */}
               <li className='dropdown'>
                 <button onClick={(e) => {
@@ -188,6 +194,7 @@ const TopHeader = ({ onMenuToggle }: TopHeaderProps) => {
                   setShowMarketDropdown(false)
                   setShowCreateDropdown(false)
                   setShowMenu(false)
+                  setShowTxnDropdown(false)
                 }}>
                   Client List <i className='fas fa-caret-down'></i>
                 </button>
@@ -231,6 +238,8 @@ const TopHeader = ({ onMenuToggle }: TopHeaderProps) => {
                   setShowCreateDropdown(!showCreateDropdown)
                   setShowClientListDropdown(false)
                   setShowMarketDropdown(false)
+                  setShowTxnDropdown(false)
+
                   setShowMenu(false)
                 }}>
                   Create User <i className='fas fa-caret-down'></i>
@@ -265,6 +274,46 @@ const TopHeader = ({ onMenuToggle }: TopHeaderProps) => {
                 )}
               </li>
 
+
+              <li className='dropdown'>
+                <button onClick={(e) => {
+                  e.stopPropagation()
+                  setShowTxnDropdown(!showTxnDropdown)
+                  setShowClientListDropdown(false)
+                  setShowCreateDropdown(false)
+                  setShowMarketDropdown(false)
+                  setShowMenu(false)
+                }}>
+                  Transactions <i className='fas fa-caret-down'></i>
+                </button>
+                {showTxnDropdown && (
+                <ul className='dropdown-menu profile-menu'>
+                  <li>
+                    <CustomLink to='/depositstatement'>Deposit</CustomLink>
+                  </li>
+               
+                  <li>
+                    <CustomLink to='/withdrawstatement'>Withdraw</CustomLink>
+                  </li>
+
+                  <li>
+                    <CustomLink to='/payment-method'>{'Payment Method'}</CustomLink>
+                  </li>
+
+                   <li>
+                                          <CustomLink to='/update-whatsapp'>
+                                            <b>{'Update Whatsapp'}</b>
+                                          </CustomLink>
+                                        </li>
+
+                  
+                  
+                </ul>
+                )}
+              </li>
+
+              
+
               {/* Create Client Button */}
               {/* <li>
                 <CustomLink to={`/add-user/${userState?.user?.username}`}>Create Client</CustomLink>
@@ -278,6 +327,7 @@ const TopHeader = ({ onMenuToggle }: TopHeaderProps) => {
                   setShowMarketDropdown(false)
                   setShowClientListDropdown(false)
                   setShowCreateDropdown(false)
+                  setShowTxnDropdown(false)
                   if (!showMenu) {
                     setShowReportsInProfile(false)
                     setShowTransactionsInProfile(false)
@@ -305,7 +355,14 @@ const TopHeader = ({ onMenuToggle }: TopHeaderProps) => {
                     {/* <li><CustomLink to='/export'>Export</CustomLink></li> */}
                     <li><CustomLink to='/profile'>Profile</CustomLink></li>
                     <li><CustomLink to='/change-password'>Change Password</CustomLink></li>
-                    <li><CustomLink  to="/notice" >Notice</CustomLink></li>
+                   {userState?.user?.role == "admin" ?  <li><CustomLink  to="/notice" >Notice</CustomLink></li> : ""}
+                   {userState?.user?.role == "admin" ?  <li><CustomLink   to={"/matches/4"} >Add Match List</CustomLink></li> : ""}
+
+                   {userState?.user?.role == "admin" ?  <li><CustomLink  to='/casino-list' > Casino List</CustomLink></li> : ""}
+                   {userState?.user?.role == "admin" ?  <li><CustomLink  to="/active-matches/4" >{"Block Markets"}</CustomLink></li> : ""}
+                   {userState?.user?.role == "admin" ?  <li><CustomLink  to="/unsettledbet" > Deleted Bets</CustomLink></li> : ""}
+
+
 
 
                     {/*

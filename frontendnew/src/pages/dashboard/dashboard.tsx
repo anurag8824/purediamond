@@ -269,20 +269,20 @@ const Dashboard = () => {
 
 
 <div className="row mx-0" style={{ marginBottom: "2px" }}>
-  <div className={isMobile ? "col-6 position-relative " : "col-3 position-relative" } style={{ paddingLeft: "1px", paddingRight: "1px" ,marginBottom: "2px" }}>
+  <CustomLink to={"casino-list-int/8"} className={isMobile ? "col-6 position-relative " : "col-3 position-relative" } style={{ paddingLeft: "1px", paddingRight: "1px" ,marginBottom: "2px" }}>
     <img
       className="img-fluid"
       src="https://speedcdn.io/frontend_config/diam/images/17627625602470028.gif"
       alt=""
     />
-  </div>
-  <div className={isMobile ? "col-6 position-relative " : "col-3 position-relative" } style={{ paddingLeft: "1px", paddingRight: "1px" }}>
+  </CustomLink>
+  <CustomLink to={"casino-list-int/8"} className={isMobile ? "col-6 position-relative " : "col-3 position-relative" } style={{ paddingLeft: "1px", paddingRight: "1px" }}>
     <img
       className="img-fluid"
       src="https://speedcdn.io/frontend_config/diam/images/17627625664266101.gif"
       alt=""
     />
-  </div>
+  </CustomLink>
   <div className={isMobile ? "col-6 position-relative " : "col-3 position-relative" } style={{ paddingLeft: "1px", paddingRight: "1px" }}>
     <img
       className="img-fluid"
