@@ -113,6 +113,13 @@ const AccountStatementAdmin = () => {
     getAccountStmt(1)
   }
 
+  React.useEffect(() => {
+    if (filterdata.startDate && filterdata.endDate) {
+      getAccountStmt(1)
+    }
+  }, [filterdata.startDate, filterdata.endDate])
+  
+
   const onSuggestionsFetchRequested = ({ value }: any) => {
     return userService.getUserListSuggestion({ username: value })
   }
@@ -246,7 +253,7 @@ const AccountStatementAdmin = () => {
                   {parseAccountStmt.length <= 0 && (
                     <tr>
                       <td colSpan={10} className='account-statement-empty'>
-                        Please select date
+                        -
                       </td>
                     </tr>
                   )}

@@ -78,7 +78,7 @@ const SideBar = () => {
       <nav className="collapse casino show">
         <ul>
           <li className="nav-item">
-            <CustomLink to={`/casino-in/live-dmd`} className={`nav-link`}>
+            <CustomLink to={`/casino-games`} className={`nav-link`}>
               <span className="new-launch-text blink_me">Our Casino</span>
             </CustomLink>
           </li>
@@ -91,7 +91,7 @@ const SideBar = () => {
             </CustomLink>
           </li> */}
           <li className="nav-item">
-            <CustomLink to={`/casino-in/live-dmd`} className={`nav-link`}>
+            <CustomLink to={`/casino-list-int/1`} className={`nav-link`}>
               <span className="new-launch-text ">Live Casino</span>
             </CustomLink>
           </li>
