@@ -383,6 +383,9 @@ const ListClients = () => {
     setSortBy(e.target.value)
   }
 
+  const [dropdownPos, setDropdownPos] = React.useState({ top: 0, left: 0 });
+
+
   return (
     <>
       <div className='list-clients-container'>
@@ -465,7 +468,7 @@ const ListClients = () => {
 
           {/* Table */}
           <div className='clients-table-wrapper'>
-            <table className='clients-table' ref={ref}>
+            <table className='clients-table' style={{overflowX:"scroll" , overflowY:"scroll" }} ref={ref}>
               <thead>
                 <tr>
                   <th>USERNAME</th>
@@ -578,13 +581,23 @@ const ListClients = () => {
                           <div style={{ position: 'relative' }}>
                             <button
                               className='reports-menu-btn'
-                              onClick={() => setShowReportsMenu(showReportsMenu === index ? null : index)}
+                              onClick={(e) => {
+                                const rect = e.currentTarget.getBoundingClientRect();
+                                setDropdownPos({
+                                  top : rect.top - 120,
+                                  left: rect.left -20,
+                                });
+                                setShowReportsMenu(showReportsMenu === index ? null : index);
+                              }}
                               title='More Options'
                             >
                               ⋮
                             </button>
                             {showReportsMenu === index && (
-                              <div className='reports-dropdown'>
+                              <div className='reports-dropdown' style={{
+                                top: dropdownPos.top,
+                                left: dropdownPos.left,
+                              }}>
                                 <CustomLink to={`/exposure-limit/${user.username}/exposure`} onClick={() => setShowReportsMenu(null)}>
                                   Exposure Limit
                                 </CustomLink>

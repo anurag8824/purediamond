@@ -77,15 +77,15 @@ const MyBetComponent = () => {
     <div className='table-responsive-new' style={{height:"200px", overflowY:"scroll"}}>
       <table className='table coupon-table scorall mybet'>
         <thead>
-          <tr>
-            <th> No</th>
-            {userState.user.role !== RoleType.user && <th>Username</th>}
-            <th className='text-left'> Nation</th>
-            <th> Amount</th>
-            <th> Rate</th>
-            {!isMobile && <th> Place Date</th>}
-            {!isMobile && <th> Match Date</th>}
-            {userState.user.role !== RoleType.user && <th> IP</th>}
+          <tr >
+            <th className='text-white'> No</th>
+            {userState.user.role !== RoleType.user && <th className='text-white'>Username</th>}
+            <th className='text-left text-white'> Nation</th>
+            <th className='text-white'> Amount</th>
+            <th className='text-white'> Rate</th>
+            {!isMobile && <th className='text-white'> Place Date</th>}
+            {!isMobile && <th className='text-white'> Match Date</th>}
+            {userState.user.role !== RoleType.user && <th className='text-white'> IP</th>}
           </tr>
         </thead>
         <tbody className='scorall'>

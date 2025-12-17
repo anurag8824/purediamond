@@ -91,14 +91,23 @@ const BetLock = ({ markets }: { markets: IMarket[] }) => {
     dispatch(setMarketBookUser(filter))
   }
 
+  const [openDropdown, setOpenDropdown] = React.useState<string | null>(null);
+
+// Toggle function
+const toggleDropdown = (type: string) => {
+  setOpenDropdown(prev => (prev === type ? null : type));
+};
+
+console.log('dorrp', openDropdown);
+
   return (
     <div className='buttons buttons-list row'>
-      <Dropdown>
+      {/* <Dropdown>
         <Dropdown.Toggle variant='primary' id='dropdown-basic'>
           Bet Lock
         </Dropdown.Toggle>
 
-        <Dropdown.Menu>
+        <Dropdown.Menu  >
           <Dropdown.Item
             href='#'
             onClick={(e: MouseEvent<HTMLAnchorElement>) => lock(e, true, 'M')}
@@ -118,7 +127,10 @@ const BetLock = ({ markets }: { markets: IMarket[] }) => {
             Select User
           </Dropdown.Item>
         </Dropdown.Menu>
-      </Dropdown>
+      </Dropdown> */}
+
+
+{/* 
       <Dropdown>
         <Dropdown.Toggle variant='primary' id='dropdown-basic'>
           BookMaker Lock
@@ -170,7 +182,41 @@ const BetLock = ({ markets }: { markets: IMarket[] }) => {
             Select User
           </Dropdown.Item>
         </Dropdown.Menu>
-      </Dropdown>
+      </Dropdown> */}
+
+<Dropdown show={openDropdown === 'bet'}>
+  <Dropdown.Toggle variant="primary"  onClick={() => toggleDropdown('bet')}>
+    Bet Lock
+  </Dropdown.Toggle>
+ {openDropdown === "bet" ? <Dropdown.Menu style={{backgroundColor: '#f8f9fa'}}>
+    <Dropdown.Item as="button" onClick={(e) => lock(e as any, true, 'M')}>Lock</Dropdown.Item>
+    <Dropdown.Item as="button" onClick={(e) => lock(e as any, false, 'M')}>Unlock</Dropdown.Item>
+    <Dropdown.Item as="button" onClick={(e) => selectUser(e as any, 'M')}>Select User</Dropdown.Item>
+  </Dropdown.Menu> : ""}
+</Dropdown>
+
+
+ <Dropdown show={openDropdown === 'book'} >
+  <Dropdown.Toggle variant="primary" onClick={() => toggleDropdown('book')}>
+    BookMaker Lock
+  </Dropdown.Toggle>{openDropdown === "book" ?
+  <Dropdown.Menu style={{backgroundColor: '#f8f9fa'}}>
+    <Dropdown.Item as="button" onClick={(e) => lock(e as any, true, 'B')}>Lock</Dropdown.Item>
+    <Dropdown.Item as="button" onClick={(e) => lock(e as any, false, 'B')}>Unlock</Dropdown.Item>
+    <Dropdown.Item as="button" onClick={(e) => selectUser(e as any, 'B')}>Select User</Dropdown.Item>
+  </Dropdown.Menu>: ""}
+</Dropdown> 
+
+ <Dropdown show={openDropdown === 'fancy'} >
+  <Dropdown.Toggle variant="primary" onClick={() => toggleDropdown('fancy')}>
+    Fancy Lock
+  </Dropdown.Toggle>{openDropdown == "fancy" ?
+  <Dropdown.Menu style={{backgroundColor: '#f8f9fa'}}>
+    <Dropdown.Item as="button" onClick={(e) => lock(e as any, true, 'F')}>Lock</Dropdown.Item>
+    <Dropdown.Item as="button" onClick={(e) => lock(e as any, false, 'F')}>Unlock</Dropdown.Item>
+    <Dropdown.Item as="button" onClick={(e) => selectUser(e as any, 'F')}>Select User</Dropdown.Item>
+  </Dropdown.Menu>: ""}
+</Dropdown> 
 
       {markets &&
         markets.map(({ marketName, _id, marketId }: IMarket) => (
