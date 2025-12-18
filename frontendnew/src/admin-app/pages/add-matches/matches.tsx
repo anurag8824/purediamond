@@ -122,7 +122,7 @@ const MatchesPage = () => {
                           value={match.name || ''}
                           checked={match.active}
                         />
-                      </td>k
+                      </td>
                     </tr>
                   )
                 })
