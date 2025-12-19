@@ -12,8 +12,8 @@ export class Database {
     // const dsn = Locals.config().mongooseUrl
     // const dsn = Locals.config().mongooseUrl + `?retryWrites=false&replicaSet=myReplicaSet`
 
-  //  const dsn = "mongodb+srv://365infayou:Jv9lwv6csl7J1Jp5@cluster365.sxln4q8.mongodb.net/infa?retryWrites=true&w=majority&appName=Cluster0"
-    const dsn = "mongodb+srv://betbhainew:FARZtgmX2xkqkZhw@betbhainew.aacdoyt.mongodb.net/infa?retryWrites=true&w=majority&appName=betbhainew";
+   const dsn =  "mongodb://admin:betbhaiAdmin123@72.61.18.12:27017/infa?replicaSet=rs0&authSource=admin"
+    // const dsn = "mongodb+srv://betbhainew:FARZtgmX2xkqkZhw@betbhainew.aacdoyt.mongodb.net/infa?retryWrites=true&w=majority&appName=betbhainew";
 
 
     const options = {
