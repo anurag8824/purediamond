@@ -190,7 +190,7 @@ const GetAllFancy = () => {
         className={'modal-dialog'}
         ariaHideApp={false}
       >
-        <div className='modal-content'>
+        <div style={{marginTop: '180px'}} className='modal-content'>
           <div className='modal-header'>
             <h5>Set Result {fancy.fancyName}</h5>
             <button onClick={() => setIsOpen(false)} className='close float-right'>
