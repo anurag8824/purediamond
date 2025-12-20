@@ -119,8 +119,9 @@ const ActiveMarkets = () => {
           contentLabel='Set Max Bet Limit'
           className={'modal-dialog'}
           ariaHideApp={false}
+         
         >
-          <div className='modal-content'>
+          <div  style={{marginTop: '180px'}} className='modal-content'>
             <div className='modal-header'>
               <h5>Choose To Win Match</h5>
               <button onClick={() => setIsOpen(false)} className='close float-right'>
