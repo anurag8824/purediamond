@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios'
-import React, { useCallback } from 'react'
+import React, { useCallback ,MouseEvent} from 'react'
 import { useLocation, useParams } from 'react-router-dom'
 import LMatch from '../../models/LMatch'
 import sportsServices from '../../services/sports.service'
@@ -8,7 +8,7 @@ import { useAppSelector } from '../../redux/hooks'
 import { selectSportList, setCurrentMatch } from '../../redux/actions/sports/sportSlice'
 import IMatch from '../../models/IMatch'
 import { useDispatch } from 'react-redux'
-import {CustomLink, useNavigateCustom } from '../_layout/elements/custom-link'
+import { CustomLink, useNavigateCustom } from '../_layout/elements/custom-link'
 import { useWebsocket } from '../../context/webSocket'
 import GameTab from '../_layout/elements/game-tab'
 import { isMobile } from 'react-device-detect'
@@ -21,6 +21,7 @@ import betService from '../../services/bet.service'
 
 
 import providersData from './providers.json';
+import mayfav from './myfav.json';
 
 import {
   selectCasinoMatchList,
@@ -28,6 +29,7 @@ import {
 } from '../../redux/actions/casino/casinoSlice'
 import Fav from '../_layout/elements/fav'
 import axios from 'axios'
+import authService from '../../services/auth.service'
 
 const Dashboard = () => {
   const [matchList, setMatchList] = React.useState<LMatch[]>([])
@@ -38,7 +40,29 @@ const Dashboard = () => {
   const [odds, setOdds] = React.useState<Record<string, Array<any>>>({})
   const location = useLocation()
   const gamesList = useAppSelector<any>(selectCasinoMatchList)
+   const [gameUrl, setGameUrl] = React.useState<string>('')
+    const [loadingGame, setLoadingGame] = React.useState(false);
 
+
+    const onIntcasinoClick = (e: MouseEvent<HTMLAnchorElement>, Item: any) => {
+    e.preventDefault();
+  
+    setLoadingGame(true);   // <<-- LOADING START
+  
+    const payload: any = {
+      lobby_url: Item,
+      ipAddress: authService.getIpAddress(),
+      isMobile: isMobile,
+    }
+  
+    casinoService.getplaycasinotwo(payload)
+      .then((res: AxiosResponse<any>) => {
+        setGameUrl(res.data.data.url);
+      })
+      .finally(() => {
+        setLoadingGame(false);   // <<-- LOADING STOP
+      });
+    }
   // const isMobile = true;
 
   const { sportId, status } = useParams()
@@ -46,7 +70,7 @@ const Dashboard = () => {
   React.useEffect(() => {
     sportsServices.getMatchList(sportId, status).then((res: AxiosResponse<any>) => {
       const oddsData = { ...odds }
-      console.log(res.data,'data from sport list')
+      console.log(res.data, 'data from sport list')
       marketIdsEvent(res.data.data, oddsData, 'joinMarketRoom')
       setOdds(oddsData)
       setMatchList(res.data.data)
@@ -225,7 +249,7 @@ const Dashboard = () => {
   )
 
   const marketIdsEvent = (data: any, oddsData: any, event: string) => {
-    console.log(data,oddsData,event ,"market Event Data")
+    console.log(data, oddsData, event, "market Event Data")
     data.map((match: IMatch) => {
       match.markets?.map((market) => {
         if (market.marketName == 'Match Odds' && !odds[market.marketId]) {
@@ -268,54 +292,89 @@ const Dashboard = () => {
               )}
 
 
-<div className="row mx-0" style={{ marginBottom: "2px" }}>
-  <CustomLink to={"/casino-list-int/8"} className={isMobile ? "col-6 position-relative " : "col-3 position-relative" } style={{ paddingLeft: "1px", paddingRight: "1px" ,marginBottom: "2px" }}>
-    <img
-      className="img-fluid"
-      src="https://speedcdn.io/frontend_config/diam/images/17627625602470028.gif"
-      alt=""
-    />
-  </CustomLink>
-  <CustomLink to={"/casino-list-int/8"} className={isMobile ? "col-6 position-relative " : "col-3 position-relative" } style={{ paddingLeft: "1px", paddingRight: "1px" }}>
-    <img
-      className="img-fluid"
-      src="https://speedcdn.io/frontend_config/diam/images/17627625664266101.gif"
-      alt=""
-    />
-  </CustomLink>
-  <CustomLink to={"/casino-list-int/2"} className={isMobile ? "col-6 position-relative " : "col-3 position-relative" } style={{ paddingLeft: "1px", paddingRight: "1px" }}>
-    <img
-      className="img-fluid"
-      src="https://speedcdn.io/frontend_config/diam/images/17627625734204431.gif"
-      alt=""
-    />
-  </CustomLink>
-  <CustomLink to={"/casino-list-int/14"} className={isMobile ? "col-6 position-relative " : "col-3 position-relative" } style={{ paddingLeft: "1px", paddingRight: "1px" }}>
-    <img
-      className="img-fluid"
-      src="https://speedcdn.io/frontend_config/diam/images/17650463849494368.gif"
-      alt=""
-    />
-  </CustomLink>
-</div>
+              <div className="row mx-0" style={{ marginBottom: "2px" }}>
+                <CustomLink to={"/casino-list-int/8"} className={isMobile ? "col-6 position-relative " : "col-3 position-relative"} style={{ paddingLeft: "1px", paddingRight: "1px", marginBottom: "2px" }}>
+                  <img
+                    className="img-fluid"
+                    src="https://speedcdn.io/frontend_config/diam/images/17627625602470028.gif"
+                    alt=""
+                  />
+                </CustomLink>
+                <CustomLink to={"/casino-list-int/8"} className={isMobile ? "col-6 position-relative " : "col-3 position-relative"} style={{ paddingLeft: "1px", paddingRight: "1px" }}>
+                  <img
+                    className="img-fluid"
+                    src="https://speedcdn.io/frontend_config/diam/images/17627625664266101.gif"
+                    alt=""
+                  />
+                </CustomLink>
+                <CustomLink to={"/casino-list-int/2"} className={isMobile ? "col-6 position-relative " : "col-3 position-relative"} style={{ paddingLeft: "1px", paddingRight: "1px" }}>
+                  <img
+                    className="img-fluid"
+                    src="https://speedcdn.io/frontend_config/diam/images/17627625734204431.gif"
+                    alt=""
+                  />
+                </CustomLink>
+                <CustomLink to={"/casino-list-int/14"} className={isMobile ? "col-6 position-relative " : "col-3 position-relative"} style={{ paddingLeft: "1px", paddingRight: "1px" }}>
+                  <img
+                    className="img-fluid"
+                    src="https://speedcdn.io/frontend_config/diam/images/17650463849494368.gif"
+                    alt=""
+                  />
+                </CustomLink>
+              </div>
 
-<h2
-  className="newheading"
-  style={{
-    display: "block",
-    width: "100%",
-    marginBottom: "2px",
-    fontSize: "16px",
-    background: "var(--theme2-bg)",
-    padding: "5px 10px",
-    fontWeight: 600,
-    textTransform: "uppercase",
-    position: "relative",
-    color: "white",
-  }}
->
-  <span>My Favourites</span>
-</h2>
+              <h2
+                className="newheading"
+                style={{
+                  display: "block",
+                  width: "100%",
+                  marginBottom: "2px",
+                  fontSize: "16px",
+                  background: "var(--theme2-bg)",
+                  padding: "5px 10px",
+                  fontWeight: 600,
+                  textTransform: "uppercase",
+                  position: "relative",
+                  color: "white",
+                }}
+              >
+                <span>Newly Lunch</span>
+              </h2>
+              <div className="row mx-0 mt-0">
+                {mayfav?.map((item:any) => (
+                  <div
+                    key={item.id}
+                    className="col-4 col-md-3 px-1"
+                  >
+                    <a className="csn_thumb mb-2"  onClick={(e) => onIntcasinoClick(e, item.id)}>
+                      {/* <CustomLink to={`/casino-list-int/${item.id}`}> */}
+                        <img  
+                          className="img-fluid w-100" style={{height:"10vh"}}
+                          src={item.image}
+                          alt={item.title}
+                        />
+                      {/* </CustomLink> */}
+                    </a>
+                  </div>
+                ))}
+              </div>
+              <h2
+                className="newheading"
+                style={{
+                  display: "block",
+                  width: "100%",
+                  marginBottom: "2px",
+                  fontSize: "16px",
+                  background: "var(--theme2-bg)",
+                  padding: "5px 10px",
+                  fontWeight: 600,
+                  textTransform: "uppercase",
+                  position: "relative",
+                  color: "white",
+                }}
+              >
+                <span>My Favourites</span>
+              </h2>
 
 
 
@@ -323,55 +382,55 @@ const Dashboard = () => {
 
               {location.pathname.includes('in-play') || !isMobile ? (
                 <div className='home-page'>
-                <div className='casino-list mt-2' style={{marginLeft:!isMobile?"-6px":""}}>
-                  {/* <div className='section-title'>Live Casino</div> */}
-                  <CasinoListItem />
-                </div>
+                  <div className='casino-list mt-2' style={{ marginLeft: !isMobile ? "-6px" : "" }}>
+                    {/* <div className='section-title'>Live Casino</div> */}
+                    <CasinoListItem />
+                  </div>
                 </div>
               ) : (
                 ''
               )}
 
 
-<h2
-  className="newheading"
-  style={{
-    display: "block",
-    width: "100%",
-    marginBottom: "2px",
-    fontSize: "16px",
-    background: "var(--theme2-bg)",
-    padding: "5px 10px",
-    fontWeight: 600,
-    textTransform: "uppercase",
-    position: "relative",
-    color: "white",
-  }}
->
-  <span>our providers</span>
-</h2>
+              <h2
+                className="newheading"
+                style={{
+                  display: "block",
+                  width: "100%",
+                  marginBottom: "2px",
+                  fontSize: "16px",
+                  background: "var(--theme2-bg)",
+                  padding: "5px 10px",
+                  fontWeight: 600,
+                  textTransform: "uppercase",
+                  position: "relative",
+                  color: "white",
+                }}
+              >
+                <span>our providers</span>
+              </h2>
 
 
 
 
-<div className="row mx-0 mt-0">
-  {providersData?.map((item) => (
-    <div
-      key={item.id}
-      className="col-4 col-md-3 px-1"
-    >
-      <div className="csn_thumb mb-2">
-        <CustomLink to={`/casino-list-int/${item.id}`}>
-          <img
-            className="img-fluid w-100"
-            src={item.image}
-            alt={item.title}
-          />
-        </CustomLink>
-      </div>
-    </div>
-  ))}
-</div>
+              <div className="row mx-0 mt-0">
+                {providersData?.map((item) => (
+                  <div
+                    key={item.id}
+                    className="col-4 col-md-3 px-1"
+                  >
+                    <div className="csn_thumb mb-2">
+                      <CustomLink to={`/casino-list-int/${item.id}`}>
+                        <img
+                          className="img-fluid w-100"
+                          src={item.image}
+                          alt={item.title}
+                        />
+                      </CustomLink>
+                    </div>
+                  </div>
+                ))}
+              </div>
 
 
 
@@ -380,6 +439,19 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
+      {loadingGame && <div className="fullscreen-loader">
+    <div className="loader-card">
+      <div className="spinner"></div>
+      <div className="loader-text">Loading Casino…</div>
+    </div>
+  </div>}
+
+
+
+    {gameUrl&&(<div className="slot-iframe show">
+   
+          <iframe scrolling="no" allow="fullscreen;" src={gameUrl} style={{width:"100%",border:"0px",height:"100%"}}></iframe>
+      </div>)}
     </>
   )
 }
