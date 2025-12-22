@@ -359,7 +359,7 @@ const TopHeader = ({ onMenuToggle }: TopHeaderProps) => {
                    {userState?.user?.role == "admin" ?  <li><CustomLink   to={"/sports-list"} >Add Match List</CustomLink></li> : ""}
 
                    {userState?.user?.role == "admin" ?  <li><CustomLink  to='/casino-list' > Casino List</CustomLink></li> : ""}
-                   {userState?.user?.role == "admin" ?  <li><CustomLink  to="/active-matches/4" >{"Block Markets"}</CustomLink></li> : ""}
+                   {userState?.user?.role == "admin" ?  <li><CustomLink  to="/sports-list-block" >{"Block Markets"}</CustomLink></li> : ""}
                    {userState?.user?.role == "admin" ?  <li><CustomLink  to="/unsettledbet" > Deleted Bets</CustomLink></li> : ""}
 
 

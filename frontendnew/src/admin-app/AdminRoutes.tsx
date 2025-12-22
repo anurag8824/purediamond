@@ -12,6 +12,8 @@ const GetAllFancy = React.lazy(() => import('../admin-app/pages/active-matches/g
 const MatchesPage = React.lazy(() => import('../admin-app/pages/add-matches/matches'))
 const SeriesPage = React.lazy(() => import('../admin-app/pages/add-matches/series'))
 const SportsPage = React.lazy(() => import('../admin-app/pages/add-matches/sports'))
+const SportsPageBlock = React.lazy(() => import('../admin-app/pages/add-matches/sportsblock'))
+
 const AddUser = React.lazy(() => import('../admin-app/pages/add-user/add-user'))
 const ListClients = React.lazy(() => import('../admin-app/pages/list-clients/list-clients'))
 const MainAdmin = React.lazy(() => import('../admin-app/pages/_layout/MainAdmin'))
@@ -113,6 +115,8 @@ const AdminRoutes = () => {
             ...(userState.user.role === RoleType.admin || userState.user.role === RoleType.sadmin
               ? [
                 { path: 'sports-list/:url?', element: <SportsPage /> },
+                { path: 'sports-list-block/:url?', element: <SportsPageBlock /> },
+
                 { path: 'series/:sportId', element: <SeriesPage /> },
                 { path: 'matches/:sportId', element: <MatchesPage /> },
                 { path: 'active-matches/:sportId/:matchType?', element: <ActiveMatches /> },
