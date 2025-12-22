@@ -356,7 +356,7 @@ const TopHeader = ({ onMenuToggle }: TopHeaderProps) => {
                     <li><CustomLink to='/profile'>Profile</CustomLink></li>
                     <li><CustomLink to='/change-password'>Change Password</CustomLink></li>
                    {userState?.user?.role == "admin" ?  <li><CustomLink  to="/notice" >Notice</CustomLink></li> : ""}
-                   {userState?.user?.role == "admin" ?  <li><CustomLink   to={"/matches/4"} >Add Match List</CustomLink></li> : ""}
+                   {userState?.user?.role == "admin" ?  <li><CustomLink   to={"/sports-list"} >Add Match List</CustomLink></li> : ""}
 
                    {userState?.user?.role == "admin" ?  <li><CustomLink  to='/casino-list' > Casino List</CustomLink></li> : ""}
                    {userState?.user?.role == "admin" ?  <li><CustomLink  to="/active-matches/4" >{"Block Markets"}</CustomLink></li> : ""}
