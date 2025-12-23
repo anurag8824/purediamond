@@ -293,28 +293,28 @@ const Dashboard = () => {
 
 
               <div className="row mx-0" style={{ marginBottom: "2px" }}>
-                <CustomLink to={"/casino-list-int/8"} className={isMobile ? "col-6 position-relative " : "col-3 position-relative"} style={{ paddingLeft: "1px", paddingRight: "1px", marginBottom: "2px" }}>
+                <CustomLink to={"/casino-list-int/19"} className={isMobile ? "col-6 position-relative " : "col-3 position-relative"} style={{ paddingLeft: "1px", paddingRight: "1px", marginBottom: "2px" }}>
                   <img
                     className="img-fluid"
                     src="https://speedcdn.io/frontend_config/diam/images/17627625602470028.gif"
                     alt=""
                   />
                 </CustomLink>
-                <CustomLink to={"/casino-list-int/8"} className={isMobile ? "col-6 position-relative " : "col-3 position-relative"} style={{ paddingLeft: "1px", paddingRight: "1px" }}>
+                <CustomLink to={"/casino-list-int/20"} className={isMobile ? "col-6 position-relative " : "col-3 position-relative"} style={{ paddingLeft: "1px", paddingRight: "1px" }}>
                   <img
                     className="img-fluid"
                     src="https://speedcdn.io/frontend_config/diam/images/17627625664266101.gif"
                     alt=""
                   />
                 </CustomLink>
-                <CustomLink to={"/casino-list-int/2"} className={isMobile ? "col-6 position-relative " : "col-3 position-relative"} style={{ paddingLeft: "1px", paddingRight: "1px" }}>
+                <CustomLink to={"/casino-list-int/21"} className={isMobile ? "col-6 position-relative " : "col-3 position-relative"} style={{ paddingLeft: "1px", paddingRight: "1px" }}>
                   <img
                     className="img-fluid"
                     src="https://speedcdn.io/frontend_config/diam/images/17627625734204431.gif"
                     alt=""
                   />
                 </CustomLink>
-                <CustomLink to={"/casino-list-int/14"} className={isMobile ? "col-6 position-relative " : "col-3 position-relative"} style={{ paddingLeft: "1px", paddingRight: "1px" }}>
+                <CustomLink to={"/casino-list-int/22"} className={isMobile ? "col-6 position-relative " : "col-3 position-relative"} style={{ paddingLeft: "1px", paddingRight: "1px" }}>
                   <img
                     className="img-fluid"
                     src="https://speedcdn.io/frontend_config/diam/images/17650463849494368.gif"
