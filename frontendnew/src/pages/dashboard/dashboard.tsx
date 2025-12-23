@@ -338,7 +338,7 @@ const Dashboard = () => {
                   color: "white",
                 }}
               >
-                <span>Newly Lunch</span>
+                <span>Newly Launch</span>
               </h2>
               <div className="row mx-0 mt-0">
                 {mayfav?.map((item:any) => (
@@ -349,7 +349,7 @@ const Dashboard = () => {
                     <a className="csn_thumb mb-2"  onClick={(e) => onIntcasinoClick(e, item.id)}>
                       {/* <CustomLink to={`/casino-list-int/${item.id}`}> */}
                         <img  
-                          className="img-fluid w-100" style={{height:"10vh"}}
+                          className="img-fluid w-100" style={{height:"15vh"}}
                           src={item.image}
                           alt={item.title}
                         />

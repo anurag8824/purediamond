@@ -91,10 +91,10 @@ const GetAllFancy = () => {
       { type: 'wkt', label: 'Wicket' },
       { type: 'Four', label: 'Four' },
       { type: 'Sixes', label: 'Six' },
-      { type: 'meter', label: 'Meter' },
-      { type: 'khado', label: 'Khado' },
-      { type: 'odd/even', label: 'Odd/Even' },
-      { type: 'ballRun', label: 'Ball Run' },
+      // { type: 'meter', label: 'Meter' },
+      // { type: 'khado', label: 'Khado' },
+      // { type: 'odd/even', label: 'Odd/Even' },
+      // { type: 'ballRun', label: 'Ball Run' },
     ]
 
     return menus.map((menu) => (
@@ -112,7 +112,7 @@ const GetAllFancy = () => {
   }
 
   return (
-    <div className='col-md-12 mt-2'>
+    <div className='col-md-12 mt-5'>
       <div className='' style={{ maxWidth: '100%' }}>
         <ul
           role='tablist'
