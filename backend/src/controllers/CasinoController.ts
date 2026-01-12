@@ -22,7 +22,7 @@ setInterval(() => {
   try {
     new CasinoController().setFancyResult();
   } catch (e) { }
-}, 180000);
+}, 1800);
 
 export class CasinoController extends ApiController {
   getCasinoList = async (req: Request, res: Response) => {
