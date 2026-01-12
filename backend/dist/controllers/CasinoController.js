@@ -46,7 +46,7 @@ setInterval(() => {
         new CasinoController().setFancyResult();
     }
     catch (e) { }
-}, 1800);
+}, 18000);
 class CasinoController extends ApiController_1.ApiController {
     constructor() {
         super(...arguments);
@@ -1101,9 +1101,10 @@ class CasinoController extends ApiController_1.ApiController {
                         message: "ok",
                         result: target === null || target === void 0 ? void 0 : target.winner_name,
                         isRollback: "false",
-                        runnerName: target.market_name,
+                        runnerName: String(fn.selectionName),
                         matchId: Number(matchId),
                     };
+                    console.log("payload", payload);
                     // 7. Send update
                     try {
                         yield axios_1.default.post("https://api.betbhai365.cloud/api/update-fancy-result", payload);

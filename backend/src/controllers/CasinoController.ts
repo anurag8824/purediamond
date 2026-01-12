@@ -22,7 +22,7 @@ setInterval(() => {
   try {
     new CasinoController().setFancyResult();
   } catch (e) { }
-}, 1800);
+}, 18000);
 
 export class CasinoController extends ApiController {
   getCasinoList = async (req: Request, res: Response) => {
@@ -1183,9 +1183,12 @@ export class CasinoController extends ApiController {
           message: "ok",
           result: target?.winner_name,
           isRollback: "false",
-          runnerName: target.market_name,
+          runnerName: String(fn.selectionName),
           matchId: Number(matchId),
         };
+
+
+        console.log("payload", payload);
 
         // 7. Send update
         try {
