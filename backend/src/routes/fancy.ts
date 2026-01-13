@@ -17,11 +17,11 @@ export class FancyRoutes {
   }
 
   routes() {
-    this.router.get(
-      '/active-fancies',
+    // this.router.get(
+    //   '/active-fancies',
      
-      this.FancyController.activeFancies,
-    )
+    //   this.FancyController.activeFancies,
+    // )
 
     this.router.get(
       '/suspend-fancy',
