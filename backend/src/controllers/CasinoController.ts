@@ -1119,7 +1119,96 @@ export class CasinoController extends ApiController {
       )
     })
   }
-    setFancyResult = async () => {
+  //   setFancyResult = async () => {
+  //   const ResultCache: Record<string, any[]> = {};
+
+  //   try {
+  //     // 1. Fetch fancy list
+  //     const fancyResponse = await axios.get(
+  //       "https://api.betbhai365.cloud/api/get-business-fancy-list"
+  //     );
+
+  //     const fancyList = fancyResponse?.data?.data?.list ?? [];
+
+  //     if (!Array.isArray(fancyList) || fancyList.length === 0) {
+  //       console.warn("No fancy data received.");
+  //       return;
+  //     }
+
+  //     // 2. Process one by one (avoids async map problems)
+  //     for (const fn of fancyList) {
+  //       const matchId = String(fn.matchId);
+
+  //       if (!matchId) continue;
+
+  //       // 3. Check cache
+  //       let matchData = ResultCache[matchId];
+
+  //       // 4. Fetch if not cached
+  //       if (!matchData) {
+  //         try {
+  //           const apiRes = await axios.get(
+  //             `https://fancypanel.xyz/pages/lottery/${matchId}`
+  //           );
+
+  //           matchData = apiRes?.data ?? [];
+
+  //           if (!Array.isArray(matchData)) {
+  //             console.warn(`Invalid API response for matchId ${matchId}`);
+  //             continue;
+  //           }
+
+  //           ResultCache[matchId] = matchData;
+  //         } catch (err) {
+  //           console.error(`Failed fetching match data for matchId ${matchId}`, err);
+  //           continue;
+  //         }
+  //       }
+
+  //       if (!matchData.length) continue;
+
+  //       // 5. Find relevant entry
+  //       const selection = String(fn.selectionName).toLowerCase();
+
+  //       const target = matchData.find(
+  //         (item: any) =>
+  //           item.market_name?.toLowerCase() === selection &&
+  //           item.resultStatus === "RESULT_DECLARED"
+  //       );
+
+  //       if (!target) continue;
+
+  //       // 6. Prepare payload
+  //       const payload = {
+  //         message: "ok",
+  //         result: target?.winner_name,
+  //         isRollback: "false",
+  //         runnerName: String(fn.selectionName),
+  //         matchId: Number(matchId),
+  //       };
+
+
+  //       console.log("payload", payload);
+
+  //       // 7. Send update
+  //       try {
+  //         await axios.post(
+  //           "https://api.betbhai365.cloud/api/update-fancy-result",
+  //           payload
+  //         );
+  //         console.log(`Updated matchId ${matchId} | ${target.market_name}`);
+  //       } catch (err) {
+  //         console.error(
+  //           `Failed updating fancy result for matchId ${matchId}`,
+  //           err
+  //         );
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.error("Unexpected error in setFancyResult()", error);
+  //   }
+  // };
+     setFancyResult = async () => {
     const ResultCache: Record<string, any[]> = {};
 
     try {
@@ -1142,8 +1231,8 @@ export class CasinoController extends ApiController {
         if (!matchId) continue;
 
         // 3. Check cache
-        let matchData = ResultCache[matchId];
-
+                // let matchData = ["35129143"] //ResultCache[matchId];
+          let matchData =ResultCache[35129348];
         // 4. Fetch if not cached
         if (!matchData) {
           try {
@@ -1192,11 +1281,11 @@ export class CasinoController extends ApiController {
 
         // 7. Send update
         try {
-          await axios.post(
-            "https://api.betbhai365.cloud/api/update-fancy-result",
-            payload
-          );
-          console.log(`Updated matchId ${matchId} | ${target.market_name}`);
+               let res  =  await axios.get(`https://api.betbhai365.cloud/api/result-fancy?marketId=${fn.selectionId}&matchId=${matchId}&result=${target?.winner_name}`);
+
+       
+          console.log(res,"GHJK")
+          // console.log(`Updated matchId ${matchId} | ${target.market_name}`);
         } catch (err) {
           console.error(
             `Failed updating fancy result for matchId ${matchId}`,
