@@ -52,6 +52,11 @@ router.get('/api/set-market-result-by-cron', new MatchController().setResultApi)
      
       new FancyController().activeFancies,
     )
+ router.get(
+      '/api/result-fancy',
+     
+      new FancyController().declarefancyresult,
+    )
 
 router.get('/api/result-market-auto', new FancyController().declaremarketresultAuto)
 router.get('/api/result-market-fancy-auto', new FancyController().setT10FancyResult)
