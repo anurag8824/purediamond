@@ -29,11 +29,11 @@ export class FancyRoutes {
       Http.adminUserRequest,
       this.FancyController.suspendFancy,
     )
-    this.router.get(
-      '/result-fancy',
+    // this.router.get(
+    //   '/result-fancy',
      
-      this.FancyController.declarefancyresult,
-    )
+    //   this.FancyController.declarefancyresult,
+    // )
 
     this.router.get(
       '/result-market',
