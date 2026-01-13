@@ -19,8 +19,7 @@ export class FancyRoutes {
   routes() {
     this.router.get(
       '/active-fancies',
-      Passport.authenticateJWT,
-      Http.adminUserRequest,
+     
       this.FancyController.activeFancies,
     )
 
@@ -32,8 +31,7 @@ export class FancyRoutes {
     )
     this.router.get(
       '/result-fancy',
-      Passport.authenticateJWT,
-      Http.adminUserRequest,
+     
       this.FancyController.declarefancyresult,
     )
 
