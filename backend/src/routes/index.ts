@@ -70,7 +70,7 @@ router.use('/api', Passport.authenticateJWT, Http.maintenance, new UserStakeRout
 router.use('/api', Passport.authenticateJWT, Http.maintenance, new BetRoute().router)
 router.use('/api', Passport.authenticateJWT, Http.maintenance, new MatchRoutes().router)
 router.use('/api', Passport.authenticateJWT, Http.maintenance, new MarketRoutes().router)
-router.use('/api', Passport.authenticateJWT, Http.maintenance, new FancyRoutes().router)
+// router.use('/api', Passport.authenticateJWT, Http.maintenance, new FancyRoutes().router)
 router.use('/api', Passport.authenticateJWT, Http.maintenance, new AccountRoutes().router)
 router.use('/api', Passport.authenticateJWT, Http.maintenance, new SportSettingsRoutes().router)
 router.use('/api', Passport.authenticateJWT, Http.maintenance, new UserBookRoutes().router)
