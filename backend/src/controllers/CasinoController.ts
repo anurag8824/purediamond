@@ -1232,7 +1232,7 @@ export class CasinoController extends ApiController {
 
         // 3. Check cache
                 // let matchData = ["35129143"] //ResultCache[matchId];
-          let matchData =ResultCache[35129348];
+          let matchData =ResultCache[matchId];
         // 4. Fetch if not cached
         if (!matchData) {
           try {
