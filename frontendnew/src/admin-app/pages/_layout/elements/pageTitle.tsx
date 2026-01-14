@@ -79,6 +79,9 @@ const PageTitle = () => {
     } else if (path.includes('profile')) {
       return 'PROFILE'
     }
+    else if (path.includes('settlement')) {
+      return 'SETTLMENT'
+    }
     
     return 'DASHBOARD'
   }

@@ -449,6 +449,17 @@ export class AccountController extends ApiController {
     }
   }
 
+
+  adminSettle = async (req: Request, res: Response) => {
+    try {
+      const user: any = req.user
+      console.log("settlement request body",req.body ,user)
+      return this.success( res, { message: "Settlement API is under construction" })
+    } catch (e: any) {
+      return this.fail(res, e)
+    }
+  }
+
   depositWithdraw = async (req: Request, { role, _id }: IUserModel) => {
     let { userId, parentUserId, amount, balanceUpdateType } = req.body
     const parentBal: any = await Balance.findOne({ userId: Types.ObjectId(parentUserId) })

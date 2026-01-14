@@ -201,6 +201,8 @@ export class UserBookController extends ApiController {
       (Item: any) => Item.parent == user._id.toString(),
     )[0].ratio
 
+    console.log(ratio, "ratioaa" , user,currentUser ,currentBalance)
+
     const currentpartnership = parseInt(ratio)
     const select = {
       _id: 1,

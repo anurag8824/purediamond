@@ -4,6 +4,7 @@ import User, { RoleType } from '../models/User'
 import { selectUserData } from '../redux/actions/login/loginSlice'
 import Login2 from '../pages/login/login2'
 import UpdateWhatsapp from './pages/settings/UpdateWhatsapp'
+import Settlement from './pages/settlement-report/Settlement'
 // import ClientLedger from './pages/settings/ClientLedger'
 const AdminHome = React.lazy(() => import('../admin-app/pages/admin-home/AdminHome'))
 const ActiveMarkets = React.lazy(() => import('../admin-app/pages/active-matches/active-markets'))
@@ -146,6 +147,8 @@ const AdminRoutes = () => {
             { path: 'sport-report-new', element: <SportReportNew /> },
             { path: 'weekly-report', element: <WeeklyReport /> },
             { path: 'settlement-report', element: <SettlementReport /> },
+            { path: 'settlement', element: <Settlement /> },
+
             { path: 'chip-summary', element: <ChipSummary /> },
             { path: 'balance-sheet', element: <BalanceSheet /> },
             { path: 'export', element: <ExportPage /> },

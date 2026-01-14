@@ -19,9 +19,15 @@ class FancyRoutes {
         this.routes();
     }
     routes() {
-        this.router.get('/active-fancies', Passport_1.default.authenticateJWT, Http_1.default.adminUserRequest, this.FancyController.activeFancies);
+        // this.router.get(
+        //   '/active-fancies',
+        //   this.FancyController.activeFancies,
+        // )
         this.router.get('/suspend-fancy', Passport_1.default.authenticateJWT, Http_1.default.adminUserRequest, this.FancyController.suspendFancy);
-        this.router.get('/result-fancy', Passport_1.default.authenticateJWT, Http_1.default.adminUserRequest, this.FancyController.declarefancyresult);
+        // this.router.get(
+        //   '/result-fancy',
+        //   this.FancyController.declarefancyresult,
+        // )
         this.router.get('/result-market', Passport_1.default.authenticateJWT, Http_1.default.adminUserRequest, this.FancyController.declaremarketresult);
         this.router.get('/rollback-result-market', Passport_1.default.authenticateJWT, Http_1.default.adminUserRequest, this.FancyController.rollbackmarketresult);
         this.router.get('/rollback-result-market-wise', Passport_1.default.authenticateJWT, Http_1.default.adminUserRequest, this.FancyController.rollbackmarketwiseresult);

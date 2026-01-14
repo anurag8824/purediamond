@@ -212,7 +212,7 @@ const UnsetteleBetHistoryAdmin = ({ hideHeader, matchId }: any) => {
                     <label>Sport</label>
                     <select name='reportType' onChange={handleformchange}>
                       <option value=''>Select Sport</option>
-                      {sportList.sports.map((sport: any) => (
+                      {sportList?.sports?.filter((sport: any) => sport.sportId === 1 || sport.sportId === 4 ||  sport.sportId === 2).map((sport: any) => (
                         <option key={sport.sportId} value={sport.sportId}>
                           {sport.name}
                         </option>

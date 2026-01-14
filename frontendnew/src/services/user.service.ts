@@ -87,6 +87,10 @@ class UserService {
   getExposerEvent() {
     return api.get('/get-exposer-event')
   }
+
+  adminSettlement(data: any) {
+    return api.post('/admin-settlement', data)
+  }
 }
 
 export default new UserService()

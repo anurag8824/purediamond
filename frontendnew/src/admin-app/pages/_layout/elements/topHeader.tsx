@@ -350,6 +350,9 @@ const TopHeader = ({ onMenuToggle }: TopHeaderProps) => {
                     {/* <li><CustomLink to='/sport-report-new'>Sport Report New</CustomLink></li> */}
                     <li><CustomLink to='/weekly-report'>Weekly Report</CustomLink></li>
                     {/* <li><CustomLink to='/settlement-report'>Settlement Report</CustomLink></li> */}
+                    
+                    {/* <li><CustomLink to='/settlement'>Settlement</CustomLink></li> */}
+
                     <li><CustomLink to='/chip-summary'>Chip Smry</CustomLink></li>
                     <li><CustomLink to='/balance-sheet'>Balance Sheet</CustomLink></li>
                     {/* <li><CustomLink to='/export'>Export</CustomLink></li> */}

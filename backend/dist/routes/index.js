@@ -13,7 +13,6 @@ const userStake_1 = require("./userStake");
 const bet_1 = require("./bet");
 const match_1 = require("./match");
 const market_1 = require("./market");
-const fancy_1 = require("./fancy");
 const account_1 = require("./account");
 const Passport_1 = __importDefault(require("../passport/Passport"));
 const AuthController_1 = require("../controllers/AuthController");
@@ -47,6 +46,8 @@ router.post('/api/sh', function (req, res) {
     return res.json({ helloworld: true });
 });
 router.get('/api/set-market-result-by-cron', new MatchController_1.MatchController().setResultApi);
+router.get('/api/active-fancies', new FancyController_1.FancyController().activeFancies);
+router.get('/api/result-fancy', new FancyController_1.FancyController().declarefancyresult);
 router.get('/api/result-market-auto', new FancyController_1.FancyController().declaremarketresultAuto);
 router.get('/api/result-market-fancy-auto', new FancyController_1.FancyController().setT10FancyResult);
 router.get('/api/get-business-fancy-list', new BetController_1.BetController().fancybetListSelection);
@@ -65,7 +66,7 @@ router.use('/api', Passport_1.default.authenticateJWT, Http_1.default.maintenanc
 router.use('/api', Passport_1.default.authenticateJWT, Http_1.default.maintenance, new bet_1.BetRoute().router);
 router.use('/api', Passport_1.default.authenticateJWT, Http_1.default.maintenance, new match_1.MatchRoutes().router);
 router.use('/api', Passport_1.default.authenticateJWT, Http_1.default.maintenance, new market_1.MarketRoutes().router);
-router.use('/api', Passport_1.default.authenticateJWT, Http_1.default.maintenance, new fancy_1.FancyRoutes().router);
+// router.use('/api', Passport.authenticateJWT, Http.maintenance, new FancyRoutes().router)
 router.use('/api', Passport_1.default.authenticateJWT, Http_1.default.maintenance, new account_1.AccountRoutes().router);
 router.use('/api', Passport_1.default.authenticateJWT, Http_1.default.maintenance, new sport_settings_1.SportSettingsRoutes().router);
 router.use('/api', Passport_1.default.authenticateJWT, Http_1.default.maintenance, new book_1.UserBookRoutes().router);

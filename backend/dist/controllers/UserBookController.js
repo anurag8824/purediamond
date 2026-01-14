@@ -195,6 +195,7 @@ class UserBookController extends ApiController_1.ApiController {
             const currentUser = yield User_1.User.findOne({ _id: ObjectId(user._id) });
             const currentBalance = yield Balance_1.Balance.findOne({ userId: ObjectId(user._id) });
             const ratio = currentUser.partnership[4].allRatio.filter((Item) => Item.parent == user._id.toString())[0].ratio;
+            console.log(ratio, "ratioaa", user, currentUser, currentBalance);
             const currentpartnership = parseInt(ratio);
             const select = {
                 _id: 1,

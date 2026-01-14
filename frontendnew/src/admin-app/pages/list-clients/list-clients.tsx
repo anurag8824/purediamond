@@ -390,6 +390,92 @@ const ListClients = () => {
     <>
       <div className='list-clients-container'>
         <div className='container-fluid'>
+
+
+        <div className='master-balance'>
+            <div
+              className='text-center '
+              onClick={() => {
+                setuserresponse()
+              }}
+            >
+              <span className='far fa-arrow-alt-circle-down' id='user-balance' />
+              <span className='far fa-arrow-alt-circle-up' />
+            </div>
+            {userbook && (
+              <div className='master-balance-detail m-t-20' id='master-balance-detail'>
+                <div className='master-balance'>
+                  <div className='master-balance-detail m-t-20' id='master-balance-detail'>
+                    <ul className='row'>
+                      <li className='col-md-4'>
+                        <label className='col-md-8 text-left  p-0'>
+                          Upper Level Credit Referance:
+                        </label>
+                        <span className='text-right col-md-4  p-0'>
+                          {userBookData.uplevelcr?.toFixed(2)}
+                        </span>
+                      </li>
+                      <li className='col-md-4'>
+                        <label className='col-md-8 text-left p-0'>Down level Occupy Balance:</label>
+                        <span className='text-right col-md-4  p-0'>
+                          {userBookData.downlineob?.toFixed(2)}
+                        </span>
+                      </li>
+                      <li className='col-md-4'>
+                        <label className='col-md-8 text-left p-0 '>
+                          Down Level Credit Referance:
+                        </label>
+                        <span className='text-right col-md-4  p-0'>
+                          {userBookData.downcr?.toFixed(2)}
+                        </span>
+                      </li>
+                      <li className='col-md-4'>
+                        <label className='col-md-8 text-left p-0'>Total Master Balance</label>
+                        <span className='text-right col-md-4 p-0'>
+                          {userBookData.totalmasterb?.toFixed(2)}
+                        </span>
+                      </li>
+                      <li className='col-md-4'>
+                        <label className='col-md-8 text-left p-0'>Upper Level:</label>
+                        <span className='text-right col-md-4 p-0'>
+                          {userBookData.upperlvell?.toFixed(2)}
+                        </span>
+                      </li>
+                      <li className='col-md-4'>
+                        <label className='col-md-8 text-left p-0'>Down Level Profit/Loss :</label>
+                        <span className='text-right col-md-4 p-0'>
+                          {userBookData.downpl?.toFixed(2)}
+                        </span>
+                      </li>
+                      <li className='col-md-4'>
+                        <label className='col-md-8 text-left p-0'>Available Balance:</label>
+                        <span className='text-right col-md-4 p-0'>
+                          {userBookData.availableB?.toFixed(2)}
+                        </span>
+                      </li>
+                      <li className='col-md-4'>
+                        <label className='col-md-8 text-left p-0'>
+                          Available Balance With Profit/Loss:
+                        </label>
+                        <span className='text-right col-md-4 p-0'>
+                          {userBookData.avpl?.toFixed(2)}
+                        </span>
+                      </li>
+                      <li className='col-md-4'>
+                        <label className='col-md-8 text-left p-0'>My Profit/Loss:</label>
+                        <span className='text-right col-md-4 p-0'>
+                          {userBookData.mypl?.toFixed(2)}
+                        </span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
+
+
           {/* Top Controls */}
           <div className='clients-top-controls d-none'>
             <div className='clients-top-left'>

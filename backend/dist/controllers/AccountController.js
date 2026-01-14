@@ -87,6 +87,16 @@ class AccountController extends ApiController_1.ApiController {
                 return this.fail(res, e);
             }
         });
+        this.adminSettle = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const user = req.user;
+                console.log("settlement request body", req.body, user);
+                return this.success(res, { message: "Settlement API is under construction" });
+            }
+            catch (e) {
+                return this.fail(res, e);
+            }
+        });
         this.depositWithdraw = (req, { role, _id }) => __awaiter(this, void 0, void 0, function* () {
             let { userId, parentUserId, amount, balanceUpdateType } = req.body;
             const parentBal = yield Balance_1.Balance.findOne({ userId: mongoose_1.Types.ObjectId(parentUserId) });

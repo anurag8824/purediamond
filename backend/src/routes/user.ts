@@ -110,6 +110,14 @@ export class UserRoutes {
       this.authController.updatePassword,
     )
 
+
+    this.router.post(
+      '/admin-settlement',
+      Passport.authenticateJWT,
+      this.accountController.adminSettle,
+    )
+
+
     this.router.post(
       '/get-user-list-suggestion',
       Passport.authenticateJWT,

@@ -34,6 +34,7 @@ class UserRoutes {
         this.router.post('/user-account-balance', user_validation_1.accountBalanceValidation, Http_1.default.validateRequest, Passport_1.default.authenticateJWT, this.accountController.saveUserDepositFC);
         this.router.get('/get-user-balance', Passport_1.default.authenticateJWT, this.accountController.getUserBalanceWithExposer);
         this.router.post('/update-password', Passport_1.default.authenticateJWT, this.authController.updatePassword);
+        this.router.post('/admin-settlement', Passport_1.default.authenticateJWT, this.accountController.adminSettle);
         this.router.post('/get-user-list-suggestion', Passport_1.default.authenticateJWT, this.dealerController.getUserListSuggestion);
         this.router.post('/add-transaction-password', Passport_1.default.authenticateJWT, this.authController.addTransactionPassword);
         this.router.post('/save-general-setting', user_validation_1.saveGenSettings, Http_1.default.validateRequest, Passport_1.default.authenticateJWT, this.dealerController.saveGeneralSettings);
