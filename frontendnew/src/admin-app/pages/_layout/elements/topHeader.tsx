@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from '../../../../redux/hooks'
 import casinoService from '../../../../services/casino.service'
 
 import UserService from "../../../../services/user.service";
+import userService from '../../../../services/user.service'
 interface TopHeaderProps {
   onMenuToggle?: () => void
 }
@@ -130,6 +131,22 @@ const TopHeader = ({ onMenuToggle }: TopHeaderProps) => {
     );
   }, [userState]);
 
+  const [userbook , setUserBook] = React.useState<any>()
+    const [userBookData, setUserBookData] = React.useState<any>(null)
+  
+
+  const setuserresponse = () => {
+    
+        userService.getUserBook().then((res: AxiosResponse<any>) => {
+          setUserBookData(res.data.data)
+        })
+      
+    }
+
+    React.useEffect(()=>{
+      setuserresponse()
+    },[userState])
+
   return (
     <div className='admin-top-header'>
       <div className='top-header-content'>
@@ -148,7 +165,7 @@ const TopHeader = ({ onMenuToggle }: TopHeaderProps) => {
             </div>
             <div className='upline-info'>
               <span className='label'>Upline :</span>
-              <span className='value'>{detail?.parentBalance?.balance?.toFixed()}</span>
+              <span className='value'>{userBookData?.upperlvell?.toFixed(2)}</span>
             </div>
           </div>
 
