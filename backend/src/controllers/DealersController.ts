@@ -121,7 +121,7 @@ export class DealersController extends ApiController {
           if (newUser._id !== undefined && newUser._id !== null) {
             await Balance.findOneAndUpdate(
               { userId: newUser._id },
-              { balance: 0, exposer: 0, profitLoss: -creditRefrences, mainBalance: 0 },
+              { balance: 0, exposer: 0, profitLoss: 0, mainBalance: 0 },
               { new: true, upsert: true, session },
             )
             if (role === RoleType.user) {

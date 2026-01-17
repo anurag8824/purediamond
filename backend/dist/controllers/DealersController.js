@@ -159,7 +159,7 @@ class DealersController extends ApiController_1.ApiController {
                     const newUser = new User_1.User(userData);
                     yield newUser.save({ session });
                     if (newUser._id !== undefined && newUser._id !== null) {
-                        yield Balance_1.Balance.findOneAndUpdate({ userId: newUser._id }, { balance: 0, exposer: 0, profitLoss: -creditRefrences, mainBalance: 0 }, { new: true, upsert: true, session });
+                        yield Balance_1.Balance.findOneAndUpdate({ userId: newUser._id }, { balance: 0, exposer: 0, profitLoss: 0, mainBalance: 0 }, { new: true, upsert: true, session });
                         if (role === Role_1.RoleType.user) {
                             // const parentStack: any = await UserBetStake.findOne({
                             //   userId: parentUser._id,
