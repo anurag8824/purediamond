@@ -806,13 +806,15 @@ export class FancyController extends ApiController {
     const Balance_ = ac && ac.length > 0 ? ac[0].totalAmount : 0
     const pnl_ =
       pnl && pnl.length > 0
-        ? pnl[0].totalAmount +
-        withdAmt +
-        depositeAmt -
-        (userCr && userCr.creditRefrences ? parseInt(userCr.creditRefrences) : 0)
-        : withdAmt +
-        depositeAmt -
-        (userCr && userCr.creditRefrences ? parseInt(userCr.creditRefrences) : 0)
+        ? pnl[0].totalAmount
+        //  +
+        // withdAmt +
+        // depositeAmt -
+        // (userCr && userCr.creditRefrences ? parseInt(userCr.creditRefrences) : 0)
+        : 0
+        //  withdAmt +
+        // depositeAmt -
+        // (userCr && userCr.creditRefrences ? parseInt(userCr.creditRefrences) : 0)
     ////const bal = await Balance.findOne({ userId: userId }).select({ profitLoss: 1 })
     //// const pnl_ = bal?.profitLoss ? bal?.profitLoss : 0
 
