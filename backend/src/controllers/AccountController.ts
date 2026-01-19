@@ -224,7 +224,7 @@ export class AccountController extends ApiController {
       const mbal = await this.getUserDepWithBalance(userId)
       await Balance.findOneAndUpdate(
         { userId },
-        { balance: newUserAccStmt.closeBal, profitLoss: pnlData + +amount, mainBalance: mbal },
+        { balance: newUserAccStmt.closeBal, profitLoss: pnlData, mainBalance: mbal },
         { new: true, upsert: true },
       )
 
