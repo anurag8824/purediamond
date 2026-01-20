@@ -165,7 +165,7 @@ const TopHeader = ({ onMenuToggle }: TopHeaderProps) => {
             </div>
             <div className='upline-info'>
               <span className='label'>Upline :</span>
-              <span className='value'>{userBookData?.upperlvell?.toFixed(2)}</span>
+              <span className='value'>{userBookData?.mypl?.toFixed(2)}</span>
             </div>
           </div>
 

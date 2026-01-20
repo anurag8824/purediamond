@@ -576,7 +576,7 @@ class AccountController extends ApiController_1.ApiController {
             if (newUserAccStmt._id !== undefined && newUserAccStmt._id !== null) {
                 const pnlData = yield this.calculatepnl(userId, 'd');
                 const mbal = yield this.getUserDepWithBalance(userId);
-                yield Balance_1.Balance.findOneAndUpdate({ userId }, { balance: newUserAccStmt.closeBal, profitLoss: pnlData + +amount, mainBalance: mbal }, { new: true, upsert: true });
+                yield Balance_1.Balance.findOneAndUpdate({ userId }, { balance: newUserAccStmt.closeBal, profitLoss: pnlData, mainBalance: mbal }, { new: true, upsert: true });
                 userAccBal = newUserAccStmt.closeBal;
             }
             const getParentOpenBal = (getParentAccStmt === null || getParentAccStmt === void 0 ? void 0 : getParentAccStmt.closeBal) ? getParentAccStmt.closeBal : 0;

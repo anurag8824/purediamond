@@ -263,8 +263,12 @@ const ListClients = () => {
 
   const mainBalance = (row: any) => {
     const creditRef = row?.creditRefrences || 0
+    const balss = row?.balance?.balance || 0
+
     const clientpl = row.balance?.profitLoss || 0
-    return (parseFloat(creditRef) + +parseFloat(clientpl))?.toFixed(2)
+    // return (parseFloat(creditRef) + +parseFloat(clientpl))?.toFixed(2)
+    return parseFloat(balss).toFixed(2)
+
   }
   /* Checkbox functionality */
   const handleSelectItem = (user: User) => {

@@ -61,7 +61,9 @@ const AddUser = () => {
     setValue,
     // setError,
     formState: { errors },
-  } = useForm<User>({ resolver: yupResolver(validationSchema) })
+  } = useForm<User>({ resolver: yupResolver(validationSchema),defaultValues: {
+    creditRefrences: 10000,
+  }, })
 
   React.useEffect(() => {
     if (username) {
@@ -411,7 +413,7 @@ const AddUser = () => {
                           )}
                         </div>
                       </div>
-                      { !isExposerAllow &&  <div className='col-md-6'>
+                      { !isExposerAllow &&  <div className='col-md-6 d-none'>
                         <div className='form-group'>
                           <label htmlFor='creditrefrence'>Free Chip:</label>
                           <input
