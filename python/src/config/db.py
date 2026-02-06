@@ -4,7 +4,7 @@ import certifi
 
 # dbClient = MongoClient('mongodb+srv://infayou:JM.dHK_PpCnV7%40L@cluster0.zbf0n.mongodb.net/infa?retryWrites=true&w=majority&appName=Cluster0&tlsAllowInvalidCertificates=true')
 # dbClient = MongoClient("mongodb+srv://365infayou:Jv9lwv6csl7J1Jp5@cluster365.sxln4q8.mongodb.net/infa?retryWrites=true&w=majority&appName=Cluster365&tlsAllowInvalidCertificates=true")
-dbClient = MongoClient("mongodb://admin:betbhaiAdmin123@72.61.18.12:27017/infa?replicaSet=rs0&authSource=admin")
+dbClient = MongoClient(""mongodb://admin:Diamond11123@72.61.19.197:27017/exch?authSource=admin&replicaSet=rs0"")
 
 print(dbClient)
 db = dbClient.get_database()
