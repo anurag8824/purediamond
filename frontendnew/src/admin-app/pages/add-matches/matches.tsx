@@ -41,9 +41,7 @@ const MatchesPage = () => {
           });
 
           const uniqueEvents = sortedMatches.filter((event, index, self) =>
-            // index === self.findIndex((e) => e.matchId === event.matchId && event.seriesId != 1)
-             index === self.findIndex((e) => e.matchId === event.matchId && event.seriesId == 1)
-
+            index === self.findIndex((e) => e.matchId === event.matchId && event.seriesId != 1)
           );
 
           const now = new Date();
@@ -109,7 +107,7 @@ const MatchesPage = () => {
               </thead>
               <tbody>
                 {matches.map((match: IMatch, index: number) => {
-                  // if (match?.series?.id == '1') return
+                  if (match?.series?.id == '1') return
                   return (
                     <tr key={index}>
                       <td>{match.name}</td>
